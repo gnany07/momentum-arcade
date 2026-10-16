@@ -17,14 +17,15 @@ This document provides a step-by-step checklist to publish **Momentum Arcade** t
 
 ## 2. Store Asset Requirements
 
-Before submitting, prepare these visual assets:
+All visual assets are pre-generated and ready in the `store_assets/` and `icons/` folders:
 
-| Asset | Dimensions | Format | Notes |
+| Asset | Dimensions | Format | File Location |
 |---|---|---|---|
-| **Store Icon** | 128 x 128 px | PNG | Located in `icons/icon128.png` |
-| **Store Screenshots** | 1280 x 800 px (or 640 x 400 px) | PNG / JPEG | At least 1 screenshot is required (up to 5 recommended). Show Zen mode and the games. |
-| **Small Promo Tile** (Optional) | 440 x 280 px | PNG / JPEG | Featured in search results and collections |
-| **Marquee Promo Tile** (Optional) | 1400 x 560 px | PNG / JPEG | Highlight banner on Chrome Web Store homepage |
+| **Store Icon** | 128 x 128 px | PNG | `icons/icon128.png` |
+| **Store Screenshot 1** | 1280 x 800 px | PNG | `store_assets/screenshot_1280x800_zen.png` |
+| **Store Screenshot 2** | 1280 x 800 px | PNG | `store_assets/screenshot_1280x800_arcade.png` |
+| **Small Promo Tile** | 440 x 280 px | PNG | `store_assets/promo_small_440x280.png` |
+| **Marquee Promo Tile** | 1400 x 560 px | PNG | `store_assets/promo_marquee_1400x560.png` |
 
 ---
 
@@ -33,33 +34,36 @@ Before submitting, prepare these visual assets:
 ### Step 1: Upload the Package
 1. Go to the [Chrome Developer Dashboard](https://chrome.google.com/webstore/devconsole).
 2. Click **"New Item"** (top right).
-3. Drag and drop `dist/momentum-arcade-v1.0.0.zip` or click "Browse files".
+3. Drag and drop `dist/momentum-arcade-v1.1.0.zip` or click "Browse files".
 4. Chrome will validate `manifest.json`.
 
 ---
 
 ### Step 2: Store Listing Information
 
-- **Product Name**: `Momentum Arcade - New Tab with Games`
+- **Product Name**: `Momentum Arcade - New Tab with 10 Games & Lo-Fi`
 - **Summary Description** (under 132 characters):
-  > *A beautiful new tab dashboard with daily quotes, clock, and 5 classic games: Snake, Sudoku, Wordle, Tetris & Block Breaker.*
+  > *A beautiful new tab dashboard with Lo-Fi ambient music, quotes, and 10 classic games: Snake, Sudoku, Wordle, Tetris, 2048 & more.*
 - **Detailed Description**:
   Copy the description below:
   ```markdown
-  Elevate your browsing routine with Momentum Arcade! Transform every new tab into a clean, inspiring sanctuary featuring relaxing photography, a digital clock, inspirational quotes, and 5 classic arcade games.
+  Transform your new tab into an aesthetic, productive oasis featuring procedural Lo-Fi ambient music, digital clock, inspirational quotes, and 10 classic arcade games!
 
   FEATURES:
-  - Zen Mode: Clean clock, greeting, date, and daily motivational quotes.
-  - 5 Classic Games:
-    - 🐍 Snake: Slither, collect apples, and beat your high score.
-    - 🔢 Sudoku: Number puzzle with Easy, Medium, and Hard difficulty modes plus on-screen numpad.
-    - 🔤 Wordle: 6 chances to guess the hidden 5-letter word with streak tracking.
-    - 🧱 Tetris: Full-featured block-stacking classic with soft drop and rotation.
-    - 🏓 Block Breaker: Brick-breaker with mouse and keyboard paddle control, multi-level progression, spark particles, and power bounces.
-  - Sound Effects: Synthesized Web Audio sound effects with one-click mute/unmute.
-  - High Score Persistence: Scores and streaks saved locally on your device.
+  - Procedural Lo-Fi Ambient Player: 4 relaxing soundscapes (Chill Lo-Fi Chords & Beats, Night Rain, Vinyl Warmth, and 432Hz Focus). 100% offline, zero bandwidth.
+  - 10 Built-In Mini Games:
+    • Snake: Classic slither with score tracking.
+    • Sudoku: Easy, Medium, and Hard puzzles with on-screen numpad.
+    • Wordle: 5-letter word puzzle with full virtual keyboard and streaks.
+    • Tetris: Block stacking with soft drop and rotation.
+    • Block Breaker: Brick-breaker with mouse tracking and 3 progressive levels.
+    • 2048: Slide and merge numbers to reach 2048.
+    • Cyber Bird: One-tap flapping flight through neon pipes.
+    • Minesweeper: Classic mine clearance with 9x9 and 12x12 modes and flags.
+    • Cyber Pong: Retro paddle duel vs smart AI (first to 5 points).
+    • Space Invaders: Shoot down waves of invading aliens.
   - Minimal Permissions: Only requests "storage" to save your high scores locally.
-  - Lightweight & Fast: 100% offline-ready with zero telemetry, trackers, or ads.
+  - 100% Local-First: Zero tracking, zero telemetry, and zero ads.
   ```
 - **Category**: Select `Fun` or `Productivity`.
 - **Language**: `English`.
