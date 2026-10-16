@@ -1,0 +1,26 @@
+{
+  "name": "momentum-arcade",
+  "version": "1.0.0",
+  "description": "A beautiful new tab dashboard with clock, quotes, and 5 classic arcade games: Snake, Sudoku, Wordle, Tetris & Block Breaker.",
+  "scripts": {
+    "icons": "node generate_icons.js",
+    "pack": "node pack.js"
+  },
+  "keywords": [
+    "chrome-extension",
+    "new-tab",
+    "arcade",
+    "games",
+    "snake",
+    "sudoku",
+    "wordle",
+    "tetris",
+    "block-breaker",
+    "breakout"
+  ],
+  "author": "gnany07",
+  "license": "MIT",
+  "devDependencies": {
+    "sharp": "^0.34.1"
+  }
+}

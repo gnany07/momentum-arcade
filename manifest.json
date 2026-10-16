@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Momentum Arcade - New Tab with Games",
+  "version": "1.0.0",
+  "description": "A beautiful new tab dashboard with daily quotes, clock, and 5 classic games: Snake, Sudoku, Wordle, Tetris & Block Breaker.",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "offline_enabled": true
+} 
