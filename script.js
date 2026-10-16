@@ -2,7 +2,10 @@
 class SoundController {
     constructor() {
         this.ctx = null;
+        this.masterGain = null;
         this.enabled = true;
+        this.userToggled = false;
+        this.activeTimeouts = [];
         this.loadPreference();
     }
 
@@ -10,15 +13,17 @@ class SoundController {
         try {
             if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
                 chrome.storage.local.get(['soundEnabled'], (result) => {
-                    if (result.soundEnabled !== undefined) {
-                        this.enabled = result.soundEnabled;
+                    if (!this.userToggled && result.soundEnabled !== undefined) {
+                        this.enabled = result.soundEnabled === true;
+                        this.applyGainState();
                         this.updateIcon();
                     }
                 });
             } else {
                 const stored = localStorage.getItem('soundEnabled');
-                if (stored !== null) {
+                if (!this.userToggled && stored !== null) {
                     this.enabled = stored === 'true';
+                    this.applyGainState();
                     this.updateIcon();
                 }
             }
@@ -27,8 +32,33 @@ class SoundController {
         }
     }
 
+    applyGainState() {
+        if (this.masterGain && this.ctx) {
+            try {
+                this.masterGain.gain.setValueAtTime(this.enabled ? 1 : 0, this.ctx.currentTime);
+            } catch (e) {}
+        }
+        if (this.ctx) {
+            try {
+                if (!this.enabled && this.ctx.state === 'running') {
+                    this.ctx.suspend();
+                } else if (this.enabled && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            } catch (e) {}
+        }
+    }
+
     toggle() {
+        this.userToggled = true;
         this.enabled = !this.enabled;
+
+        // Clear any pending melody timeouts (win/gameover sounds)
+        this.activeTimeouts.forEach(t => clearTimeout(t));
+        this.activeTimeouts = [];
+
+        this.applyGainState();
+
         try {
             if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
                 chrome.storage.local.set({ soundEnabled: this.enabled });
@@ -36,8 +66,15 @@ class SoundController {
                 localStorage.setItem('soundEnabled', this.enabled.toString());
             }
         } catch (e) {}
+
         this.updateIcon();
-        if (this.enabled) {
+
+        // If muting and Lo-Fi music is playing, pause it so all audio completely stops
+        if (!this.enabled) {
+            if (window.lofiPlayer && window.lofiPlayer.isPlaying) {
+                window.lofiPlayer.pause();
+            }
+        } else {
             this.playTone(520, 'sine', 0.1, 0.1);
         }
     }
@@ -68,6 +105,16 @@ class SoundController {
             arcadeBtn.title = this.enabled ? 'Disable Game Sound (Press M)' : 'Enable Game Sound (Press M)';
             arcadeBtn.setAttribute('aria-label', this.enabled ? 'Disable Game Sound' : 'Enable Game Sound');
         }
+
+        // Also update all in-cabinet game sound buttons
+        document.querySelectorAll('.cabinet-sound-btn').forEach(btn => {
+            btn.classList.toggle('muted', !this.enabled);
+            const bIcon = btn.querySelector('.cabinet-sound-icon');
+            if (bIcon) bIcon.textContent = this.enabled ? '🔊' : '🔇';
+            const bText = btn.querySelector('.cabinet-sound-text');
+            if (bText) bText.textContent = this.enabled ? 'Sound: ON' : 'Sound: OFF';
+            btn.title = this.enabled ? 'Disable Sound (Press M)' : 'Enable Sound (Press M)';
+        });
     }
 
     init() {
@@ -75,6 +122,9 @@ class SoundController {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             if (AudioContext) {
                 this.ctx = new AudioContext();
+                this.masterGain = this.ctx.createGain();
+                this.masterGain.gain.setValueAtTime(this.enabled ? 1 : 0, this.ctx.currentTime);
+                this.masterGain.connect(this.ctx.destination);
             }
         }
     }
@@ -94,7 +144,7 @@ class SoundController {
             gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
             osc.connect(gain);
-            gain.connect(this.ctx.destination);
+            gain.connect(this.masterGain || this.ctx.destination);
             osc.start();
             osc.stop(this.ctx.currentTime + duration);
         } catch (e) {
@@ -113,13 +163,21 @@ class SoundController {
     score() { this.playTone(660, 'triangle', 0.1, 0.1); }
     move() { this.playTone(280, 'sine', 0.04, 0.05); }
     win() {
+        if (!this.enabled) return;
         [523, 659, 784, 1046].forEach((f, i) => {
-            setTimeout(() => this.playTone(f, 'triangle', 0.2, 0.12), i * 110);
+            const t = setTimeout(() => {
+                if (this.enabled) this.playTone(f, 'triangle', 0.2, 0.12);
+            }, i * 110);
+            this.activeTimeouts.push(t);
         });
     }
     gameOver() {
+        if (!this.enabled) return;
         [300, 240, 180].forEach((f, i) => {
-            setTimeout(() => this.playTone(f, 'sawtooth', 0.22, 0.15), i * 140);
+            const t = setTimeout(() => {
+                if (this.enabled) this.playTone(f, 'sawtooth', 0.22, 0.15);
+            }, i * 140);
+            this.activeTimeouts.push(t);
         });
     }
 }
@@ -222,13 +280,30 @@ class ArcadeApp {
     setupSoundToggle() {
         const btn = document.getElementById('soundToggleBtn');
         if (btn) {
-            btn.addEventListener('click', () => window.sounds.toggle());
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.sounds.toggle();
+            });
         }
 
         const arcadeBtn = document.getElementById('arcadeSoundToggleBtn');
         if (arcadeBtn) {
-            arcadeBtn.addEventListener('click', () => window.sounds.toggle());
+            arcadeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.sounds.toggle();
+            });
         }
+
+        // Wire any cabinet sound toggle buttons
+        document.querySelectorAll('.cabinet-sound-btn').forEach(cBtn => {
+            cBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.sounds.toggle();
+            });
+        });
 
         // Global hotkey: press 'M' to mute/unmute game sounds (unless typing or playing Wordle)
         window.addEventListener('keydown', (e) => {

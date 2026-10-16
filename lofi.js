@@ -57,6 +57,14 @@ class LofiPlayer {
             });
         }
 
+        const quickPlayBtn = document.getElementById('lofiPlayQuickBtn');
+        if (quickPlayBtn) {
+            quickPlayBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.togglePlay();
+            });
+        }
+
         if (playBtn) {
             playBtn.addEventListener('click', () => {
                 this.togglePlay();
@@ -210,6 +218,16 @@ class LofiPlayer {
         if (toggleBtn) {
             if (playing) toggleBtn.classList.add('playing');
             else toggleBtn.classList.remove('playing');
+        }
+
+        const quickPlayBtn = document.getElementById('lofiPlayQuickBtn');
+        const quickIcon = document.getElementById('lofiQuickIcon');
+        if (quickIcon) {
+            quickIcon.textContent = playing ? '⏸' : '▶';
+        }
+        if (quickPlayBtn) {
+            quickPlayBtn.classList.toggle('playing', playing);
+            quickPlayBtn.title = playing ? 'Pause Lo-Fi Music' : 'Play Lo-Fi Music';
         }
     }
 

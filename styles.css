@@ -112,6 +112,38 @@ body {
    ========================================================================== */
 .lofi-widget-container {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.lofi-quick-play-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(12px);
+    color: var(--text-main);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lofi-quick-play-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--glass-border-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.lofi-quick-play-btn.playing {
+    border-color: #38bdf8;
+    color: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
 }
 
 .lofi-toggle-btn {
@@ -749,6 +781,31 @@ canvas {
     background: rgba(6, 182, 212, 0.35);
     color: #ffffff;
     transform: translateY(-2px);
+}
+
+.cabinet-sound-btn {
+    background: rgba(99, 102, 241, 0.16);
+    border-color: rgba(99, 102, 241, 0.32);
+    color: #c7d2fe;
+    font-size: 0.88rem;
+    padding: 0.55rem 1rem;
+}
+
+.cabinet-sound-btn:hover {
+    background: rgba(99, 102, 241, 0.3);
+    border-color: rgba(99, 102, 241, 0.55);
+    color: #ffffff;
+}
+
+.cabinet-sound-btn.muted {
+    background: rgba(148, 163, 184, 0.12);
+    border-color: rgba(148, 163, 184, 0.25);
+    color: #94a3b8;
+}
+
+.cabinet-sound-btn.muted:hover {
+    background: rgba(148, 163, 184, 0.22);
+    color: #e2e8f0;
 }
 
 .controls-hint {

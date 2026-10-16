@@ -14,7 +14,10 @@
         <header class="top-nav">
             <!-- Lo-Fi Music Widget -->
             <div class="lofi-widget-container">
-                <button id="lofiToggleBtn" class="lofi-toggle-btn" title="Lo-Fi Ambient Radio">
+                <button id="lofiPlayQuickBtn" class="lofi-quick-play-btn" title="Play / Pause Lo-Fi Music" aria-label="Play or Pause Lo-Fi Music">
+                    <span id="lofiQuickIcon">▶</span>
+                </button>
+                <button id="lofiToggleBtn" class="lofi-toggle-btn" title="Lo-Fi Ambient Radio Settings">
                     <span class="lofi-icon">🎧</span>
                     <span class="lofi-label">Lo-Fi Radio</span>
                     <div id="lofiEqAnim" class="eq-bars">
@@ -160,6 +163,7 @@
                     </div>
                     <div class="controls-bar">
                         <button id="startSnake" class="btn btn-primary">Start Game</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
                     <div class="controls-hint">Use Arrow Keys or WASD to Slither</div>
                 </div>
@@ -193,6 +197,7 @@
                         <button id="startSudoku" class="btn btn-primary">Start Game</button>
                         <button id="newSudoku" class="btn btn-secondary">New Puzzle</button>
                         <button id="checkSudoku" class="btn btn-accent">Check Solution</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
                     <div class="controls-hint">Click a cell, then use keyboard numbers 1–9 or click the number pad.</div>
                 </div>
@@ -211,6 +216,7 @@
                     <div class="controls-bar">
                         <button id="startWordle" class="btn btn-primary">Start Game</button>
                         <button id="newWordle" class="btn btn-secondary">New Word</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
                     <div class="controls-hint">Guess the hidden 5-letter word in 6 tries. Green = exact match, Gold = in word.</div>
                 </div>
@@ -231,6 +237,7 @@
                     <div class="controls-bar">
                         <button id="startTetris" class="btn btn-primary">Start Game</button>
                         <button id="pauseTetris" class="btn btn-secondary">Pause</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
                     <div class="controls-hint">◄ ► to Move • ▲ or Space to Rotate • ▼ to Soft Drop • P to Pause</div>
                 </div>
@@ -252,6 +259,7 @@
                     <div class="controls-bar">
                         <button id="startBlockBreaker" class="btn btn-primary">Start Game</button>
                         <button id="pauseBlockBreaker" class="btn btn-secondary">Pause</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
                     <div class="controls-hint">Move: Mouse or ◄ ► / A D • Launch: Space or Click • P: Pause</div>
                 </div>
@@ -270,6 +278,7 @@
                     <div class="controls-bar">
                         <button id="start2048" class="btn btn-primary">Start Game</button>
                         <button id="new2048" class="btn btn-secondary">Reset Grid</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
                     <div class="controls-hint">Join the tiles, slide with Arrow Keys or WASD to reach 2048!</div>
                 </div>
@@ -287,6 +296,7 @@
                     </div>
                     <div class="controls-bar">
                         <button id="startFlappy" class="btn btn-primary">Start Flight</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
                     <div class="controls-hint">Press Space, ▲, or Click anywhere on canvas to flap wings</div>
                 </div>
@@ -308,6 +318,9 @@
                     <div class="minesweeper-wrapper">
                         <div id="minesweeperGrid" class="minesweeper-grid"></div>
                     </div>
+                    <div class="controls-bar">
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
+                    </div>
                     <div class="controls-hint">Left Click to dig, Right Click to flag (or toggle Flag Mode)</div>
                 </div>
 
@@ -325,6 +338,7 @@
                     </div>
                     <div class="controls-bar">
                         <button id="startPong" class="btn btn-primary">Start Match</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
                     <div class="controls-hint">Steer left paddle with Mouse, ▲ ▼, or W / S</div>
                 </div>
@@ -343,6 +357,7 @@
                     </div>
                     <div class="controls-bar">
                         <button id="startInvaders" class="btn btn-primary">Launch Defense</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
                     <div class="controls-hint">◄ ► or A / D to Move • Space or Tap on canvas to Fire</div>
                 </div>
