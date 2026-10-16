@@ -53,7 +53,7 @@
             </button>
 
             <!-- Sound Effects Toggle Button -->
-            <button id="soundToggleBtn" class="nav-icon-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
+            <button id="soundToggleBtn" class="nav-icon-btn" title="Toggle Game Sound (Press M)" aria-label="Toggle Game Sound">
                 <span id="soundIcon">🔊</span>
             </button>
         </header>
@@ -88,9 +88,15 @@
                     <span class="arcade-games-count">10 Games</span>
                 </div>
                 <div class="arcade-compact-clock" id="compactClock">12:00</div>
-                <button id="closeArcadeBtn" class="arcade-close-btn" title="Close Arcade & Return to Zen">
-                    <span>✕ Close Arcade</span>
-                </button>
+                <div class="arcade-header-actions">
+                    <button id="arcadeSoundToggleBtn" class="arcade-sound-btn" title="Toggle Game Sound (Press M)" aria-label="Toggle Game Sound">
+                        <span id="arcadeSoundIcon">🔊</span>
+                        <span id="arcadeSoundText">Sound: ON</span>
+                    </button>
+                    <button id="closeArcadeBtn" class="arcade-close-btn" title="Close Arcade & Return to Zen">
+                        <span>✕ Close Arcade</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Game Tabs Navigation (10 Games) -->

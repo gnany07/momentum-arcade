@@ -47,6 +47,27 @@ class SoundController {
         if (icon) {
             icon.textContent = this.enabled ? '🔊' : '🔇';
         }
+        const topBtn = document.getElementById('soundToggleBtn');
+        if (topBtn) {
+            topBtn.classList.toggle('muted', !this.enabled);
+            topBtn.title = this.enabled ? 'Game Sound: ON (Press M to mute)' : 'Game Sound: OFF (Press M to unmute)';
+            topBtn.setAttribute('aria-label', this.enabled ? 'Mute Game Sound' : 'Unmute Game Sound');
+        }
+
+        const arcadeIcon = document.getElementById('arcadeSoundIcon');
+        if (arcadeIcon) {
+            arcadeIcon.textContent = this.enabled ? '🔊' : '🔇';
+        }
+        const arcadeText = document.getElementById('arcadeSoundText');
+        if (arcadeText) {
+            arcadeText.textContent = this.enabled ? 'Sound: ON' : 'Sound: OFF';
+        }
+        const arcadeBtn = document.getElementById('arcadeSoundToggleBtn');
+        if (arcadeBtn) {
+            arcadeBtn.classList.toggle('muted', !this.enabled);
+            arcadeBtn.title = this.enabled ? 'Disable Game Sound (Press M)' : 'Enable Game Sound (Press M)';
+            arcadeBtn.setAttribute('aria-label', this.enabled ? 'Disable Game Sound' : 'Enable Game Sound');
+        }
     }
 
     init() {
@@ -203,6 +224,30 @@ class ArcadeApp {
         if (btn) {
             btn.addEventListener('click', () => window.sounds.toggle());
         }
+
+        const arcadeBtn = document.getElementById('arcadeSoundToggleBtn');
+        if (arcadeBtn) {
+            arcadeBtn.addEventListener('click', () => window.sounds.toggle());
+        }
+
+        // Global hotkey: press 'M' to mute/unmute game sounds (unless typing or playing Wordle)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'm' || e.key === 'M') {
+                if (e.ctrlKey || e.metaKey || e.altKey) return;
+                const tag = (e.target && e.target.tagName) || '';
+                if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
+                if (this.isGameActive('wordle')) {
+                    const wGame = this.games['wordle'];
+                    if (wGame && wGame.isPlaying && !wGame.gameOver) {
+                        return; // Let Wordle type the letter 'M'
+                    }
+                }
+                e.preventDefault();
+                window.sounds.toggle();
+            }
+        });
+
+        window.sounds.updateIcon();
     }
 
     setupArcadeToggles() {

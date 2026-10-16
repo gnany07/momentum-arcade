@@ -476,6 +476,53 @@ body {
     letter-spacing: 1px;
 }
 
+.arcade-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.arcade-sound-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.42rem 0.95rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: rgba(99, 102, 241, 0.18);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    color: #c7d2fe;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.arcade-sound-btn:hover {
+    background: rgba(99, 102, 241, 0.32);
+    border-color: rgba(99, 102, 241, 0.6);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.arcade-sound-btn.muted {
+    background: rgba(148, 163, 184, 0.12);
+    border-color: rgba(148, 163, 184, 0.25);
+    color: #94a3b8;
+}
+
+.arcade-sound-btn.muted:hover {
+    background: rgba(148, 163, 184, 0.22);
+    color: #e2e8f0;
+}
+
+#soundToggleBtn.muted {
+    opacity: 0.65;
+    border-color: rgba(239, 68, 68, 0.4);
+    background: rgba(239, 68, 68, 0.12);
+}
+
 .arcade-close-btn {
     padding: 0.45rem 1rem;
     font-size: 0.9rem;
@@ -949,4 +996,10 @@ canvas {
     .arcade-hub { padding: 1rem; }
     .game-tab { padding: 0.45rem 0.75rem; font-size: 0.8rem; }
     .tab-name { display: none; }
+    .arcade-compact-clock { display: none; }
+}
+
+@media (max-width: 600px) {
+    #arcadeSoundText { display: none; }
+    .arcade-sound-btn { padding: 0.42rem 0.6rem; }
 }
