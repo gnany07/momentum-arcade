@@ -104,6 +104,7 @@ class CyberPong {
     loop() {
         if (!this.isPlaying) return;
         this.update();
+        if (!this.isPlaying) return;
         this.draw();
         if (this.isPlaying) {
             this.gameLoop = requestAnimationFrame(() => this.loop());
@@ -205,8 +206,39 @@ class CyberPong {
     gameOver(playerWon) {
         this.isPlaying = false;
         if (this.gameLoop) cancelAnimationFrame(this.gameLoop);
-        if (playerWon && window.sounds) window.sounds.win();
-        else if (!playerWon && window.sounds) window.sounds.gameOver();
+        
+        if (playerWon) {
+            if (window.celebrateWin) {
+                window.celebrateWin({
+                    title: 'PONG CHAMPION!',
+                    subtitle: 'You defeated the Cyber AI!',
+                    trophy: '🏓',
+                    stats: [
+                        { label: 'Player', val: this.player.score },
+                        { label: 'AI Score', val: this.ai.score }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            } else if (window.sounds) {
+                window.sounds.win();
+            }
+        } else {
+            if (window.sounds) window.sounds.gameOver();
+            if (window.showGameOverModal) {
+                setTimeout(() => {
+                    window.showGameOverModal({
+                        title: 'DEFEATED BY AI',
+                        subtitle: 'The AI paddle outmaneuvered you this match.',
+                        icon: '🏓',
+                        stats: [
+                            { label: 'Your Score', val: this.player.score },
+                            { label: 'AI Score', val: this.ai.score }
+                        ],
+                        onRestart: () => this.startGame()
+                    });
+                }, 350);
+            }
+        }
 
         this.ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);

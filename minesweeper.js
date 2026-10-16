@@ -152,6 +152,21 @@ class Minesweeper {
             if (window.sounds) window.sounds.lostLife();
             this.revealAllMines();
             this.render();
+            if (window.showGameOverModal) {
+                setTimeout(() => {
+                    const timeStr = document.getElementById('mineTimer')?.textContent || '00:00';
+                    window.showGameOverModal({
+                        title: 'DETONATION!',
+                        subtitle: 'You stepped on a hidden naval mine!',
+                        icon: '💥',
+                        stats: [
+                            { label: 'Revealed', val: `${this.revealedCount}/${(this.rows * this.cols) - this.mines}` },
+                            { label: 'Time Survived', val: timeStr }
+                        ],
+                        onRestart: () => this.resetGame()
+                    });
+                }, 350);
+            }
             return;
         }
 
@@ -213,8 +228,24 @@ class Minesweeper {
             if (this.timerInterval) clearInterval(this.timerInterval);
             const face = document.getElementById('mineResetBtn');
             if (face) face.textContent = '😎';
-            if (window.sounds) window.sounds.win();
-            setTimeout(() => alert(`Congratulations! You cleared all mines in ${document.getElementById('mineTimer').textContent}!`), 250);
+            const timeStr = document.getElementById('mineTimer') ? document.getElementById('mineTimer').textContent : '00:00';
+            if (window.celebrateWin) {
+                setTimeout(() => {
+                    window.celebrateWin({
+                        title: 'MINEFIELD CLEARED!',
+                        subtitle: 'Incredible detection! All hidden mines safely defused!',
+                        trophy: '🚩',
+                        stats: [
+                            { label: 'Time', val: timeStr },
+                            { label: 'Mines Flagged', val: this.mines },
+                            { label: 'Field Size', val: `${this.rows}x${this.cols}` }
+                        ],
+                        onRestart: () => this.resetGame()
+                    });
+                }, 250);
+            } else if (window.sounds) {
+                window.sounds.win();
+            }
         }
     }
 

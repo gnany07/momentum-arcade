@@ -366,6 +366,31 @@
         </section>
     </div>
 
+    <!-- Universal Game Victory & Celebration Overlay -->
+    <div id="winCelebrationOverlay" class="celebration-overlay hidden" aria-modal="true" role="dialog">
+        <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+        <div class="celebration-card">
+            <div class="celebration-trophy" id="winTrophy">🏆</div>
+            <h2 class="celebration-title" id="winTitle">VICTORY!</h2>
+            <p class="celebration-subtitle" id="winSubtitle">You conquered the challenge!</p>
+            <div class="celebration-stats" id="winStats"></div>
+            <div class="celebration-actions">
+                <button id="winPlayAgainBtn" class="btn btn-primary celebration-btn">
+                    <span>🎮 Play Again</span>
+                </button>
+                <button id="winCloseBtn" class="btn btn-secondary celebration-btn">
+                    <span>✕ Close</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Universal Toast Notification for In-Game Alerts (Replaces alert()) -->
+    <div id="gameToast" class="game-toast hidden" role="status" aria-live="polite">
+        <span id="gameToastIcon">ℹ️</span>
+        <span id="gameToastText">Notification</span>
+    </div>
+
     <!-- Engine Scripts -->
     <script src="quotes.js"></script>
     <script src="script.js"></script>

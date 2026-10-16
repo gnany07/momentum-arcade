@@ -121,7 +121,21 @@ class Game2048 {
                 arr.splice(i + 1, 1);
                 if (arr[i] === 2048 && !this.won) {
                     this.won = true;
-                    if (window.sounds) window.sounds.win();
+                    if (window.celebrateWin) {
+                        window.celebrateWin({
+                            title: '2048 ACHIEVED!',
+                            subtitle: 'Legendary merge! You built the 2048 tile!',
+                            trophy: '🏆',
+                            stats: [
+                                { label: 'Current Score', val: this.score },
+                                { label: 'High Score', val: this.highScore },
+                                { label: 'Tile Reached', val: '2048' }
+                            ],
+                            onRestart: () => this.startGame()
+                        });
+                    } else if (window.sounds) {
+                        window.sounds.win();
+                    }
                 }
             }
         }
@@ -195,8 +209,22 @@ class Game2048 {
             }
         }
         this.gameOver = true;
-        if (window.sounds) window.sounds.gameOver();
-        setTimeout(() => alert(`Game Over! Final Score: ${this.score}`), 300);
+        if (window.showGameOverModal) {
+            setTimeout(() => {
+                window.showGameOverModal({
+                    title: 'NO MORE MOVES',
+                    subtitle: 'The 2048 grid is completely locked!',
+                    icon: '🔢',
+                    stats: [
+                        { label: 'Final Score', val: this.score },
+                        { label: 'High Score', val: this.highScore }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            }, 300);
+        } else if (window.sounds) {
+            window.sounds.gameOver();
+        }
     }
 
     render() {

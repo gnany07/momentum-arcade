@@ -123,6 +123,7 @@ class SpaceInvaders {
         this.isPlaying = true;
         this.lives = 3;
         this.score = 0;
+        this.wave = 1;
         this.bullets = [];
         this.alienBullets = [];
         this.alienSpeed = 1.0;
@@ -153,6 +154,7 @@ class SpaceInvaders {
     loop() {
         if (!this.isPlaying) return;
         this.update();
+        if (!this.isPlaying) return;
         this.draw();
         if (this.isPlaying) {
             this.gameLoop = requestAnimationFrame(() => this.loop());
@@ -250,9 +252,35 @@ class SpaceInvaders {
         if (this.aliens.length === 0) {
             this.score += 500;
             this.updateHighScore();
-            this.initAliens();
-            this.alienSpeed += 0.4;
-            if (window.sounds) window.sounds.win();
+            if (this.wave >= 3) {
+                this.isPlaying = false;
+                if (this.gameLoop) cancelAnimationFrame(this.gameLoop);
+                this.updateHUD();
+                if (window.celebrateWin) {
+                    window.celebrateWin({
+                        title: 'GALAXY SAVED!',
+                        subtitle: 'Glorious victory! You repelled all 3 alien invasion waves!',
+                        trophy: '👾',
+                        stats: [
+                            { label: 'Final Score', val: this.score },
+                            { label: 'Armadas Defeated', val: '3 Waves' },
+                            { label: 'Ships Left', val: this.lives }
+                        ],
+                        onRestart: () => this.startGame()
+                    });
+                } else if (window.sounds) {
+                    window.sounds.win();
+                }
+                return;
+            } else {
+                this.wave++;
+                if (window.showToast) {
+                    window.showToast(`Wave ${this.wave} Approaching! Faster & Stronger!`, '👾');
+                }
+                this.initAliens();
+                this.alienSpeed += 0.45;
+                if (window.sounds) window.sounds.win();
+            }
         }
     }
 
@@ -280,6 +308,22 @@ class SpaceInvaders {
         this.ctx.fillStyle = '#94a3b8';
         this.ctx.font = '14px Arial';
         this.ctx.fillText('Click "Start Game" to Defend Again', this.canvas.width / 2, this.canvas.height / 2 + 70);
+
+        if (window.showGameOverModal) {
+            setTimeout(() => {
+                window.showGameOverModal({
+                    title: 'DEFENSE BREACHED',
+                    subtitle: 'The alien armada broke through planetary shields!',
+                    icon: '👾',
+                    stats: [
+                        { label: 'Score', val: this.score },
+                        { label: 'Best', val: this.highScore },
+                        { label: 'Wave Reached', val: `Wave ${this.wave || 1}` }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            }, 300);
+        }
     }
 
     draw() {

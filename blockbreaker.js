@@ -312,6 +312,8 @@ class BlockBreaker {
         if (!this.isPlaying || this.isPaused) return;
 
         this.update();
+        if (!this.isPlaying) return;
+
         this.draw();
 
         if (this.isPlaying && !this.isPaused) {
@@ -466,8 +468,8 @@ class BlockBreaker {
     }
 
     levelWon() {
-        if (window.sounds) window.sounds.win();
         if (this.level < this.maxLevels) {
+            if (window.sounds) window.sounds.score();
             this.level++;
             this.score += 500;
             this.updateHUD();
@@ -475,18 +477,50 @@ class BlockBreaker {
             this.setupBlocks();
         } else {
             this.isPlaying = false;
+            if (this.gameLoop) cancelAnimationFrame(this.gameLoop);
             blockbreakerTimer.stop();
             this.updateHighScore();
             this.drawWinScreen();
+            if (window.celebrateWin) {
+                window.celebrateWin({
+                    title: 'FORTRESS CLEARED!',
+                    subtitle: 'Outstanding! You beat all 3 Block Breaker levels!',
+                    trophy: '🧱',
+                    stats: [
+                        { label: 'Final Score', val: this.score },
+                        { label: 'Best', val: this.highScore },
+                        { label: 'Lives Left', val: this.lives }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            } else if (window.sounds) {
+                window.sounds.win();
+            }
         }
     }
 
     gameOver() {
         this.isPlaying = false;
+        if (this.gameLoop) cancelAnimationFrame(this.gameLoop);
         blockbreakerTimer.stop();
         this.updateHighScore();
         if (window.sounds) window.sounds.gameOver();
         this.drawGameOverScreen();
+        if (window.showGameOverModal) {
+            setTimeout(() => {
+                window.showGameOverModal({
+                    title: 'OUT OF PADDLES',
+                    subtitle: 'All your energy balls breached past the paddle.',
+                    icon: '🧱',
+                    stats: [
+                        { label: 'Final Score', val: this.score },
+                        { label: 'Level Reached', val: `Level ${this.level}` },
+                        { label: 'High Score', val: this.highScore }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            }, 300);
+        }
     }
 
     draw() {

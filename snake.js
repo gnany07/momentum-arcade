@@ -273,6 +273,37 @@ class Snake {
         this.ctx.fillStyle = '#94a3b8';
         this.ctx.font = '13px Arial';
         this.ctx.fillText('Click "Start Game" to Play Again', this.canvas.width / 2, this.canvas.height / 2 + 65);
+
+        const timeStr = document.getElementById('snakeTimer') ? document.getElementById('snakeTimer').textContent : '00:00';
+        if (this.score > 0 && this.score >= this.highScore && this.score >= 60 && window.celebrateWin) {
+            setTimeout(() => {
+                window.celebrateWin({
+                    title: 'NEW HIGH SCORE!',
+                    subtitle: `Sensational slither! You set a personal best of ${this.score} points!`,
+                    trophy: '🐍',
+                    stats: [
+                        { label: 'Score', val: this.score },
+                        { label: 'Length', val: this.snake.length },
+                        { label: 'Time', val: timeStr }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            }, 300);
+        } else if (window.showGameOverModal) {
+            setTimeout(() => {
+                window.showGameOverModal({
+                    title: 'SNAKE COLLISION',
+                    subtitle: 'You collided with the boundary wall or tail.',
+                    icon: '🐍',
+                    stats: [
+                        { label: 'Final Score', val: this.score },
+                        { label: 'Best Score', val: this.highScore },
+                        { label: 'Time', val: timeStr }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            }, 300);
+        }
     }
 }
 

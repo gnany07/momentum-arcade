@@ -196,7 +196,10 @@ class Wordle {
     }
 
     submitGuess() {
-        if (this.currentGuess.length !== 5) return;
+        if (this.currentGuess.length !== 5) {
+            if (window.showToast) window.showToast('Word must be 5 letters!', '⚠️');
+            return;
+        }
         
         const guess = this.currentGuess;
         this.guesses.push(guess);
@@ -255,17 +258,48 @@ class Wordle {
             this.played++;
             this.streak++;
             this.saveStats();
-            if (window.sounds) window.sounds.win();
             const timeStr = document.getElementById('wordleTimer') ? document.getElementById('wordleTimer').textContent : '00:00';
-            setTimeout(() => alert(`Splendid! You guessed the word in ${this.guesses.length} tries! Time: ${timeStr}`), 400);
+            if (window.celebrateWin) {
+                setTimeout(() => {
+                    window.celebrateWin({
+                        title: 'SPLENDID!',
+                        subtitle: `You deciphered "${this.currentWord}" in ${this.guesses.length} tries!`,
+                        trophy: '🔤',
+                        stats: [
+                            { label: 'Word', val: this.currentWord },
+                            { label: 'Guesses', val: `${this.guesses.length}/6` },
+                            { label: 'Win Streak', val: this.streak },
+                            { label: 'Time', val: timeStr }
+                        ],
+                        onRestart: () => this.newGame()
+                    });
+                }, 350);
+            } else if (window.sounds) {
+                window.sounds.win();
+            }
         } else if (this.guesses.length === this.maxGuesses) {
             this.gameOver = true;
             wordleTimer.stop();
             this.played++;
             this.streak = 0;
             this.saveStats();
-            if (window.sounds) window.sounds.gameOver();
-            setTimeout(() => alert(`Game Over! The word was ${this.currentWord}.`), 400);
+            if (window.showGameOverModal) {
+                setTimeout(() => {
+                    window.showGameOverModal({
+                        title: 'WORD MISSED',
+                        subtitle: `The secret word was "${this.currentWord}".`,
+                        icon: '💡',
+                        stats: [
+                            { label: 'Correct Word', val: this.currentWord },
+                            { label: 'Games Played', val: this.played },
+                            { label: 'Streak Reset', val: '0' }
+                        ],
+                        onRestart: () => this.newGame()
+                    });
+                }, 350);
+            } else if (window.sounds) {
+                window.sounds.gameOver();
+            }
         } else {
             if (window.sounds) window.sounds.score();
         }

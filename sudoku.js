@@ -293,7 +293,9 @@ class Sudoku {
         for (let r = 0; r < 9; r++) {
             for (let c = 0; c < 9; c++) {
                 if (this.board[r][c] === 0) {
-                    alert('Please fill in all empty cells before checking!');
+                    if (window.showToast) {
+                        window.showToast('Please fill in all empty cells before checking!', '⚠️');
+                    }
                     sudokuTimer.start();
                     return;
                 }
@@ -308,16 +310,31 @@ class Sudoku {
                 this.board[r][c] = val;
                 if (!ok) {
                     if (window.sounds) window.sounds.lostLife();
-                    alert('There are conflicting numbers. Keep trying!');
+                    if (window.showToast) {
+                        window.showToast('There are conflicting numbers. Keep trying!', '❌');
+                    }
                     sudokuTimer.start();
                     return;
                 }
             }
         }
 
-        if (window.sounds) window.sounds.win();
         const timeStr = document.getElementById('sudokuTimer') ? document.getElementById('sudokuTimer').textContent : '00:00';
-        alert(`Congratulations! You solved the puzzle in ${timeStr}!`);
+        if (window.celebrateWin) {
+            window.celebrateWin({
+                title: 'PUZZLE SOLVED!',
+                subtitle: `Brilliant! You cracked the Sudoku grid in ${timeStr}!`,
+                trophy: '🧩',
+                stats: [
+                    { label: 'Difficulty', val: this.difficulty.toUpperCase() },
+                    { label: 'Time', val: timeStr },
+                    { label: 'Accuracy', val: '100% Solved' }
+                ],
+                onRestart: () => this.newGame()
+            });
+        } else if (window.sounds) {
+            window.sounds.win();
+        }
     }
 }
 

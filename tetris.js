@@ -148,6 +148,8 @@ class Tetris {
             this.dropPiece();
             this.dropTime = 0;
         }
+
+        if (!this.isPlaying) return;
         
         this.draw();
         if (this.isPlaying && !this.isPaused) {
@@ -405,6 +407,7 @@ class Tetris {
 
     gameOver() {
         this.isPlaying = false;
+        if (this.gameLoop) cancelAnimationFrame(this.gameLoop);
         tetrisTimer.stop();
         this.updateHighScore();
         if (window.sounds) window.sounds.gameOver();
@@ -428,6 +431,36 @@ class Tetris {
         this.ctx.fillStyle = '#94a3b8';
         this.ctx.font = '13px Arial';
         this.ctx.fillText('Click "Start Game" to Play Again', this.canvas.width / 2, this.canvas.height / 2 + 85);
+
+        if (this.lines >= 10 && window.celebrateWin) {
+            setTimeout(() => {
+                window.celebrateWin({
+                    title: 'TETRIS MASTER!',
+                    subtitle: `Fantastic stacking! You wiped out ${this.lines} complete lines!`,
+                    trophy: '🧱',
+                    stats: [
+                        { label: 'Final Score', val: this.score },
+                        { label: 'Lines Cleared', val: this.lines },
+                        { label: 'High Score', val: this.highScore }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            }, 300);
+        } else if (window.showGameOverModal) {
+            setTimeout(() => {
+                window.showGameOverModal({
+                    title: 'GRID LOCKOUT',
+                    subtitle: 'The blocks stacked all the way to the top ceiling.',
+                    icon: '🧱',
+                    stats: [
+                        { label: 'Score', val: this.score },
+                        { label: 'Lines', val: this.lines },
+                        { label: 'Best Score', val: this.highScore }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            }, 300);
+        }
     }
 }
 

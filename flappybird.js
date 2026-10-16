@@ -110,6 +110,7 @@ class FlappyBird {
     loop() {
         if (!this.isPlaying) return;
         this.update();
+        if (!this.isPlaying) return;
         this.draw();
         if (this.isPlaying) {
             this.gameLoop = requestAnimationFrame(() => this.loop());
@@ -196,6 +197,34 @@ class FlappyBird {
         this.ctx.fillStyle = '#94a3b8';
         this.ctx.font = '14px Arial';
         this.ctx.fillText('Tap or press Space to retry', this.canvas.width / 2, this.canvas.height / 2 + 70);
+
+        if (this.score > 0 && this.score >= this.highScore && this.score >= 10 && window.celebrateWin) {
+            setTimeout(() => {
+                window.celebrateWin({
+                    title: 'NEW FLIGHT RECORD!',
+                    subtitle: `Spectacular flight! You navigated through ${this.score} neon gates!`,
+                    trophy: '🐤',
+                    stats: [
+                        { label: 'Score', val: this.score },
+                        { label: 'High Score', val: this.highScore }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            }, 300);
+        } else if (window.showGameOverModal) {
+            setTimeout(() => {
+                window.showGameOverModal({
+                    title: 'FLIGHT ABORTED',
+                    subtitle: 'The cyber bird clipped a neon gate or boundary.',
+                    icon: '🐤',
+                    stats: [
+                        { label: 'Gates Cleared', val: this.score },
+                        { label: 'High Score', val: this.highScore }
+                    ],
+                    onRestart: () => this.startGame()
+                });
+            }, 300);
+        }
     }
 
     draw() {
