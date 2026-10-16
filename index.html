@@ -3,21 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Momentum Arcade - New Tab with Games</title>
+    <title>Momentum Arcade - New Tab with 10 Games & Lo-Fi</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="bg-overlay"></div>
 
     <div class="dashboard-container">
-        <!-- Top Utility Bar -->
+        <!-- Top Utility Bar (Lo-Fi Widget, Wallpaper Refresh, Sound Effects) -->
         <header class="top-nav">
+            <!-- Lo-Fi Music Widget -->
+            <div class="lofi-widget-container">
+                <button id="lofiToggleBtn" class="lofi-toggle-btn" title="Lo-Fi Ambient Radio">
+                    <span class="lofi-icon">🎧</span>
+                    <span class="lofi-label">Lo-Fi Radio</span>
+                    <div id="lofiEqAnim" class="eq-bars">
+                        <span></span><span></span><span></span>
+                    </div>
+                </button>
+
+                <!-- Floating Popover Player -->
+                <div id="lofiPopover" class="lofi-popover">
+                    <div class="lofi-popover-header">
+                        <span class="lofi-popover-title">Lo-Fi & Ambient Lounge</span>
+                    </div>
+                    <div class="lofi-track-status" id="lofiStatusText">Chill Lo-Fi Chords & Beats</div>
+                    <div class="lofi-modes">
+                        <button class="lofi-mode-btn active" data-mode="lofi">🎵 Chill Lo-Fi</button>
+                        <button class="lofi-mode-btn" data-mode="rain">🌧️ Night Rain</button>
+                        <button class="lofi-mode-btn" data-mode="vinyl">📻 Vinyl Warmth</button>
+                        <button class="lofi-mode-btn" data-mode="focus">🧘 432Hz Focus</button>
+                    </div>
+                    <div class="lofi-controls">
+                        <button id="lofiPlayBtn" class="lofi-play-btn" title="Play / Pause">▶</button>
+                        <div class="lofi-vol-group">
+                            <span class="vol-icon">🔈</span>
+                            <input type="range" id="lofiVolume" min="0" max="1" step="0.05" value="0.45" class="vol-slider">
+                            <span class="vol-icon">🔊</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wallpaper Refresh Button -->
             <button id="refreshBgBtn" class="nav-icon-btn" title="Refresh Wallpaper" aria-label="Refresh Wallpaper">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
                 </svg>
             </button>
-            <button id="soundToggleBtn" class="nav-icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
+
+            <!-- Sound Effects Toggle Button -->
+            <button id="soundToggleBtn" class="nav-icon-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
                 <span id="soundIcon">🔊</span>
             </button>
         </header>
@@ -36,19 +72,20 @@
             <div class="games-trigger-wrapper">
                 <button id="openArcadeBtn" class="arcade-launch-btn">
                     <span class="btn-icon">🎮</span>
-                    <span class="btn-text">Play Games</span>
-                    <span class="btn-badge">5 Games</span>
+                    <span class="btn-text">Open Arcade Lounge</span>
+                    <span class="btn-badge">10 Games</span>
                 </button>
             </div>
         </main>
 
-        <!-- Arcade Hub (Modern Tabbed Game Station) -->
+        <!-- Arcade Hub (Modern Tabbed Game Station with 10 Games) -->
         <section class="arcade-hub hidden" id="arcadeHub" aria-label="Arcade Games">
             <!-- Arcade Bar Header -->
             <div class="arcade-header">
                 <div class="arcade-brand">
                     <span class="arcade-logo-icon">🕹️</span>
                     <span class="arcade-title">Arcade Lounge</span>
+                    <span class="arcade-games-count">10 Games</span>
                 </div>
                 <div class="arcade-compact-clock" id="compactClock">12:00</div>
                 <button id="closeArcadeBtn" class="arcade-close-btn" title="Close Arcade & Return to Zen">
@@ -56,27 +93,47 @@
                 </button>
             </div>
 
-            <!-- Game Tabs Navigation -->
+            <!-- Game Tabs Navigation (10 Games) -->
             <nav class="game-tabs" id="gameTabs" role="tablist">
-                <button class="game-tab active" data-game="snake" role="tab" aria-selected="true">
+                <button class="game-tab active" data-game="snake" role="tab">
                     <span class="tab-icon">🐍</span>
                     <span class="tab-name">Snake</span>
                 </button>
-                <button class="game-tab" data-game="sudoku" role="tab" aria-selected="false">
+                <button class="game-tab" data-game="sudoku" role="tab">
                     <span class="tab-icon">🔢</span>
                     <span class="tab-name">Sudoku</span>
                 </button>
-                <button class="game-tab" data-game="wordle" role="tab" aria-selected="false">
+                <button class="game-tab" data-game="wordle" role="tab">
                     <span class="tab-icon">🔤</span>
                     <span class="tab-name">Wordle</span>
                 </button>
-                <button class="game-tab" data-game="tetris" role="tab" aria-selected="false">
+                <button class="game-tab" data-game="tetris" role="tab">
                     <span class="tab-icon">🧱</span>
                     <span class="tab-name">Tetris</span>
                 </button>
-                <button class="game-tab" data-game="blockbreaker" role="tab" aria-selected="false">
+                <button class="game-tab" data-game="blockbreaker" role="tab">
                     <span class="tab-icon">🏓</span>
                     <span class="tab-name">Block Breaker</span>
+                </button>
+                <button class="game-tab" data-game="2048" role="tab">
+                    <span class="tab-icon">🔢</span>
+                    <span class="tab-name">2048</span>
+                </button>
+                <button class="game-tab" data-game="flappy" role="tab">
+                    <span class="tab-icon">🐦</span>
+                    <span class="tab-name">Cyber Bird</span>
+                </button>
+                <button class="game-tab" data-game="minesweeper" role="tab">
+                    <span class="tab-icon">💣</span>
+                    <span class="tab-name">Minesweeper</span>
+                </button>
+                <button class="game-tab" data-game="pong" role="tab">
+                    <span class="tab-icon">🏓</span>
+                    <span class="tab-name">Cyber Pong</span>
+                </button>
+                <button class="game-tab" data-game="invaders" role="tab">
+                    <span class="tab-icon">👾</span>
+                    <span class="tab-name">Space Invaders</span>
                 </button>
             </nav>
 
@@ -114,7 +171,6 @@
                     <div class="canvas-wrapper">
                         <canvas id="sudokuCanvas" width="450" height="450"></canvas>
                     </div>
-                    <!-- Number Pad for Mouse/Touch Input -->
                     <div class="sudoku-numpad" id="sudokuNumpad">
                         <button class="num-key" data-num="1">1</button>
                         <button class="num-key" data-num="2">2</button>
@@ -180,7 +236,7 @@
                             <span class="stat-badge"><span class="badge-label">Score</span><span id="blockbreakerScore" class="badge-val">0</span></span>
                             <span class="stat-badge"><span class="badge-label">Best</span><span id="blockbreakerHighScore" class="badge-val">0</span></span>
                             <span class="stat-badge"><span class="badge-label">Level</span><span id="blockbreakerLevel" class="badge-val">1</span></span>
-                            <span class="stat-badge lives-badge"><span class="badge-label">Lives</span><span id="blockbreakerLives" class="badge-val">3</span></span>
+                            <span class="stat-badge lives-badge"><span class="badge-label">Lives</span><span id="blockbreakerLives" class="badge-val">❤️❤️❤️</span></span>
                         </div>
                         <div class="timer-badge" id="blockbreakerTimer">00:00</div>
                     </div>
@@ -194,16 +250,116 @@
                     <div class="controls-hint">Move: Mouse or ◄ ► / A D • Launch: Space or Click • P: Pause</div>
                 </div>
 
+                <!-- 6. 2048 Cabinet -->
+                <div class="game-cabinet hidden" id="game-2048">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Score</span><span id="score2048" class="badge-val">0</span></span>
+                            <span class="stat-badge"><span class="badge-label">Best</span><span id="highScore2048" class="badge-val">0</span></span>
+                        </div>
+                    </div>
+                    <div class="game-2048-container">
+                        <div id="board2048" class="board-2048"></div>
+                    </div>
+                    <div class="controls-bar">
+                        <button id="start2048" class="btn btn-primary">Start Game</button>
+                        <button id="new2048" class="btn btn-secondary">Reset Grid</button>
+                    </div>
+                    <div class="controls-hint">Join the tiles, slide with Arrow Keys or WASD to reach 2048!</div>
+                </div>
+
+                <!-- 7. Cyber Bird Cabinet -->
+                <div class="game-cabinet hidden" id="game-flappy">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Score</span><span id="scoreFlappy" class="badge-val">0</span></span>
+                            <span class="stat-badge"><span class="badge-label">Best</span><span id="highScoreFlappy" class="badge-val">0</span></span>
+                        </div>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="flappyCanvas" width="400" height="500"></canvas>
+                    </div>
+                    <div class="controls-bar">
+                        <button id="startFlappy" class="btn btn-primary">Start Flight</button>
+                    </div>
+                    <div class="controls-hint">Press Space, ▲, or Click anywhere on canvas to flap wings</div>
+                </div>
+
+                <!-- 8. Minesweeper Cabinet -->
+                <div class="game-cabinet hidden" id="game-minesweeper">
+                    <div class="cabinet-header">
+                        <div class="difficulty-group">
+                            <button class="mine-diff-btn active" data-diff="easy">9x9 (10)</button>
+                            <button class="mine-diff-btn" data-diff="hard">12x12 (22)</button>
+                        </div>
+                        <div class="mine-status-bar">
+                            <span class="mine-counter-badge">💣 <span id="mineRemaining">10</span></span>
+                            <button id="mineResetBtn" class="mine-face-btn" title="Reset">😊</button>
+                            <span class="mine-timer-badge">⏱️ <span id="mineTimer">00:00</span></span>
+                        </div>
+                        <button id="mineFlagToggle" class="btn btn-secondary flag-toggle-btn" title="Toggle Flag Placement Mode">🚩 Flag Mode</button>
+                    </div>
+                    <div class="minesweeper-wrapper">
+                        <div id="minesweeperGrid" class="minesweeper-grid"></div>
+                    </div>
+                    <div class="controls-hint">Left Click to dig, Right Click to flag (or toggle Flag Mode)</div>
+                </div>
+
+                <!-- 9. Cyber Pong Cabinet -->
+                <div class="game-cabinet hidden" id="game-pong">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Player</span><span id="pongPlayerScore" class="badge-val">0</span></span>
+                            <span class="stat-badge"><span class="badge-label">AI</span><span id="pongAiScore" class="badge-val">0</span></span>
+                        </div>
+                        <span class="stat-badge"><span class="badge-label">Goal</span><span class="badge-val">First to 5</span></span>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="pongCanvas" width="500" height="360"></canvas>
+                    </div>
+                    <div class="controls-bar">
+                        <button id="startPong" class="btn btn-primary">Start Match</button>
+                    </div>
+                    <div class="controls-hint">Steer left paddle with Mouse, ▲ ▼, or W / S</div>
+                </div>
+
+                <!-- 10. Space Invaders Cabinet -->
+                <div class="game-cabinet hidden" id="game-invaders">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Score</span><span id="scoreInvaders" class="badge-val">0</span></span>
+                            <span class="stat-badge"><span class="badge-label">Best</span><span id="highScoreInvaders" class="badge-val">0</span></span>
+                            <span class="stat-badge lives-badge"><span class="badge-label">Lives</span><span id="livesInvaders" class="badge-val">🚀🚀🚀</span></span>
+                        </div>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="invadersCanvas" width="400" height="500"></canvas>
+                    </div>
+                    <div class="controls-bar">
+                        <button id="startInvaders" class="btn btn-primary">Launch Defense</button>
+                    </div>
+                    <div class="controls-hint">◄ ► or A / D to Move • Space or Tap on canvas to Fire</div>
+                </div>
+
             </div>
         </section>
     </div>
 
+    <!-- Engine Scripts -->
     <script src="quotes.js"></script>
     <script src="script.js"></script>
+    <script src="lofi.js"></script>
+
+    <!-- 10 Arcade Games -->
     <script src="snake.js"></script>
     <script src="sudoku.js"></script>
     <script src="wordle.js"></script>
     <script src="tetris.js"></script>
     <script src="blockbreaker.js"></script>
+    <script src="game2048.js"></script>
+    <script src="flappybird.js"></script>
+    <script src="minesweeper.js"></script>
+    <script src="pong.js"></script>
+    <script src="spaceinvaders.js"></script>
 </body>
-</html> 
+</html>

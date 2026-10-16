@@ -1,30 +1,38 @@
-# Momentum Arcade - New Tab with Games 🕹️✨
+# Momentum Arcade - New Tab with 10 Games & Lo-Fi 🕹️🎧✨
 
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore)
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-10B981)](https://developer.chrome.com/docs/extensions/mv3/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A gorgeous, responsive Chrome extension that upgrades your new tab into an inspiring dashboard with scenic wallpapers, digital clock, motivational quotes, and an integrated **Arcade Lounge** featuring 5 classic games: **Snake**, **Sudoku**, **Wordle**, **Tetris**, and **Block Breaker**.
+A gorgeous, responsive Chrome extension that upgrades your new tab into an inspiring sanctuary with scenic wallpapers, digital clock, motivational quotes, integrated **procedural Lo-Fi music / ambient soundscapes**, and an **Arcade Lounge** featuring **10 classic games**!
 
 ---
 
 ## ✨ Features
 
+- 🎧 **Built-in Lo-Fi & Ambient Soundscape Player**:
+  - **Procedural Audio Generation**: Zero audio file downloads, works 100% offline with zero bandwidth.
+  - **4 Ambient Sound Modes**:
+    1. 🎵 **Chill Lo-Fi Chords & Beats**: Mellow electric piano jazz chords with tape warble and soft beat.
+    2. 🌧️ **Night Rain**: Calming rainfall white/pink noise generator.
+    3. 📻 **Vinyl Warmth**: Authentic vinyl crackle and record needle atmosphere.
+    4. 🧘 **432Hz Focus**: Binaural theta wave ambient drone.
+  - Floating player with volume slider, equalizer animation, and persistent memory.
 - 🌅 **Zen Dashboard**:
-  - Crisp live digital clock, date, and adaptive greeting.
+  - Live clock, date, and adaptive greeting.
   - Curated inspirational quotes with one-click refresh (`✦`).
   - Scenic wallpaper integration with smooth transitions and refresh button.
-- 🕹️ **Arcade Lounge (5 Built-in Games)**:
-  - 🐍 **Snake**: Classic slither gameplay with apple collection, responsive speed, and high score tracking.
-  - 🔢 **Sudoku**: Generator with Easy, Medium, and Hard difficulty modes, cell highlighting, and an on-screen number pad for mouse & touch users.
-  - 🔤 **Wordle**: 6-attempt 5-letter word game with letter validation, virtual keyboard (with Enter & Backspace), and win streak stats.
-  - 🧱 **Tetris**: Full tetromino gameplay with line clears, score progression, soft drop, and rotation controls without page scrolling.
-  - 🏓 **Block Breaker**: Complete overhaul featuring:
-    - Mouse tracking and keyboard (Arrow / A-D) paddle movement.
-    - Ball sits on paddle before launch; launches with Space or click.
-    - 3 progressive levels (Rainbow, Pyramid with reinforced bricks, and Castle).
-    - Particle explosion sparks on brick destruction.
-    - Robust physics with zero ball-tunneling and angle-based paddle bounce.
+- 🕹️ **Arcade Lounge (10 Built-in Games)**:
+  1. 🐍 **Snake**: Classic slither gameplay with apple eating and high score tracking.
+  2. 🔢 **Sudoku**: Puzzles with Easy, Medium, and Hard difficulty modes, cell highlighting, and an on-screen numpad for mouse & touch users.
+  3. 🔤 **Wordle**: 6-attempt 5-letter word puzzle with letter validation, on-screen keyboard (with Enter & Backspace), and win streak stats.
+  4. 🧱 **Tetris**: Full tetromino gameplay with line clears, score progression, soft drop, and rotation controls without page scrolling.
+  5. 🏓 **Block Breaker**: Overhauled brick-breaker with mouse and keyboard steering, 3 progressive levels, spark particles, and power bounces.
+  6. 🔢 **2048**: Slide and merge numbers to reach the legendary 2048 tile with high score tracking.
+  7. 🐦 **Cyber Bird (Flappy)**: One-tap flapping flight through neon pipes with responsive gravity and best score.
+  8. 💣 **Minesweeper**: Retro mine clearance with 9x9 and 12x12 modes, smiley reset button, flags, and flood fill.
+  9. 🏓 **Cyber Pong**: Fast-paced Player vs AI retro paddle duel; first to 5 points takes the crown.
+  10. 👾 **Space Invaders**: Defend Earth against waves of descending alien armadas with missile shooting.
 - 🔊 **Synthesized Web Audio**: Retro sound effects for hits, scores, launches, and game overs (toggleable mute/unmute).
 - 💾 **Local-First Persistence**: High scores and game states are saved locally with `chrome.storage.local`.
 - 🔒 **Privacy Focused**: No analytics, no telemetry, no tracking, and zero external script injection (100% Manifest V3 compliant).
@@ -40,6 +48,11 @@ A gorgeous, responsive Chrome extension that upgrades your new tab into an inspi
 | **Sudoku** | Arrow Keys to navigate, `1`–`9` to enter number, `Backspace` to clear | Click cell to select, Click on-screen numpad (1–9, ⌫) |
 | **Wordle** | Type letters on physical keyboard, `Enter` to submit, `Backspace` to delete | Click onscreen virtual keyboard keys |
 | **Tetris** | ◄ ► to Move, ▲ or `Space` to Rotate, ▼ for Soft Drop, `P` to Pause | Start and Pause buttons |
+| **2048** | Arrow Keys or `W`/`A`/`S`/`D` to slide tiles | Start and Reset buttons |
+| **Cyber Bird** | `Space` or ▲ to Flap | Click / Tap anywhere on canvas to flap |
+| **Minesweeper** | Left Click to dig, Right Click to flag | Left Click, Right Click, or toggle Flag Mode |
+| **Cyber Pong** | ▲ ▼ or `W`/`S` to move paddle | Move mouse vertically over canvas |
+| **Space Invaders** | ◄ ► or `A`/`D` to Move, `Space` to Fire | Move ship, Tap canvas to shoot |
 
 ---
 
@@ -70,33 +83,10 @@ npm run pack
 
 This creates a clean, validated distribution package at:
 ```
-dist/momentum-arcade-v1.0.0.zip
+dist/momentum-arcade-v1.1.0.zip
 ```
 
 For the complete step-by-step submission guide, review [STORE_GUIDE.md](STORE_GUIDE.md).
-
----
-
-## 🛠️ Project Structure
-
-```
-├── manifest.json         # Manifest V3 extension configuration
-├── index.html            # Main new tab DOM structure (Zen & Arcade Hub)
-├── styles.css            # Glassmorphism design system & game cabinet styling
-├── script.js             # Arcade App manager, clock, sound synthesizer, storage
-├── quotes.js             # Curated inspirational quotes collection
-├── snake.js              # Snake game engine
-├── sudoku.js             # Sudoku generator, solver, and validator
-├── wordle.js             # Wordle engine with virtual keyboard
-├── tetris.js             # Tetris tetromino engine
-├── blockbreaker.js       # Overhauled Block Breaker with multi-level physics
-├── generate_icons.js     # Sharp icon generator (16, 32, 48, 128 px)
-├── pack.js               # Distribution packager script
-├── privacy_policy.html   # Chrome Web Store compliant privacy policy
-├── STORE_GUIDE.md        # Official Chrome Web Store publishing manual
-├── icons/                # Extension icons (16, 32, 48, 128 px)
-└── dist/                 # Ready-to-upload zip package
-```
 
 ---
 

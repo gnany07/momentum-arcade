@@ -12,25 +12,29 @@ const version = manifest.version || '1.0.0';
 const zipName = `momentum-arcade-v${version}.zip`;
 const zipPath = path.join(distDir, zipName);
 
-console.log(`Packaging Momentum Arcade v${version} for Chrome Web Store...`);
+console.log(`Packaging Momentum Arcade v${version} (10 Games + Lo-Fi) for Chrome Web Store...`);
 
-// Files and folders required for Chrome Extension runtime
 const filesToInclude = [
     'manifest.json',
     'index.html',
     'styles.css',
     'script.js',
     'quotes.js',
+    'lofi.js',
     'snake.js',
     'sudoku.js',
     'wordle.js',
     'tetris.js',
     'blockbreaker.js',
+    'game2048.js',
+    'flappybird.js',
+    'minesweeper.js',
+    'pong.js',
+    'spaceinvaders.js',
     'privacy_policy.html',
     'icons'
 ];
 
-// Verify existence
 filesToInclude.forEach(file => {
     if (!fs.existsSync(path.join(__dirname, file))) {
         console.error(`ERROR: Required extension file missing: ${file}`);
@@ -38,12 +42,10 @@ filesToInclude.forEach(file => {
     }
 });
 
-// Remove existing zip if present
 if (fs.existsSync(zipPath)) {
     fs.unlinkSync(zipPath);
 }
 
-// Create clean zip using standard OS zip
 try {
     const includeArgs = filesToInclude.map(f => `"${f}"`).join(' ');
     execSync(`zip -r "${zipPath}" ${includeArgs}`, { cwd: __dirname, stdio: 'inherit' });
