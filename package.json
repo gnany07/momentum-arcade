@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "A beautiful new tab dashboard with Lo-Fi ambient music, clock, quotes, and 10 classic arcade games.",
   "scripts": {
+    "assets": "node generate_github_assets.js",
     "icons": "node generate_icons.js",
     "pack": "node pack.js"
   },
