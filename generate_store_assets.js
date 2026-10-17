@@ -199,17 +199,17 @@ const screenshotArcadeSvg = `
 `;
 
 async function renderAssets() {
-  await sharp(Buffer.from(smallSvg)).png().toFile(path.join(outDir, 'promo_small_440x280.png'));
-  console.log('Generated promo_small_440x280.png');
+  await sharp(Buffer.from(smallSvg)).flatten({ background: '#090d16' }).removeAlpha().png().toFile(path.join(outDir, 'promo_small_440x280.png'));
+  console.log('Generated promo_small_440x280.png (24-bit no-alpha)');
 
-  await sharp(Buffer.from(marqueeSvg)).png().toFile(path.join(outDir, 'promo_marquee_1400x560.png'));
-  console.log('Generated promo_marquee_1400x560.png');
+  await sharp(Buffer.from(marqueeSvg)).flatten({ background: '#090d16' }).removeAlpha().png().toFile(path.join(outDir, 'promo_marquee_1400x560.png'));
+  console.log('Generated promo_marquee_1400x560.png (24-bit no-alpha)');
 
-  await sharp(Buffer.from(screenshotZenSvg)).png().toFile(path.join(outDir, 'screenshot_1280x800_zen.png'));
-  console.log('Generated screenshot_1280x800_zen.png');
+  await sharp(Buffer.from(screenshotZenSvg)).flatten({ background: '#090d16' }).removeAlpha().png().toFile(path.join(outDir, 'screenshot_1280x800_zen.png'));
+  console.log('Generated screenshot_1280x800_zen.png (24-bit no-alpha)');
 
-  await sharp(Buffer.from(screenshotArcadeSvg)).png().toFile(path.join(outDir, 'screenshot_1280x800_arcade.png'));
-  console.log('Generated screenshot_1280x800_arcade.png');
+  await sharp(Buffer.from(screenshotArcadeSvg)).flatten({ background: '#090d16' }).removeAlpha().png().toFile(path.join(outDir, 'screenshot_1280x800_arcade.png'));
+  console.log('Generated screenshot_1280x800_arcade.png (24-bit no-alpha)');
 }
 
 renderAssets().catch(err => {
