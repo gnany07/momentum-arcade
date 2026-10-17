@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Momentum Arcade - New Tab Dashboard & Lo-Fi",
   "version": "1.1.1",
-  "description": "Transform your New Tab into a calm sanctuary with a live digital clock, daily quotes, ambient Lo-Fi radio, and built-in retro mini-games.",
+  "description": "A calm New Tab dashboard featuring a live digital clock, daily quotes, ambient Lo-Fi radio, and mini-games.",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
