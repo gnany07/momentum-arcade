@@ -16,7 +16,7 @@
 <p align="center">
   <a href="#-visual-tour">Visual Tour</a> •
   <a href="#-tech-stack--architecture">Tech Stack</a> •
-  <a href="#-features">Features</a> •
+  <a href="ARCHITECTURE.md"><b>System Architecture &amp; Game Diagrams</b></a> •
   <a href="#-game-controls">Controls</a> •
   <a href="#-local-installation">Installation</a> •
   <a href="#-packaging">Packaging</a>
@@ -91,6 +91,8 @@ Built with obsession for performance, clean architecture, and lightweight code:
   - Unified `window.ScoreStorage` abstraction wrapping `chrome.storage.local` with automatic fallback to `localStorage`.
 - **📦 Ultra-Lightweight Bundle**:
   - Entire extension zip is **under 75 KB** total! Loads in under 20ms.
+
+> 📐 **Full Architectural Topology**: Check out [ARCHITECTURE.md](ARCHITECTURE.md) for detailed Mermaid system diagrams and independent state-machine diagrams for each of the 10 games.
 
 ---
 
