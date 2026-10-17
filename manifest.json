@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Momentum Arcade - New Tab with 10 Games & Lo-Fi",
-  "version": "1.1.0",
-  "description": "A beautiful new tab dashboard with Lo-Fi ambient music, quotes, and 10 classic games: Snake, Sudoku, Wordle, Tetris, 2048 & more.",
+  "name": "Momentum Arcade - New Tab Dashboard & Lo-Fi",
+  "version": "1.1.1",
+  "description": "Transform your New Tab into a calm sanctuary with a live digital clock, daily quotes, ambient Lo-Fi radio, and built-in retro mini-games.",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
