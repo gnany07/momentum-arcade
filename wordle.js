@@ -520,13 +520,13 @@ class Wordle {
         this.streak = 0;
         this.strictClueMode = true;
         this.revealedIndices = new Set();
+        this.clueShown = false;
 
         this.board = document.getElementById("wordleBoard");
         this.keyboard = document.getElementById("wordleKeyboard");
         this.cluePanel = document.getElementById("wordleCluePanel");
         this.cluePatternEl = document.getElementById("wordleCluePattern");
         this.clueTextEl = document.getElementById("wordleClueText");
-        this.validationStatusEl = document.getElementById("wordleValidationStatus");
         this.validCountEl = document.getElementById("wordleValidCount");
 
         const startBtn = document.getElementById("startWordle");
@@ -568,7 +568,7 @@ class Wordle {
 
     showStartScreen() {
         if (this.board) {
-            this.board.innerHTML = '<div style="grid-column: span 5; text-align: center; color: #94a3b8; padding: 2rem 0; font-size: 1.05rem;">Click <b>Start Game</b> to play Wordle!<br><span style="font-size: 0.85rem; color: #64748b;">10,000 Common 5-Letter Words • Live Clue Validation</span></div>';
+            this.board.innerHTML = '<div style="grid-column: span 5; text-align: center; color: #94a3b8; padding: 2rem 0; font-size: 1.05rem;">Click <b>Start Game</b> to play Wordle!</div>';
         }
         if (this.keyboard) {
             this.keyboard.style.display = "none";
@@ -581,7 +581,7 @@ class Wordle {
     startGame() {
         this.isPlaying = true;
         if (this.keyboard) this.keyboard.style.display = "flex";
-        if (this.cluePanel) this.cluePanel.classList.remove("hidden");
+        if (this.cluePanel) this.cluePanel.classList.add("hidden");
         this.initializeBoard();
         this.initializeKeyboard();
         this.newGame();
@@ -600,11 +600,10 @@ class Wordle {
             btn.classList.toggle("active-mode", this.strictClueMode);
             btn.textContent = this.strictClueMode ? "🛡️ Clue Check: ON" : "🛡️ Clue Check: OFF";
         }
-        this.updateClueAndValidationUI();
         if (window.showToast) {
             window.showToast(
                 this.strictClueMode
-                    ? "Clue Validation ON: Words must match all revealed clues!"
+                    ? "Clue Validation ON: Guesses must match revealed clues!"
                     : "Clue Validation OFF: Any valid dictionary word allowed.",
                 this.strictClueMode ? "🛡️" : "🔓"
             );
@@ -667,6 +666,12 @@ class Wordle {
         this.currentGuess = "";
         this.gameOver = false;
         this.revealedIndices = new Set();
+        this.clueShown = false;
+
+        // Keep clue panel hidden until the player explicitly clicks "💡 Clue"
+        if (this.cluePanel) {
+            this.cluePanel.classList.add("hidden");
+        }
 
         if (typeof wordleTimer !== "undefined") {
             wordleTimer.reset();
@@ -690,15 +695,13 @@ class Wordle {
         if (window.sounds) window.sounds.launch();
     }
 
-    // Compute a natural clue description for the current secret word + revealed clues
+    // Compute a natural clue description for the current secret word
     getWordBaseClue() {
         if (!this.currentWord) return "";
         const vowels = (this.currentWord.match(/[AEIOU]/g) || []).length;
         const uniqueCount = new Set(this.currentWord.split("")).size;
         const repeatInfo = uniqueCount === 5 ? "No repeating letters" : "Has repeating letters";
-        const firstChar = this.currentWord[0];
-        const rangeHint = firstChar <= "M" ? "Starts A–M" : "Starts N–Z";
-        return `${vowels} ${vowels === 1 ? "vowel" : "vowels"} • ${repeatInfo} • ${rangeHint}`;
+        return `${vowels} ${vowels === 1 ? "vowel" : "vowels"} • ${repeatInfo}`;
     }
 
     // Build the consolidated clue constraints from all prior guesses and revealed hint positions
@@ -765,7 +768,6 @@ class Wordle {
                 if (positiveCount > 0) {
                     minLetterCounts[letter] = Math.max(minLetterCounts[letter] || 0, positiveCount);
                 }
-                // If the guess had more copies of `letter` than `positiveCount`, then at least one copy was Gray!
                 if (guessLetterTotals[letter] > positiveCount) {
                     maxLetterCounts[letter] = positiveCount;
                 }
@@ -883,10 +885,10 @@ class Wordle {
         });
     }
 
-    // Reveal a positional letter clue for the current secret word
+    // Reveal a positional letter clue ONLY when the user clicks the "💡 Clue" button
     revealClue() {
         if (!this.isPlaying || this.gameOver || !this.currentWord) {
-            if (window.showToast) window.showToast("Start a game first to reveal a clue!", "💡");
+            if (window.showToast) window.showToast("Click Start Game first to use a clue!", "💡");
             return;
         }
 
@@ -899,18 +901,20 @@ class Wordle {
         }
 
         if (unrevealed.length <= 1) {
+            this.clueShown = true;
+            this.updateClueAndValidationUI();
             if (window.showToast) window.showToast("4 letters are already known — solve the final letter!", "💡");
             return;
         }
 
         const pickIdx = unrevealed[Math.floor(Math.random() * unrevealed.length)];
         this.revealedIndices.add(pickIdx);
-        this.updateBoard();
+        this.clueShown = true;
         this.updateClueAndValidationUI();
 
         const revealedLetter = this.currentWord[pickIdx];
         if (window.showToast) {
-            window.showToast(`Clue revealed: Position ${pickIdx + 1} is '${revealedLetter}'!`, "💡");
+            window.showToast(`Clue: Position ${pickIdx + 1} is '${revealedLetter}'!`, "💡");
         }
         if (window.sounds) window.sounds.score();
     }
@@ -925,71 +929,23 @@ class Wordle {
             this.validCountEl.textContent = matchingWords.length.toLocaleString();
         }
 
-        // Update Clue Pattern (e.g. "Clue: _ R _ _ E")
+        // Only display the clue banner if the user explicitly clicked "💡 Clue"
+        if (!this.cluePanel) return;
+        if (!this.clueShown) {
+            this.cluePanel.classList.add("hidden");
+            return;
+        }
+
+        this.cluePanel.classList.remove("hidden");
+
         const patternStr = clueState.exactPositions.map(ch => ch || "_").join(" ");
         if (this.cluePatternEl) {
-            this.cluePatternEl.textContent = `Clue: ${patternStr}`;
+            this.cluePatternEl.textContent = `💡 Clue: ${patternStr}`;
         }
 
-        // Update Clue Summary text (required letters + structural clue)
-        const mustInclude = Object.keys(clueState.minLetterCounts);
         if (this.clueTextEl) {
-            if (mustInclude.length > 0) {
-                this.clueTextEl.textContent = `Must include: ${mustInclude.join(", ")} • ${matchingWords.length.toLocaleString()} valid words fit`;
-            } else {
-                this.clueTextEl.textContent = this.getWordBaseClue();
-            }
+            this.clueTextEl.textContent = this.getWordBaseClue();
         }
-
-        // Live validation status for the currently typed word
-        if (!this.validationStatusEl) return;
-        this.validationStatusEl.className = "wordle-validation-pill";
-
-        if (this.currentGuess.length === 0) {
-            this.validationStatusEl.textContent = `Type a 5-letter word (${matchingWords.length.toLocaleString()} of 10,000 words match active clues)`;
-            return;
-        }
-
-        if (this.currentGuess.length < 5) {
-            // Even while typing < 5 letters, check if any typed letter already violates an exact or forbidden position clue!
-            for (let i = 0; i < this.currentGuess.length; i++) {
-                const ch = this.currentGuess[i];
-                if (clueState.exactPositions[i] && ch !== clueState.exactPositions[i]) {
-                    this.validationStatusEl.classList.add("invalid-clue");
-                    this.validationStatusEl.textContent = `⚠️ Clue warning: Position ${i + 1} must be '${clueState.exactPositions[i]}'`;
-                    return;
-                }
-                if (clueState.forbiddenPositions[i].has(ch)) {
-                    this.validationStatusEl.classList.add("invalid-clue");
-                    this.validationStatusEl.textContent = `⚠️ Clue warning: '${ch}' cannot be at position ${i + 1}`;
-                    return;
-                }
-                if (clueState.maxLetterCounts[ch] === 0) {
-                    this.validationStatusEl.classList.add("invalid-clue");
-                    this.validationStatusEl.textContent = `⚠️ Clue warning: '${ch}' was already ruled out`;
-                    return;
-                }
-            }
-            this.validationStatusEl.textContent = `Typing "${this.currentGuess}" (${this.currentGuess.length}/5 letters)...`;
-            return;
-        }
-
-        // Full 5-letter live validation check
-        if (!this.isValidDictionaryWord(this.currentGuess)) {
-            this.validationStatusEl.classList.add("invalid-word");
-            this.validationStatusEl.textContent = `✕ "${this.currentGuess}" is not in the 10,000 common words list`;
-            return;
-        }
-
-        const clueCheck = this.validateWordForClue(this.currentGuess, clueState);
-        if (!clueCheck.valid) {
-            this.validationStatusEl.classList.add("invalid-clue");
-            this.validationStatusEl.textContent = `⚠️ ${clueCheck.reason}`;
-            return;
-        }
-
-        this.validationStatusEl.classList.add("valid");
-        this.validationStatusEl.textContent = clueCheck.reason;
     }
 
     shakeCurrentRow() {
@@ -1015,13 +971,11 @@ class Wordle {
             event.preventDefault();
             this.currentGuess = this.currentGuess.slice(0, -1);
             this.updateBoard();
-            this.updateClueAndValidationUI();
             if (window.sounds) window.sounds.move();
         } else if (event.key.length === 1 && /[a-zA-Z]/.test(event.key)) {
             if (this.currentGuess.length < 5) {
                 this.currentGuess += event.key.toUpperCase();
                 this.updateBoard();
-                this.updateClueAndValidationUI();
                 if (window.sounds) window.sounds.move();
             }
         }
@@ -1035,12 +989,10 @@ class Wordle {
         } else if (key === "⌫" || key === "BACKSPACE") {
             this.currentGuess = this.currentGuess.slice(0, -1);
             this.updateBoard();
-            this.updateClueAndValidationUI();
             if (window.sounds) window.sounds.move();
         } else if (this.currentGuess.length < 5) {
             this.currentGuess += key;
             this.updateBoard();
-            this.updateClueAndValidationUI();
             if (window.sounds) window.sounds.move();
         }
     }
@@ -1048,21 +1000,9 @@ class Wordle {
     updateBoard() {
         const currentRow = this.guesses.length;
         const cells = document.querySelectorAll(`.wordle-row:nth-child(${currentRow + 1}) .wordle-cell`);
-        const clueState = this.getClueState();
 
         cells.forEach((cell, index) => {
-            const typedChar = this.currentGuess[index];
-            if (typedChar) {
-                cell.textContent = typedChar;
-                cell.style.color = "#ffffff";
-            } else if (clueState.exactPositions[index]) {
-                // Show faint placeholder of known Green clue letter when cell is empty
-                cell.textContent = clueState.exactPositions[index];
-                cell.style.color = "rgba(52, 211, 153, 0.35)";
-            } else {
-                cell.textContent = "";
-                cell.style.color = "#ffffff";
-            }
+            cell.textContent = this.currentGuess[index] || "";
             cell.className = "wordle-cell";
         });
     }
@@ -1079,7 +1019,6 @@ class Wordle {
         // 1. Validate against 10,000 most common words dictionary
         if (!this.isValidDictionaryWord(guess)) {
             this.shakeCurrentRow();
-            this.updateClueAndValidationUI();
             if (window.showToast) window.showToast(`"${guess}" is not in the 10,000 common words list!`, "❌");
             return;
         }
@@ -1095,7 +1034,6 @@ class Wordle {
         const clueValidation = this.validateWordForClue(guess);
         if (this.strictClueMode && !clueValidation.valid) {
             this.shakeCurrentRow();
-            this.updateClueAndValidationUI();
             if (window.showToast) window.showToast(clueValidation.reason, "🛡️");
             return;
         }
@@ -1114,7 +1052,6 @@ class Wordle {
         // Exact matches (Green)
         for (let i = 0; i < 5; i++) {
             cells[i].textContent = guess[i];
-            cells[i].style.color = "#ffffff";
             if (guess[i] === this.currentWord[i]) {
                 cells[i].classList.add("correct");
                 letterCounts[guess[i]]--;
