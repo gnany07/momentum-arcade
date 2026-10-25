@@ -956,6 +956,80 @@ canvas {
 .mine-cell[data-num="8"] { color: #94a3b8; }
 
 /* Wordle & Sudoku */
+.wordle-clue-panel {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 0.85rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.wordle-clue-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+.wordle-clue-badge {
+    font-family: monospace;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+}
+.wordle-clue-hint {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+.wordle-validation-pill {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.28rem 0.65rem;
+    border-radius: 6px;
+    background: rgba(30, 41, 59, 0.8);
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+    transition: all 0.18s ease;
+}
+.wordle-validation-pill.valid {
+    background: rgba(16, 185, 129, 0.16);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.4);
+}
+.wordle-validation-pill.invalid-clue {
+    background: rgba(245, 158, 11, 0.16);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.45);
+}
+.wordle-validation-pill.invalid-word {
+    background: rgba(239, 68, 68, 0.16);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.45);
+}
+#wordleStrictBtn.active-mode {
+    background: rgba(16, 185, 129, 0.18);
+    border-color: rgba(16, 185, 129, 0.45);
+    color: #34d399;
+}
+@keyframes wordleShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}
+.wordle-row.shake {
+    animation: wordleShake 0.35s ease;
+}
 .wordle-board {
     display: grid;
     grid-template-rows: repeat(6, 1fr);

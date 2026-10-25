@@ -208,17 +208,27 @@
                         <div class="stats-group">
                             <span class="stat-badge"><span class="badge-label">Played</span><span id="wordlePlayed" class="badge-val">0</span></span>
                             <span class="stat-badge"><span class="badge-label">Streak</span><span id="wordleStreak" class="badge-val">0</span></span>
+                            <span class="stat-badge" title="Number of words in the 10,000-word dictionary that match all revealed clues"><span class="badge-label">Valid Matches</span><span id="wordleValidCount" class="badge-val">10,000</span></span>
                         </div>
                         <div class="timer-badge" id="wordleTimer">00:00</div>
+                    </div>
+                    <div id="wordleCluePanel" class="wordle-clue-panel hidden">
+                        <div class="wordle-clue-row">
+                            <span class="wordle-clue-badge" id="wordleCluePattern">Clue: _ _ _ _ _</span>
+                            <span class="wordle-clue-hint" id="wordleClueText">10,000 common 5-letter words loaded</span>
+                        </div>
+                        <div class="wordle-validation-pill" id="wordleValidationStatus">Type a 5-letter word — validated against 10,000 common words &amp; active clues</div>
                     </div>
                     <div id="wordleBoard" class="wordle-board"></div>
                     <div class="keyboard" id="wordleKeyboard"></div>
                     <div class="controls-bar">
                         <button id="startWordle" class="btn btn-primary">Start Game</button>
                         <button id="newWordle" class="btn btn-secondary">New Word</button>
+                        <button id="wordleHintBtn" class="btn btn-accent" title="Reveal a positional letter clue for the current word">💡 Clue</button>
+                        <button id="wordleStrictBtn" class="btn btn-secondary active-mode" title="Validate that every guess matches all revealed clues">🛡️ Clue Check: ON</button>
                         <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
-                    <div class="controls-hint">Guess the hidden 5-letter word in 6 tries. Green = exact match, Gold = in word.</div>
+                    <div class="controls-hint">10,000 common 5-letter words • Validates dictionary words &amp; checks guesses against revealed clues.</div>
                 </div>
 
                 <!-- 4. Tetris Cabinet -->
