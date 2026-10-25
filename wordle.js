@@ -1,4 +1,4 @@
-// Momentum Arcade - Wordle with 10,000 Most Common 5-Letter Words & Clue Validation
+// Momentum Arcade - Wordle with 10,000 Most Common 5-Letter Words & Dictionary Validation
 const WORDLE_COMMON_10000 = [
     "ABOUT","OTHER","WHICH","THEIR","THERE","FIRST","WOULD","THESE","CLICK","PRICE","STATE","EMAIL","WORLD","MUSIC","AFTER","VIDEO","WHERE","ORDER","GROUP","UNDER",
     "COULD","GREAT","HOTEL","STORE","RIGHT","LOCAL","THOSE","USING","PHONE","FORUM","BLACK","CHECK","INDEX","BEING","WOMEN","TODAY","SOUTH","FOUND","HOUSE","PHOTO",
@@ -518,7 +518,6 @@ class Wordle {
         this.isPlaying = false;
         this.played = 0;
         this.streak = 0;
-        this.strictClueMode = true;
         this.revealedIndices = new Set();
         this.clueShown = false;
 
@@ -537,9 +536,6 @@ class Wordle {
 
         const hintBtn = document.getElementById("wordleHintBtn");
         if (hintBtn) hintBtn.addEventListener("click", () => this.revealClue());
-
-        const strictBtn = document.getElementById("wordleStrictBtn");
-        if (strictBtn) strictBtn.addEventListener("click", () => this.toggleStrictClueMode());
 
         document.addEventListener("keydown", this.handleKeyPress.bind(this));
 
@@ -590,23 +586,6 @@ class Wordle {
     pause() {
         if (this.isPlaying && !this.gameOver && typeof wordleTimer !== "undefined") {
             wordleTimer.stop();
-        }
-    }
-
-    toggleStrictClueMode() {
-        this.strictClueMode = !this.strictClueMode;
-        const btn = document.getElementById("wordleStrictBtn");
-        if (btn) {
-            btn.classList.toggle("active-mode", this.strictClueMode);
-            btn.textContent = this.strictClueMode ? "🛡️ Clue Check: ON" : "🛡️ Clue Check: OFF";
-        }
-        if (window.showToast) {
-            window.showToast(
-                this.strictClueMode
-                    ? "Clue Validation ON: Guesses must match revealed clues!"
-                    : "Clue Validation OFF: Any valid dictionary word allowed.",
-                this.strictClueMode ? "🛡️" : "🔓"
-            );
         }
     }
 
@@ -704,14 +683,11 @@ class Wordle {
         return `${vowels} ${vowels === 1 ? "vowel" : "vowels"} • ${repeatInfo}`;
     }
 
-    // Build the consolidated clue constraints from all prior guesses and revealed hint positions
+    // Track discovered letters for the optional Clue Banner & Valid Matches counter
     getClueState() {
         const exactPositions = [null, null, null, null, null];
-        const forbiddenPositions = [new Set(), new Set(), new Set(), new Set(), new Set()];
         const minLetterCounts = {};
-        const maxLetterCounts = {};
 
-        // 1. Include any explicitly revealed hint indices
         this.revealedIndices.forEach(idx => {
             const letter = this.currentWord[idx];
             if (letter) {
@@ -720,7 +696,6 @@ class Wordle {
             }
         });
 
-        // 2. Derive Green, Yellow, and Gray clue constraints from every submitted guess
         this.guesses.forEach(guess => {
             const targetCounts = {};
             for (let i = 0; i < 5; i++) {
@@ -728,160 +703,66 @@ class Wordle {
                 targetCounts[ch] = (targetCounts[ch] || 0) + 1;
             }
 
-            const status = ["absent", "absent", "absent", "absent", "absent"];
             const matchedCounts = {};
-
-            // Exact (Green) matches first
             for (let i = 0; i < 5; i++) {
                 if (guess[i] === this.currentWord[i]) {
-                    status[i] = "correct";
                     exactPositions[i] = guess[i];
                     targetCounts[guess[i]]--;
                     matchedCounts[guess[i]] = (matchedCounts[guess[i]] || 0) + 1;
                 }
             }
 
-            // Present (Yellow) vs Absent (Gray) matches
             for (let i = 0; i < 5; i++) {
-                if (status[i] !== "correct") {
+                if (guess[i] !== this.currentWord[i]) {
                     const gChar = guess[i];
-                    forbiddenPositions[i].add(gChar);
                     if (this.currentWord.includes(gChar) && targetCounts[gChar] > 0) {
-                        status[i] = "present";
                         targetCounts[gChar]--;
                         matchedCounts[gChar] = (matchedCounts[gChar] || 0) + 1;
-                    } else {
-                        status[i] = "absent";
                     }
                 }
             }
 
-            // Update minLetterCounts and maxLetterCounts per letter in this guess
-            const guessLetterTotals = {};
-            for (let i = 0; i < 5; i++) {
-                const gChar = guess[i];
-                guessLetterTotals[gChar] = (guessLetterTotals[gChar] || 0) + 1;
-            }
-
-            Object.keys(guessLetterTotals).forEach(letter => {
-                const positiveCount = matchedCounts[letter] || 0;
-                if (positiveCount > 0) {
-                    minLetterCounts[letter] = Math.max(minLetterCounts[letter] || 0, positiveCount);
-                }
-                if (guessLetterTotals[letter] > positiveCount) {
-                    maxLetterCounts[letter] = positiveCount;
-                }
+            Object.keys(matchedCounts).forEach(letter => {
+                minLetterCounts[letter] = Math.max(minLetterCounts[letter] || 0, matchedCounts[letter]);
             });
         });
 
-        // Ensure minLetterCounts accounts for distinct exactPositions of the same letter
-        const exactCountByLetter = {};
-        exactPositions.forEach(ch => {
-            if (ch) exactCountByLetter[ch] = (exactCountByLetter[ch] || 0) + 1;
-        });
-        Object.keys(exactCountByLetter).forEach(ch => {
-            minLetterCounts[ch] = Math.max(minLetterCounts[ch] || 0, exactCountByLetter[ch]);
-        });
-
-        return {
-            exactPositions,
-            forbiddenPositions,
-            minLetterCounts,
-            maxLetterCounts
-        };
+        return { exactPositions, minLetterCounts };
     }
 
-    // Check if a 5-letter word is in the 10,000 common words dictionary
+    // Validate if a 5-letter word is a valid English word in our 10,000 common words list
     isValidDictionaryWord(word) {
         if (!word || typeof word !== "string" || word.length !== 5) return false;
         return this.validWordSet.has(word.toUpperCase());
     }
 
-    // Validate if a candidate 5-letter word satisfies all active clues
-    validateWordForClue(word, clueState = null) {
+    // Validate word (allows ruled-out/any letters freely as long as it is a valid 5-letter English word)
+    validateWordForClue(word) {
         const upper = (word || "").toUpperCase();
         if (upper.length !== 5) {
-            return { valid: false, code: "LENGTH", reason: "Word must be 5 letters long." };
+            return { valid: false, code: "LENGTH", reason: "Word must be 5 letters!" };
         }
         if (!this.isValidDictionaryWord(upper)) {
-            return { valid: false, code: "NOT_IN_LIST", reason: `"${upper}" is not in the 10,000 common words list.` };
+            return { valid: false, code: "NOT_IN_LIST", reason: `"${upper}" is not a valid 5-letter word!` };
         }
-
-        const state = clueState || this.getClueState();
-
-        // 1. Check exact Green / Hint position clues
-        for (let i = 0; i < 5; i++) {
-            if (state.exactPositions[i] && upper[i] !== state.exactPositions[i]) {
-                return {
-                    valid: false,
-                    code: "CLUE_EXACT_POS",
-                    reason: `Invalid for clue: Position ${i + 1} must be '${state.exactPositions[i]}'.`
-                };
-            }
-        }
-
-        // 2. Check Yellow/Gray forbidden position clues
-        for (let i = 0; i < 5; i++) {
-            if (state.forbiddenPositions[i].has(upper[i])) {
-                return {
-                    valid: false,
-                    code: "CLUE_FORBIDDEN_POS",
-                    reason: `Invalid for clue: '${upper[i]}' cannot be in position ${i + 1}.`
-                };
-            }
-        }
-
-        // Count letter occurrences in candidate word
-        const candidateCounts = {};
-        for (let i = 0; i < 5; i++) {
-            const ch = upper[i];
-            candidateCounts[ch] = (candidateCounts[ch] || 0) + 1;
-        }
-
-        // 3. Check required Yellow/Green letters (minLetterCounts)
-        for (const [letter, minCount] of Object.entries(state.minLetterCounts)) {
-            const actual = candidateCounts[letter] || 0;
-            if (actual < minCount) {
-                const msg = minCount > 1
-                    ? `Invalid for clue: Word must contain at least ${minCount} '${letter}'s.`
-                    : `Invalid for clue: Word must include '${letter}'.`;
-                return {
-                    valid: false,
-                    code: "CLUE_MISSING_LETTER",
-                    reason: msg
-                };
-            }
-        }
-
-        // 4. Check ruled-out Gray letters (maxLetterCounts)
-        for (const [letter, maxCount] of Object.entries(state.maxLetterCounts)) {
-            const actual = candidateCounts[letter] || 0;
-            if (actual > maxCount) {
-                const msg = maxCount === 0
-                    ? `Invalid for clue: Letter '${letter}' was already ruled out.`
-                    : `Invalid for clue: Word can contain at most ${maxCount} '${letter}'.`;
-                return {
-                    valid: false,
-                    code: "CLUE_RULED_OUT_LETTER",
-                    reason: msg
-                };
-            }
-        }
-
-        return {
-            valid: true,
-            code: "VALID",
-            reason: `✓ "${upper}" is a valid word & matches all clues!`
-        };
+        return { valid: true, code: "VALID", reason: "Valid 5-letter word" };
     }
 
-    // Return all words from the 10,000 list that satisfy the current clues
+    // Count how many words in the 10,000 dictionary match the revealed Green/Yellow letters
     getMatchingWordsForClues(clueState = null) {
         const state = clueState || this.getClueState();
-        const guessedSet = new Set(this.guesses);
         return this.wordList.filter(w => {
-            if (guessedSet.has(w) && w !== this.currentWord) return false;
-            return this.validateWordForClue(w, state).valid;
+            for (let i = 0; i < 5; i++) {
+                if (state.exactPositions[i] && w[i] !== state.exactPositions[i]) return false;
+            }
+            for (const [letter, minCount] of Object.entries(state.minLetterCounts)) {
+                let count = 0;
+                for (let i = 0; i < 5; i++) {
+                    if (w[i] === letter) count++;
+                }
+                if (count < minCount) return false;
+            }
+            return true;
         });
     }
 
@@ -1016,25 +897,19 @@ class Wordle {
 
         const guess = this.currentGuess.toUpperCase();
 
-        // 1. Validate against 10,000 most common words dictionary
-        if (!this.isValidDictionaryWord(guess)) {
+        // Validate that the guessed word is a real 5-letter English word in the 10,000-word list
+        // (Players are 100% free to use any letters, including ruled-out gray letters, according to their choice!)
+        const validation = this.validateWordForClue(guess);
+        if (!validation.valid) {
             this.shakeCurrentRow();
-            if (window.showToast) window.showToast(`"${guess}" is not in the 10,000 common words list!`, "❌");
+            if (window.showToast) window.showToast(validation.reason, "❌");
             return;
         }
 
-        // 2. Prevent duplicate guess in the same game
+        // Prevent duplicate guess of the exact same word in the same round
         if (this.guesses.includes(guess)) {
             this.shakeCurrentRow();
             if (window.showToast) window.showToast(`You already guessed "${guess}"!`, "⚠️");
-            return;
-        }
-
-        // 3. Validate whether the word is valid for the active clues
-        const clueValidation = this.validateWordForClue(guess);
-        if (this.strictClueMode && !clueValidation.valid) {
-            this.shakeCurrentRow();
-            if (window.showToast) window.showToast(clueValidation.reason, "🛡️");
             return;
         }
 
@@ -1070,7 +945,7 @@ class Wordle {
             }
         }
 
-        // Update keyboard colors accurately per cell status
+        // Update keyboard colors accurately per cell status (all keys remain clickable!)
         const keys = document.querySelectorAll(".key");
         for (let i = 0; i < 5; i++) {
             const gChar = guess[i];
