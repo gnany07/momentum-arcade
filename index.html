@@ -76,19 +76,19 @@
                 <button id="openArcadeBtn" class="arcade-launch-btn">
                     <span class="btn-icon">🎮</span>
                     <span class="btn-text">Open Arcade Lounge</span>
-                    <span class="btn-badge">10 Games</span>
+                    <span class="btn-badge">16 Games</span>
                 </button>
             </div>
         </main>
 
-        <!-- Arcade Hub (Modern Tabbed Game Station with 10 Games) -->
+        <!-- Arcade Hub (Modern Tabbed Game Station with 16 Games) -->
         <section class="arcade-hub hidden" id="arcadeHub" aria-label="Arcade Games">
             <!-- Arcade Bar Header -->
             <div class="arcade-header">
                 <div class="arcade-brand">
                     <span class="arcade-logo-icon">🕹️</span>
                     <span class="arcade-title">Arcade Lounge</span>
-                    <span class="arcade-games-count">10 Games</span>
+                    <span class="arcade-games-count">16 Games</span>
                 </div>
                 <div class="arcade-compact-clock" id="compactClock">12:00</div>
                 <div class="arcade-header-actions">
@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <!-- Game Tabs Navigation (10 Games) -->
+            <!-- Game Tabs Navigation (16 Games) -->
             <nav class="game-tabs" id="gameTabs" role="tablist">
                 <button class="game-tab active" data-game="snake" role="tab">
                     <span class="tab-icon">🐍</span>
@@ -115,6 +115,30 @@
                 <button class="game-tab" data-game="wordle" role="tab">
                     <span class="tab-icon">🔤</span>
                     <span class="tab-name">Wordle</span>
+                </button>
+                <button class="game-tab" data-game="connections" role="tab">
+                    <span class="tab-icon">🟨</span>
+                    <span class="tab-name">Connections</span>
+                </button>
+                <button class="game-tab" data-game="codenames" role="tab">
+                    <span class="tab-icon">🕵️</span>
+                    <span class="tab-name">Codenames Duet</span>
+                </button>
+                <button class="game-tab" data-game="nerdle" role="tab">
+                    <span class="tab-icon">🧮</span>
+                    <span class="tab-name">Nerdle</span>
+                </button>
+                <button class="game-tab" data-game="strands" role="tab">
+                    <span class="tab-icon">🧶</span>
+                    <span class="tab-name">Strands</span>
+                </button>
+                <button class="game-tab" data-game="contexto" role="tab">
+                    <span class="tab-icon">🎯</span>
+                    <span class="tab-name">Contexto</span>
+                </button>
+                <button class="game-tab" data-game="worldle" role="tab">
+                    <span class="tab-icon">🌍</span>
+                    <span class="tab-name">Worldle</span>
                 </button>
                 <button class="game-tab" data-game="tetris" role="tab">
                     <span class="tab-icon">🧱</span>
@@ -368,6 +392,150 @@
                     <div class="controls-hint">◄ ► or A / D to Move • Space or Tap on canvas to Fire</div>
                 </div>
 
+                <!-- 11. Connections Cabinet -->
+                <div class="game-cabinet hidden" id="game-connections">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Solved</span><span id="connectionsWins" class="badge-val">0</span></span>
+                            <span class="stat-badge"><span class="badge-label">Streak</span><span id="connectionsStreak" class="badge-val">0</span></span>
+                            <span class="stat-badge"><span class="badge-label">Mistakes Left</span><span id="connectionsMistakes" class="badge-val">⚫⚫⚫⚫</span></span>
+                        </div>
+                        <div class="timer-badge" id="connectionsPuzzleNum">Puzzle #1</div>
+                    </div>
+                    <div id="connectionsSolved" class="connections-solved-area"></div>
+                    <div id="connectionsGrid" class="connections-grid"></div>
+                    <div class="controls-bar">
+                        <button id="startConnections" class="btn btn-primary">Start Game</button>
+                        <button id="submitConnections" class="btn btn-primary hidden" disabled>Submit (4)</button>
+                        <button id="shuffleConnections" class="btn btn-secondary">🔀 Shuffle</button>
+                        <button id="deselectConnections" class="btn btn-secondary">Deselect</button>
+                        <button id="hintConnections" class="btn btn-accent">💡 Hint</button>
+                        <button id="newConnections" class="btn btn-secondary">New Puzzle</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
+                    </div>
+                    <div class="controls-hint">Create 4 groups of 4 words that share a common thread. Yellow = Easiest, Purple = Tricky.</div>
+                </div>
+
+                <!-- 12. Codenames Duet Cabinet -->
+                <div class="game-cabinet hidden" id="game-codenames">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Agents Found</span><span id="codenamesFound" class="badge-val">0 / 9</span></span>
+                            <span class="stat-badge"><span class="badge-label">Turns Left</span><span id="codenamesTokens" class="badge-val">9 ⏱️</span></span>
+                            <span class="stat-badge"><span class="badge-label">Wins</span><span id="codenamesWins" class="badge-val">0</span></span>
+                        </div>
+                    </div>
+                    <div id="codenamesClueBanner" class="codenames-clue-banner">
+                        <span class="spymaster-tag">🕵️ AI Spymaster Clue:</span>
+                        <span id="codenamesClueWord" class="spymaster-clue-word">Click "Start Mission"</span>
+                        <span id="codenamesClueCount" class="spymaster-clue-count"></span>
+                    </div>
+                    <div id="codenamesGrid" class="codenames-grid"></div>
+                    <div class="controls-bar">
+                        <button id="startCodenames" class="btn btn-primary">Start Mission</button>
+                        <button id="nextClueCodenames" class="btn btn-accent">⏭️ End Turn / Next Clue</button>
+                        <button id="newCodenames" class="btn btn-secondary">New Board</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
+                    </div>
+                    <div class="controls-hint">Uncover all 9 Green Agents using the AI Spymaster's 1-word clue. Avoid the 3 Black Assassins!</div>
+                </div>
+
+                <!-- 13. Nerdle Cabinet -->
+                <div class="game-cabinet hidden" id="game-nerdle">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Played</span><span id="nerdlePlayed" class="badge-val">0</span></span>
+                            <span class="stat-badge"><span class="badge-label">Streak</span><span id="nerdleStreak" class="badge-val">0</span></span>
+                        </div>
+                        <div class="timer-badge" id="nerdleTimer">00:00</div>
+                    </div>
+                    <div id="nerdleBoard" class="nerdle-board"></div>
+                    <div id="nerdleKeyboard" class="keyboard nerdle-keyboard"></div>
+                    <div class="controls-bar">
+                        <button id="startNerdle" class="btn btn-primary">Start Game</button>
+                        <button id="newNerdle" class="btn btn-secondary">New Equation</button>
+                        <button id="hintNerdle" class="btn btn-accent">💡 Clue</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
+                    </div>
+                    <div class="controls-hint">Guess the hidden 8-character math equation in 6 tries (e.g. 12+35=47). Order of operations applies!</div>
+                </div>
+
+                <!-- 14. Strands Cabinet -->
+                <div class="game-cabinet hidden" id="game-strands">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Theme Words</span><span id="strandsFoundCount" class="badge-val">0 / 0</span></span>
+                            <span class="stat-badge"><span class="badge-label">Solved</span><span id="strandsWins" class="badge-val">0</span></span>
+                        </div>
+                        <span class="stat-badge" id="strandsThemeBadge"><span class="badge-label">Theme</span><span id="strandsThemeTitle" class="badge-val">—</span></span>
+                    </div>
+                    <div id="strandsCurrentWord" class="strands-current-word">Select adjacent letters to form theme words</div>
+                    <div class="strands-play-area">
+                        <div id="strandsGrid" class="strands-grid"></div>
+                        <div id="strandsWordList" class="strands-found-list"></div>
+                    </div>
+                    <div class="controls-bar">
+                        <button id="startStrands" class="btn btn-primary">Start Game</button>
+                        <button id="submitStrandsWord" class="btn btn-primary">✓ Submit Word</button>
+                        <button id="clearStrandsSelection" class="btn btn-secondary">Clear</button>
+                        <button id="hintStrands" class="btn btn-accent">💡 Hint</button>
+                        <button id="newStrands" class="btn btn-secondary">New Puzzle</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
+                    </div>
+                    <div class="controls-hint">Click adjacent letters (including diagonals) to uncover Blue Theme Words and the Gold Spangram!</div>
+                </div>
+
+                <!-- 15. Contexto Cabinet -->
+                <div class="game-cabinet hidden" id="game-contexto">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Guesses</span><span id="contextoGuessCount" class="badge-val">0</span></span>
+                            <span class="stat-badge"><span class="badge-label">Best Rank</span><span id="contextoBestRank" class="badge-val">—</span></span>
+                            <span class="stat-badge"><span class="badge-label">Solved</span><span id="contextoWins" class="badge-val">0</span></span>
+                        </div>
+                    </div>
+                    <div class="contexto-input-bar">
+                        <input type="text" id="contextoInput" class="arcade-text-input" placeholder="Type any word and press Enter..." autocomplete="off" />
+                        <button id="submitContexto" class="btn btn-primary">Guess</button>
+                    </div>
+                    <div id="contextoHistory" class="contexto-history"></div>
+                    <div class="controls-bar">
+                        <button id="startContexto" class="btn btn-primary">Start Game</button>
+                        <button id="hintContexto" class="btn btn-accent">💡 Hint</button>
+                        <button id="giveUpContexto" class="btn btn-secondary">🏳️ Reveal</button>
+                        <button id="newContexto" class="btn btn-secondary">New Word</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
+                    </div>
+                    <div class="controls-hint">Words are ranked by semantic similarity to the secret word (#1). Green = 1–300, Gold = 301–1500.</div>
+                </div>
+
+                <!-- 16. Worldle Cabinet -->
+                <div class="game-cabinet hidden" id="game-worldle">
+                    <div class="cabinet-header">
+                        <div class="stats-group">
+                            <span class="stat-badge"><span class="badge-label">Guesses</span><span id="worldleGuessCount" class="badge-val">0 / 6</span></span>
+                            <span class="stat-badge"><span class="badge-label">Solved</span><span id="worldleWins" class="badge-val">0</span></span>
+                            <span class="stat-badge"><span class="badge-label">Streak</span><span id="worldleStreak" class="badge-val">0</span></span>
+                        </div>
+                    </div>
+                    <div id="worldleMapContainer" class="worldle-map-container"></div>
+                    <div class="worldle-input-wrapper">
+                        <div class="contexto-input-bar">
+                            <input type="text" id="worldleInput" class="arcade-text-input" placeholder="Search country or territory..." autocomplete="off" />
+                            <button id="submitWorldle" class="btn btn-primary">🌍 Guess</button>
+                        </div>
+                        <div id="worldleSuggestions" class="worldle-suggestions hidden"></div>
+                    </div>
+                    <div id="worldleGuesses" class="worldle-guesses"></div>
+                    <div class="controls-bar">
+                        <button id="startWorldle" class="btn btn-primary">Start Game</button>
+                        <button id="hintWorldle" class="btn btn-accent">💡 Clue</button>
+                        <button id="newWorldle" class="btn btn-secondary">New Country</button>
+                        <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
+                    </div>
+                    <div class="controls-hint">Identify the mystery country from its silhouette in 6 guesses! Shows distance (km), direction &amp; proximity %.</div>
+                </div>
+
             </div>
         </section>
     </div>
@@ -402,10 +570,16 @@
     <script src="script.js"></script>
     <script src="lofi.js"></script>
 
-    <!-- 10 Arcade Games -->
+    <!-- 16 Arcade Games -->
     <script src="snake.js"></script>
     <script src="sudoku.js"></script>
     <script src="wordle.js"></script>
+    <script src="connections.js"></script>
+    <script src="codenames.js"></script>
+    <script src="nerdle.js"></script>
+    <script src="strands.js"></script>
+    <script src="contexto.js"></script>
+    <script src="worldle.js"></script>
     <script src="tetris.js"></script>
     <script src="blockbreaker.js"></script>
     <script src="game2048.js"></script>

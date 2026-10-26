@@ -12,7 +12,7 @@ const version = manifest.version || '1.0.0';
 const zipName = `momentum-arcade-v${version}.zip`;
 const zipPath = path.join(distDir, zipName);
 
-console.log(`Packaging Momentum Arcade v${version} (10 Games + Lo-Fi) for Chrome Web Store...`);
+console.log(`Packaging Momentum Arcade v${version} (16 Games + Lo-Fi) for Chrome Web Store...`);
 
 const filesToInclude = [
     'manifest.json',
@@ -24,6 +24,12 @@ const filesToInclude = [
     'snake.js',
     'sudoku.js',
     'wordle.js',
+    'connections.js',
+    'codenames.js',
+    'nerdle.js',
+    'strands.js',
+    'contexto.js',
+    'worldle.js',
     'tetris.js',
     'blockbreaker.js',
     'game2048.js',

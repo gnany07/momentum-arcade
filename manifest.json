@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Momentum Arcade - New Tab Dashboard & Lo-Fi",
-  "version": "1.1.2",
-  "description": "A calm New Tab dashboard featuring a live digital clock, daily quotes, ambient Lo-Fi radio, and mini-games.",
+  "version": "1.2.0",
+  "description": "A calm New Tab dashboard featuring a live digital clock, daily quotes, ambient Lo-Fi radio, and 16 mini-games (Wordle, Connections, Codenames Duet, Nerdle, Strands, Contexto, Worldle & more).",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },

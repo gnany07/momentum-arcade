@@ -496,6 +496,7 @@ class Timer {
 const snakeTimer = new Timer('snakeTimer');
 const sudokuTimer = new Timer('sudokuTimer');
 const wordleTimer = new Timer('wordleTimer');
+const nerdleTimer = new Timer('nerdleTimer');
 const tetrisTimer = new Timer('tetrisTimer');
 const blockbreakerTimer = new Timer('blockbreakerTimer');
 
