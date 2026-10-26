@@ -517,11 +517,27 @@
                             <span class="stat-badge"><span class="badge-label">Solved</span><span id="worldleWins" class="badge-val">0</span></span>
                             <span class="stat-badge"><span class="badge-label">Streak</span><span id="worldleStreak" class="badge-val">0</span></span>
                         </div>
+                        <div class="difficulty-group">
+                            <button id="worldleUnitBtn" class="diff-btn active" title="Switch km / miles">km</button>
+                            <button id="worldleRotateBtn" class="diff-btn" title="Challenge Mode: Rotate Map">🧭 North-Up</button>
+                        </div>
                     </div>
-                    <div id="worldleMapContainer" class="worldle-map-container"></div>
+                    <div class="worldle-stage">
+                        <div id="worldleMapContainer" class="worldle-map-container"></div>
+                        <div id="worldleIntelPanel" class="worldle-intel-panel">
+                            <div class="worldle-intel-title">📡 Geographic Intelligence</div>
+                            <div class="worldle-intel-grid">
+                                <button class="worldle-intel-chip" id="intelHemisphere" data-intel="hemisphere">🌐 Hemisphere</button>
+                                <button class="worldle-intel-chip" id="intelContinent" data-intel="continent">🗺️ Continent</button>
+                                <button class="worldle-intel-chip" id="intelBorders" data-intel="borders">🚧 Borders / Coast</button>
+                                <button class="worldle-intel-chip" id="intelCapital" data-intel="capital">🏛️ Capital City</button>
+                            </div>
+                            <div id="worldleIntelOutput" class="worldle-intel-output">Click any Intel sensor above if you need a geographic clue!</div>
+                        </div>
+                    </div>
                     <div class="worldle-input-wrapper">
                         <div class="contexto-input-bar">
-                            <input type="text" id="worldleInput" class="arcade-text-input" placeholder="Search country or territory..." autocomplete="off" />
+                            <input type="text" id="worldleInput" class="arcade-text-input" placeholder="Search 195+ countries or territories..." autocomplete="off" />
                             <button id="submitWorldle" class="btn btn-primary">🌍 Guess</button>
                         </div>
                         <div id="worldleSuggestions" class="worldle-suggestions hidden"></div>
@@ -529,11 +545,11 @@
                     <div id="worldleGuesses" class="worldle-guesses"></div>
                     <div class="controls-bar">
                         <button id="startWorldle" class="btn btn-primary">Start Game</button>
-                        <button id="hintWorldle" class="btn btn-accent">💡 Clue</button>
+                        <button id="hintWorldle" class="btn btn-accent">💡 Next Intel Clue</button>
                         <button id="newWorldle" class="btn btn-secondary">New Country</button>
                         <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
-                    <div class="controls-hint">Identify the mystery country from its silhouette in 6 guesses! Shows distance (km), direction &amp; proximity %.</div>
+                    <div class="controls-hint">Real Natural Earth 50m cartographic silhouettes • Shows Haversine distance, compass bearing &amp; proximity.</div>
                 </div>
 
             </div>
