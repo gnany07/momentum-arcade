@@ -511,8 +511,14 @@
 
                 <!-- 16. Worldle Cabinet -->
                 <div class="game-cabinet hidden" id="game-worldle">
-                    <div class="cabinet-header">
+                    <div class="cabinet-header" style="flex-wrap: wrap; gap: 0.5rem;">
+                        <div class="difficulty-group" id="worldleModeGroup">
+                            <button id="worldleModeCountries" class="diff-btn active" data-mode="countries">🌍 Countries</button>
+                            <button id="worldleModeCities" class="diff-btn" data-mode="cities">🏙️ World Cities</button>
+                        </div>
                         <div class="stats-group">
+                            <span class="stat-badge" title="Potential points for this round (1,000 max without clues)"><span class="badge-label">Round Pts</span><span id="worldleRoundPotential" class="badge-val" style="color: #fde047;">1000</span></span>
+                            <span class="stat-badge" title="Cumulative Worldle Score"><span class="badge-label">Score</span><span id="worldleScore" class="badge-val" style="color: #34d399;">0</span></span>
                             <span class="stat-badge"><span class="badge-label">Guesses</span><span id="worldleGuessCount" class="badge-val">0 / 6</span></span>
                             <span class="stat-badge"><span class="badge-label">Solved</span><span id="worldleWins" class="badge-val">0</span></span>
                             <span class="stat-badge"><span class="badge-label">Streak</span><span id="worldleStreak" class="badge-val">0</span></span>
@@ -525,19 +531,33 @@
                     <div class="worldle-stage">
                         <div id="worldleMapContainer" class="worldle-map-container"></div>
                         <div id="worldleIntelPanel" class="worldle-intel-panel">
-                            <div class="worldle-intel-title">📡 Geographic Intelligence</div>
-                            <div class="worldle-intel-grid">
-                                <button class="worldle-intel-chip" id="intelHemisphere" data-intel="hemisphere">🌐 Hemisphere</button>
-                                <button class="worldle-intel-chip" id="intelContinent" data-intel="continent">🗺️ Continent</button>
-                                <button class="worldle-intel-chip" id="intelBorders" data-intel="borders">🚧 Borders / Coast</button>
-                                <button class="worldle-intel-chip" id="intelCapital" data-intel="capital">🏛️ Capital City</button>
+                            <div class="worldle-intel-header-row">
+                                <span class="worldle-intel-title">📡 Geographic Clues (No Clues = Max 1,000 Pts)</span>
                             </div>
-                            <div id="worldleIntelOutput" class="worldle-intel-output">Click any Intel sensor above if you need a geographic clue!</div>
+                            <div class="worldle-intel-grid">
+                                <button class="worldle-intel-chip" id="intelHemisphere" data-intel="hemisphere">
+                                    <span>🌐 Hemisphere</span>
+                                    <span class="intel-cost-tag cost-low">-75 pts</span>
+                                </button>
+                                <button class="worldle-intel-chip" id="intelBorders" data-intel="borders">
+                                    <span id="intelBordersLabel">🚧 Borders / Coast</span>
+                                    <span class="intel-cost-tag cost-med">-150 pts</span>
+                                </button>
+                                <button class="worldle-intel-chip" id="intelContinent" data-intel="continent">
+                                    <span>🗺️ Continent</span>
+                                    <span class="intel-cost-tag cost-high">-250 pts</span>
+                                </button>
+                                <button class="worldle-intel-chip" id="intelCapital" data-intel="capital">
+                                    <span id="intelCapitalLabel">🏛️ Capital / City</span>
+                                    <span class="intel-cost-tag cost-max">-350 pts</span>
+                                </button>
+                            </div>
+                            <div id="worldleIntelOutput" class="worldle-intel-output">Solve with 0 clues for the full 1,000-pt No-Clue Bonus!</div>
                         </div>
                     </div>
                     <div class="worldle-input-wrapper">
                         <div class="contexto-input-bar">
-                            <input type="text" id="worldleInput" class="arcade-text-input" placeholder="Search 195+ countries or territories..." autocomplete="off" />
+                            <input type="text" id="worldleInput" class="arcade-text-input" placeholder="Search 240+ countries or switch to Cities at the top..." autocomplete="off" />
                             <button id="submitWorldle" class="btn btn-primary">🌍 Guess</button>
                         </div>
                         <div id="worldleSuggestions" class="worldle-suggestions hidden"></div>
@@ -545,11 +565,11 @@
                     <div id="worldleGuesses" class="worldle-guesses"></div>
                     <div class="controls-bar">
                         <button id="startWorldle" class="btn btn-primary">Start Game</button>
-                        <button id="hintWorldle" class="btn btn-accent">💡 Next Intel Clue</button>
-                        <button id="newWorldle" class="btn btn-secondary">New Country</button>
+                        <button id="hintWorldle" class="btn btn-accent">💡 Reveal Next Clue</button>
+                        <button id="newWorldle" class="btn btn-secondary">New Target</button>
                         <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
-                    <div class="controls-hint">Real Natural Earth 50m cartographic silhouettes • Shows Haversine distance, compass bearing &amp; proximity.</div>
+                    <div class="controls-hint">No Clues = 1,000 pts • Clue deductions: Hemisphere (-75), Borders (-150), Continent (-250), Capital/City (-350).</div>
                 </div>
 
             </div>

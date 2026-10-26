@@ -1,4 +1,4 @@
-// Momentum Arcade - Worldle (Natural Earth 50m Cartographic Silhouettes, Geodesic Radar & Geographic Intel)
+// Momentum Arcade - Worldle (Countries & World Cities Modes + Tiered Clue Scoring System)
 const WORLDLE_TARGET_COUNTRIES = [
   {
     "code": "GBR",
@@ -680,11 +680,825 @@ const WORLDLE_TARGET_COUNTRIES = [
 
 const WORLDLE_ALL_COUNTRIES = [{"name": "AFGHANISTAN", "flag": "🇦🇫", "continent": "Asia", "lat": 33.9242, "lon": 67.6885}, {"name": "ALBANIA", "flag": "🇦🇱", "continent": "Europe", "lat": 41.1507, "lon": 20.1559}, {"name": "ALGERIA", "flag": "🇩🇿", "continent": "Africa", "lat": 28.0395, "lon": 1.6423}, {"name": "AMERICAN SAMOA", "flag": "🇦🇸", "continent": "Oceania", "lat": -14.3086, "lon": -170.6943}, {"name": "ANDORRA", "flag": "🇦🇩", "continent": "Europe", "lat": 42.5386, "lon": 1.5775}, {"name": "ANGOLA", "flag": "🇦🇴", "continent": "Africa", "lat": -11.2243, "lon": 17.8949}, {"name": "ANGUILLA", "flag": "🇦🇮", "continent": "North America", "lat": 18.2206, "lon": -63.0698}, {"name": "ANTARCTICA", "flag": "🇦🇶", "continent": "Antarctica", "lat": -76.6126, "lon": 0.0}, {"name": "ANTIGUA AND BARB.", "flag": "🇦🇬", "continent": "North America", "lat": 17.3556, "lon": -61.7866}, {"name": "ARGENTINA", "flag": "🇦🇷", "continent": "South America", "lat": -38.4173, "lon": -63.6224}, {"name": "ARMENIA", "flag": "🇦🇲", "continent": "Asia", "lat": 40.08, "lon": 45.0121}, {"name": "ARUBA", "flag": "🇦🇼", "continent": "North America", "lat": 12.5186, "lon": -69.9809}, {"name": "ASHMORE AND CARTIER IS.", "flag": "🇦🇹", "continent": "Oceania", "lat": -12.4299, "lon": 123.5838}, {"name": "AUSTRALIA", "flag": "🇦🇺", "continent": "Oceania", "lat": -27.1633, "lon": 133.4008}, {"name": "AUSTRIA", "flag": "🇦🇹", "continent": "Europe", "lat": 47.7004, "lon": 13.3357}, {"name": "AZERBAIJAN", "flag": "🇦🇿", "continent": "Asia", "lat": 40.1448, "lon": 47.5671}, {"name": "BAHAMAS", "flag": "🇧🇸", "continent": "North America", "lat": 23.9387, "lon": -75.8665}, {"name": "BAHRAIN", "flag": "🇧🇭", "continent": "Asia", "lat": 26.0266, "lon": 50.535}, {"name": "BANGLADESH", "flag": "🇧🇩", "continent": "Asia", "lat": 23.681, "lon": 90.3275}, {"name": "BARBADOS", "flag": "🇧🇧", "continent": "North America", "lat": 13.1899, "lon": -59.5372}, {"name": "BELARUS", "flag": "🇧🇾", "continent": "Europe", "lat": 53.7054, "lon": 27.9427}, {"name": "BELGIUM", "flag": "🇧🇪", "continent": "Europe", "lat": 50.501, "lon": 4.4447}, {"name": "BELIZE", "flag": "🇧🇿", "continent": "North America", "lat": 17.1855, "lon": -88.5131}, {"name": "BENIN", "flag": "🇧🇯", "continent": "Africa", "lat": 9.3003, "lon": 2.2989}, {"name": "BERMUDA", "flag": "🇧🇲", "continent": "North America", "lat": 32.3233, "lon": -64.7656}, {"name": "BHUTAN", "flag": "🇧🇹", "continent": "Asia", "lat": 27.5064, "lon": 90.4111}, {"name": "BOLIVIA", "flag": "🇧🇴", "continent": "South America", "lat": -16.3011, "lon": -63.5707}, {"name": "BOSNIA AND HERZ.", "flag": "🇧🇦", "continent": "Europe", "lat": 43.9181, "lon": 17.6602}, {"name": "BOTSWANA", "flag": "🇧🇼", "continent": "Africa", "lat": -22.3209, "lon": 24.6711}, {"name": "BR. INDIAN OCEAN TER.", "flag": "🇮🇴", "continent": "Seven seas (open ocean)", "lat": -7.3279, "lon": 72.4241}, {"name": "BRAZIL", "flag": "🇧🇷", "continent": "South America", "lat": -14.2421, "lon": -54.4038}, {"name": "BRITISH VIRGIN IS.", "flag": "🇻🇬", "continent": "North America", "lat": 18.5759, "lon": -64.4844}, {"name": "BRUNEI", "flag": "🇧🇳", "continent": "Asia", "lat": 4.5232, "lon": 114.6953}, {"name": "BULGARIA", "flag": "🇧🇬", "continent": "Europe", "lat": 42.7407, "lon": 25.4647}, {"name": "BURKINA FASO", "flag": "🇧🇫", "continent": "Africa", "lat": 12.2513, "lon": -1.5672}, {"name": "BURUNDI", "flag": "🇧🇮", "continent": "Africa", "lat": -3.3844, "lon": 29.9128}, {"name": "CABO VERDE", "flag": "🇨🇻", "continent": "Africa", "lat": 16.0059, "lon": -24.0117}, {"name": "CAMBODIA", "flag": "🇰🇭", "continent": "Asia", "lat": 12.5582, "lon": 104.9626}, {"name": "CAMEROON", "flag": "🇨🇲", "continent": "Africa", "lat": 7.3774, "lon": 12.3581}, {"name": "CANADA", "flag": "🇨🇦", "continent": "North America", "lat": 62.3955, "lon": -96.8279}, {"name": "CAYMAN IS.", "flag": "🇰🇾", "continent": "North America", "lat": 19.5188, "lon": -80.5807}, {"name": "CENTRAL AFRICAN REP.", "flag": "🇨🇫", "continent": "Africa", "lat": 6.6332, "lon": 20.9172}, {"name": "CHAD", "flag": "🇹🇩", "continent": "Africa", "lat": 15.4603, "lon": 18.7158}, {"name": "CHILE", "flag": "🇨🇱", "continent": "South America", "lat": -36.5783, "lon": -71.3584}, {"name": "CHINA", "flag": "🇨🇳", "continent": "Asia", "lat": 35.8869, "lon": 104.1798}, {"name": "COLOMBIA", "flag": "🇨🇴", "continent": "South America", "lat": 4.0992, "lon": -72.9507}, {"name": "COMOROS", "flag": "🇰🇲", "continent": "Africa", "lat": -11.8684, "lon": 43.8767}, {"name": "CONGO", "flag": "🇨🇬", "continent": "Africa", "lat": -0.6585, "lon": 14.8762}, {"name": "COOK IS.", "flag": "🇨🇰", "continent": "Oceania", "lat": -21.218, "lon": -159.7897}, {"name": "COSTA RICA", "flag": "🇨🇷", "continent": "North America", "lat": 9.6301, "lon": -84.2358}, {"name": "CROATIA", "flag": "🇭🇷", "continent": "Europe", "lat": 44.4838, "lon": 16.4591}, {"name": "CUBA", "flag": "🇨🇺", "continent": "North America", "lat": 21.5229, "lon": -79.512}, {"name": "CURAÇAO", "flag": "🇨🇼", "continent": "North America", "lat": 12.2129, "lon": -68.955}, {"name": "CYPRUS", "flag": "🇨🇾", "continent": "Asia", "lat": 34.8761, "lon": 33.1756}, {"name": "CZECHIA", "flag": "🇨🇿", "continent": "Europe", "lat": 49.807, "lon": 15.461}, {"name": "CÔTE D'IVOIRE", "flag": "🇨🇮", "continent": "Africa", "lat": 7.5377, "lon": -5.5547}, {"name": "DEM. REP. CONGO", "flag": "🇨🇩", "continent": "Africa", "lat": -4.0709, "lon": 21.7438}, {"name": "DENMARK", "flag": "🇩🇰", "continent": "Europe", "lat": 56.1829, "lon": 11.6293}, {"name": "DJIBOUTI", "flag": "🇩🇯", "continent": "Africa", "lat": 11.8248, "lon": 42.5872}, {"name": "DOMINICA", "flag": "🇩🇲", "continent": "North America", "lat": 15.4302, "lon": -61.3661}, {"name": "DOMINICAN REP.", "flag": "🇩🇴", "continent": "North America", "lat": 18.7748, "lon": -70.1698}, {"name": "ECUADOR", "flag": "🇪🇨", "continent": "South America", "lat": -1.7676, "lon": -83.4232}, {"name": "EGYPT", "flag": "🇪🇬", "continent": "Africa", "lat": 26.8249, "lon": 30.7873}, {"name": "EL SALVADOR", "flag": "🇸🇻", "continent": "North America", "lat": 13.7976, "lon": -88.9106}, {"name": "EQ. GUINEA", "flag": "🇬🇶", "continent": "Africa", "lat": 2.3592, "lon": 9.8848}, {"name": "ERITREA", "flag": "🇪🇷", "continent": "Africa", "lat": 15.1908, "lon": 39.7717}, {"name": "ESTONIA", "flag": "🇪🇪", "continent": "Europe", "lat": 58.5823, "lon": 25.0028}, {"name": "ESWATINI", "flag": "🇸🇿", "continent": "Africa", "lat": -26.5265, "lon": 31.4502}, {"name": "ETHIOPIA", "flag": "🇪🇹", "continent": "Africa", "lat": 9.1542, "lon": 40.4886}, {"name": "FAEROE IS.", "flag": "🇫🇴", "continent": "Europe", "lat": 61.885, "lon": -6.9143}, {"name": "FALKLAND IS.", "flag": "🇫🇰", "continent": "South America", "lat": -51.789, "lon": -59.4684}, {"name": "FIJI", "flag": "🇫🇯", "continent": "Oceania", "lat": -15.8143, "lon": 179.3776}, {"name": "FINLAND", "flag": "🇫🇮", "continent": "Europe", "lat": 64.9404, "lon": 26.0793}, {"name": "FR. POLYNESIA", "flag": "🇵🇫", "continent": "Oceania", "lat": -18.3165, "lon": -145.0091}, {"name": "FR. S. ANTARCTIC LANDS", "flag": "🇹🇫", "continent": "Seven seas (open ocean)", "lat": -49.1832, "lon": 69.6625}, {"name": "FRANCE", "flag": "🇫🇷", "continent": "Europe", "lat": 46.241, "lon": 2.397}, {"name": "GABON", "flag": "🇬🇦", "continent": "Africa", "lat": -0.8071, "lon": 11.5918}, {"name": "GAMBIA", "flag": "🇬🇲", "continent": "Africa", "lat": 13.4381, "lon": -15.3258}, {"name": "GEORGIA", "flag": "🇬🇪", "continent": "Asia", "lat": 42.32, "lon": 43.3254}, {"name": "GERMANY", "flag": "🇩🇪", "continent": "Europe", "lat": 51.0911, "lon": 10.4371}, {"name": "GHANA", "flag": "🇬🇭", "continent": "Africa", "lat": 7.9647, "lon": -1.0283}, {"name": "GREECE", "flag": "🇬🇷", "continent": "Europe", "lat": 38.3391, "lon": 23.9392}, {"name": "GREENLAND", "flag": "🇬🇱", "continent": "North America", "lat": 71.7075, "lon": -42.1218}, {"name": "GRENADA", "flag": "🇬🇩", "continent": "North America", "lat": 12.1227, "lon": -61.6946}, {"name": "GUAM", "flag": "🇬🇺", "continent": "Oceania", "lat": 13.4399, "lon": 144.7951}, {"name": "GUATEMALA", "flag": "🇬🇹", "continent": "North America", "lat": 15.7765, "lon": -90.2317}, {"name": "GUERNSEY", "flag": "🇬🇬", "continent": "Europe", "lat": 49.4677, "lon": -2.5792}, {"name": "GUINEA", "flag": "🇬🇳", "continent": "Africa", "lat": 9.9449, "lon": -11.3662}, {"name": "GUINEA-BISSAU", "flag": "🇬🇼", "continent": "Africa", "lat": 11.81, "lon": -15.1927}, {"name": "GUYANA", "flag": "🇬🇾", "continent": "South America", "lat": 4.8753, "lon": -58.9368}, {"name": "HAITI", "flag": "🇭🇹", "continent": "North America", "lat": 19.0664, "lon": -73.0617}, {"name": "HEARD I. AND MCDONALD IS.", "flag": "🇭🇲", "continent": "Seven seas (open ocean)", "lat": -53.0754, "lon": 73.5445}, {"name": "HONDURAS", "flag": "🇭🇳", "continent": "North America", "lat": 14.5017, "lon": -86.2601}, {"name": "HONG KONG", "flag": "🇭🇰", "continent": "Asia", "lat": 22.3801, "lon": 114.0871}, {"name": "HUNGARY", "flag": "🇭🇺", "continent": "Europe", "lat": 47.1532, "lon": 19.4849}, {"name": "ICELAND", "flag": "🇮🇸", "continent": "Europe", "lat": 64.9664, "lon": -19.0159}, {"name": "INDIA", "flag": "🇮🇳", "continent": "Asia", "lat": 21.7871, "lon": 82.7543}, {"name": "INDIAN OCEAN TER.", "flag": "🇮🇴", "continent": "Asia", "lat": -11.3152, "lon": 101.2756}, {"name": "INDONESIA", "flag": "🇮🇩", "continent": "Asia", "lat": -2.3592, "lon": 118.0914}, {"name": "IRAN", "flag": "🇮🇷", "continent": "Asia", "lat": 32.4353, "lon": 53.6642}, {"name": "IRAQ", "flag": "🇮🇶", "continent": "Asia", "lat": 33.2178, "lon": 43.66}, {"name": "IRELAND", "flag": "🇮🇪", "continent": "Europe", "lat": 53.4198, "lon": -8.2088}, {"name": "ISLE OF MAN", "flag": "🇮🇲", "continent": "Europe", "lat": 54.2329, "lon": -4.5617}, {"name": "ISRAEL", "flag": "🇮🇱", "continent": "Asia", "lat": 31.4465, "lon": 35.0666}, {"name": "ITALY", "flag": "🇮🇹", "continent": "Europe", "lat": 41.885, "lon": 12.5568}, {"name": "JAMAICA", "flag": "🇯🇲", "continent": "North America", "lat": 18.1186, "lon": -77.2751}, {"name": "JAPAN", "flag": "🇯🇵", "continent": "Asia", "lat": 35.8021, "lon": 136.7414}, {"name": "JERSEY", "flag": "🇯🇪", "continent": "Europe", "lat": 49.2181, "lon": -2.1229}, {"name": "JORDAN", "flag": "🇯🇴", "continent": "Asia", "lat": 31.2813, "lon": 37.1218}, {"name": "KAZAKHSTAN", "flag": "🇰🇿", "continent": "Asia", "lat": 47.9991, "lon": 66.966}, {"name": "KENYA", "flag": "🇰🇪", "continent": "Africa", "lat": 0.4, "lon": 37.892}, {"name": "KIRIBATI", "flag": "🇰🇮", "continent": "Oceania", "lat": -0.8542, "lon": -157.1762}, {"name": "KOSOVO", "flag": "🇰🇴", "continent": "Europe", "lat": 42.5574, "lon": 20.8912}, {"name": "KUWAIT", "flag": "🇰🇼", "continent": "Asia", "lat": 29.3152, "lon": 47.487}, {"name": "KYRGYZSTAN", "flag": "🇰🇬", "continent": "Asia", "lat": 41.224, "lon": 74.7376}, {"name": "LAOS", "flag": "🇱🇦", "continent": "Asia", "lat": 18.2082, "lon": 103.884}, {"name": "LATVIA", "flag": "🇱🇻", "continent": "Europe", "lat": 56.8655, "lon": 24.6085}, {"name": "LEBANON", "flag": "🇱🇧", "continent": "Asia", "lat": 33.8772, "lon": 35.8468}, {"name": "LESOTHO", "flag": "🇱🇸", "continent": "Africa", "lat": -29.612, "lon": 28.2212}, {"name": "LIBERIA", "flag": "🇱🇷", "continent": "Africa", "lat": 6.4445, "lon": -9.4537}, {"name": "LIBYA", "flag": "🇱🇾", "continent": "Africa", "lat": 26.3393, "lon": 17.2304}, {"name": "LIECHTENSTEIN", "flag": "🇱🇮", "continent": "Europe", "lat": 47.1641, "lon": 9.545}, {"name": "LITHUANIA", "flag": "🇱🇹", "continent": "Europe", "lat": 55.1521, "lon": 23.9109}, {"name": "LUXEMBOURG", "flag": "🇱🇺", "continent": "Europe", "lat": 49.8063, "lon": 6.1094}, {"name": "MACAO", "flag": "🇲🇴", "continent": "Asia", "lat": 22.2208, "lon": 113.5135}, {"name": "MADAGASCAR", "flag": "🇲🇬", "continent": "Africa", "lat": -18.825, "lon": 46.8699}, {"name": "MALAWI", "flag": "🇲🇼", "continent": "Africa", "lat": -13.263, "lon": 34.2816}, {"name": "MALAYSIA", "flag": "🇲🇾", "continent": "Asia", "lat": 3.9261, "lon": 109.6927}, {"name": "MALDIVES", "flag": "🇲🇻", "continent": "Seven seas (open ocean)", "lat": 3.7385, "lon": 73.4552}, {"name": "MALI", "flag": "🇲🇱", "continent": "Africa", "lat": 17.5694, "lon": -4.023}, {"name": "MALTA", "flag": "🇲🇹", "continent": "Europe", "lat": 35.948, "lon": 14.3733}, {"name": "MARSHALL IS.", "flag": "🇲🇭", "continent": "Oceania", "lat": 8.4842, "lon": 169.3008}, {"name": "MAURITANIA", "flag": "🇲🇷", "continent": "Africa", "lat": 21.0156, "lon": -10.9433}, {"name": "MAURITIUS", "flag": "🇲🇺", "continent": "Seven seas (open ocean)", "lat": -20.2516, "lon": 57.5548}, {"name": "MEXICO", "flag": "🇲🇽", "continent": "North America", "lat": 23.6304, "lon": -101.95}, {"name": "MICRONESIA", "flag": "🇫🇲", "continent": "Oceania", "lat": 6.3722, "lon": 157.2816}, {"name": "MOLDOVA", "flag": "🇲🇩", "continent": "Europe", "lat": 46.9641, "lon": 28.375}, {"name": "MONACO", "flag": "🇲🇨", "continent": "Europe", "lat": 43.7513, "lon": 7.4082}, {"name": "MONGOLIA", "flag": "🇲🇳", "continent": "Asia", "lat": 46.8564, "lon": 103.8205}, {"name": "MONTENEGRO", "flag": "🇲🇪", "continent": "Europe", "lat": 42.7057, "lon": 19.392}, {"name": "MONTSERRAT", "flag": "🇲🇸", "continent": "North America", "lat": 16.7454, "lon": -62.1857}, {"name": "MOROCCO", "flag": "🇲🇦", "continent": "Africa", "lat": 28.6753, "lon": -9.0343}, {"name": "MOZAMBIQUE", "flag": "🇲🇿", "continent": "Africa", "lat": -18.663, "lon": 35.5332}, {"name": "MYANMAR", "flag": "🇲🇲", "continent": "Asia", "lat": 19.276, "lon": 96.6634}, {"name": "N. CYPRUS", "flag": "🇨🇾", "continent": "Asia", "lat": 35.3312, "lon": 33.6344}, {"name": "N. MARIANA IS.", "flag": "🇲🇵", "continent": "Oceania", "lat": 16.4591, "lon": 145.4938}, {"name": "NAMIBIA", "flag": "🇳🇦", "continent": "Africa", "lat": -22.9532, "lon": 18.4902}, {"name": "NAURU", "flag": "🇳🇷", "continent": "Oceania", "lat": -0.5201, "lon": 166.9327}, {"name": "NEPAL", "flag": "🇳🇵", "continent": "Asia", "lat": 28.3739, "lon": 84.1066}, {"name": "NETHERLANDS", "flag": "🇳🇱", "continent": "Europe", "lat": 52.0958, "lon": 5.2737}, {"name": "NEW CALEDONIA", "flag": "🇳🇨", "continent": "Oceania", "lat": -20.8879, "lon": 164.0336}, {"name": "NEW ZEALAND", "flag": "🇳🇿", "continent": "Oceania", "lat": -42.6376, "lon": 174.8558}, {"name": "NICARAGUA", "flag": "🇳🇮", "continent": "North America", "lat": 12.8717, "lon": -85.4138}, {"name": "NIGER", "flag": "🇳🇪", "continent": "Africa", "lat": 17.6071, "lon": 8.0635}, {"name": "NIGERIA", "flag": "🇳🇬", "continent": "Africa", "lat": 9.0751, "lon": 8.6566}, {"name": "NIUE", "flag": "🇳🇺", "continent": "Oceania", "lat": -19.052, "lon": -169.8709}, {"name": "NORFOLK ISLAND", "flag": "🇳🇫", "continent": "Oceania", "lat": -29.0551, "lon": 167.9483}, {"name": "NORTH KOREA", "flag": "🇰🇵", "continent": "Asia", "lat": 40.3586, "lon": 127.518}, {"name": "NORTH MACEDONIA", "flag": "🇲🇰", "continent": "Europe", "lat": 41.604, "lon": 21.7271}, {"name": "NORWAY", "flag": "🇳🇴", "continent": "Europe", "lat": 64.5561, "lon": 17.9355}, {"name": "OMAN", "flag": "🇴🇲", "continent": "Asia", "lat": 21.5024, "lon": 55.9076}, {"name": "PAKISTAN", "flag": "🇵🇰", "continent": "Asia", "lat": 30.395, "lon": 68.946}, {"name": "PALAU", "flag": "🇵🇼", "continent": "Oceania", "lat": 5.367, "lon": 132.8973}, {"name": "PALESTINE", "flag": "🇵🇸", "continent": "Asia", "lat": 31.8714, "lon": 34.8851}, {"name": "PANAMA", "flag": "🇵🇦", "continent": "North America", "lat": 8.409, "lon": -80.1117}, {"name": "PAPUA NEW GUINEA", "flag": "🇵🇬", "continent": "Oceania", "lat": -6.3017, "lon": 148.41}, {"name": "PARAGUAY", "flag": "🇵🇾", "continent": "South America", "lat": -23.42, "lon": -58.4464}, {"name": "PERU", "flag": "🇵🇪", "continent": "South America", "lat": -9.1937, "lon": -75.0109}, {"name": "PHILIPPINES", "flag": "🇵🇭", "continent": "Asia", "lat": 11.8377, "lon": 121.906}, {"name": "PITCAIRN IS.", "flag": "🇵🇳", "continent": "Oceania", "lat": -24.3679, "lon": -128.3201}, {"name": "POLAND", "flag": "🇵🇱", "continent": "Europe", "lat": 51.9295, "lon": 19.1172}, {"name": "PORTUGAL", "flag": "🇵🇹", "continent": "Europe", "lat": 39.5714, "lon": -7.8461}, {"name": "PUERTO RICO", "flag": "🇵🇷", "continent": "North America", "lat": 18.2347, "lon": -66.616}, {"name": "QATAR", "flag": "🇶🇦", "continent": "Asia", "lat": 25.359, "lon": 51.1817}, {"name": "ROMANIA", "flag": "🇷🇴", "continent": "Europe", "lat": 45.9671, "lon": 24.9738}, {"name": "RUSSIA", "flag": "🇷🇺", "continent": "Europe", "lat": 59.4649, "lon": 108.8114}, {"name": "RWANDA", "flag": "🇷🇼", "continent": "Africa", "lat": -1.9358, "lon": 29.8671}, {"name": "S. GEO. AND THE IS.", "flag": "🇬🇸", "continent": "Seven seas (open ocean)", "lat": -56.2382, "lon": -32.1386}, {"name": "S. SUDAN", "flag": "🇸🇸", "continent": "Africa", "lat": 7.8569, "lon": 29.7079}, {"name": "SAINT HELENA", "flag": "🇸🇭", "continent": "Seven seas (open ocean)", "lat": -15.9551, "lon": -5.7211}, {"name": "SAINT LUCIA", "flag": "🇱🇨", "continent": "North America", "lat": 13.9055, "lon": -60.98}, {"name": "SAMOA", "flag": "🇼🇸", "continent": "Oceania", "lat": -13.7563, "lon": -172.114}, {"name": "SAN MARINO", "flag": "🇸🇲", "continent": "Europe", "lat": 43.9419, "lon": 12.4558}, {"name": "SAUDI ARABIA", "flag": "🇸🇦", "continent": "Asia", "lat": 24.2481, "lon": 45.1286}, {"name": "SENEGAL", "flag": "🇸🇳", "continent": "Africa", "lat": 14.5035, "lon": -14.459}, {"name": "SERBIA", "flag": "🇷🇸", "continent": "Europe", "lat": 44.2057, "lon": 20.908}, {"name": "SEYCHELLES", "flag": "🇸🇨", "continent": "Seven seas (open ocean)", "lat": -4.6722, "lon": 55.4632}, {"name": "SIACHEN GLACIER", "flag": "🇰🇦", "continent": "Asia", "lat": 35.3858, "lon": 77.2832}, {"name": "SIERRA LEONE", "flag": "🇸🇱", "continent": "Africa", "lat": 8.4515, "lon": -11.7879}, {"name": "SINGAPORE", "flag": "🇸🇬", "continent": "Asia", "lat": 1.3562, "lon": 103.8233}, {"name": "SINT MAARTEN", "flag": "🇸🇽", "continent": "North America", "lat": 18.0441, "lon": -63.0679}, {"name": "SLOVAKIA", "flag": "🇸🇰", "continent": "Europe", "lat": 48.6806, "lon": 19.7007}, {"name": "SLOVENIA", "flag": "🇸🇮", "continent": "Europe", "lat": 46.1458, "lon": 14.9472}, {"name": "SOLOMON IS.", "flag": "🇸🇧", "continent": "Oceania", "lat": -9.2206, "lon": 161.3034}, {"name": "SOMALIA", "flag": "🇸🇴", "continent": "Africa", "lat": 5.1442, "lon": 46.1773}, {"name": "SOMALILAND", "flag": "🇸🇴", "continent": "Africa", "lat": 9.7484, "lon": 45.7975}, {"name": "SOUTH AFRICA", "flag": "🇿🇦", "continent": "Africa", "lat": -28.466, "lon": 24.6668}, {"name": "SOUTH KOREA", "flag": "🇰🇷", "continent": "Asia", "lat": 35.9125, "lon": 127.8407}, {"name": "SPAIN", "flag": "🇪🇸", "continent": "Europe", "lat": 39.8952, "lon": -2.8869}, {"name": "SRI LANKA", "flag": "🇱🇰", "continent": "Asia", "lat": 7.881, "lon": 80.7924}, {"name": "ST-BARTHÉLEMY", "flag": "🇧🇱", "continent": "North America", "lat": 17.8987, "lon": -62.8376}, {"name": "ST-MARTIN", "flag": "🇲🇫", "continent": "North America", "lat": 18.0921, "lon": -63.0662}, {"name": "ST. KITTS AND NEVIS", "flag": "🇰🇳", "continent": "North America", "lat": 17.2516, "lon": -62.6864}, {"name": "ST. PIERRE AND MIQUELON", "flag": "🇵🇲", "continent": "North America", "lat": 46.9259, "lon": -56.2621}, {"name": "ST. VIN. AND GREN.", "flag": "🇻🇨", "continent": "North America", "lat": 13.0267, "lon": -61.2388}, {"name": "SUDAN", "flag": "🇸🇩", "continent": "Africa", "lat": 15.434, "lon": 30.2174}, {"name": "SURINAME", "flag": "🇸🇷", "continent": "South America", "lat": 3.9178, "lon": -56.0225}, {"name": "SWEDEN", "flag": "🇸🇪", "continent": "Europe", "lat": 62.1916, "lon": 17.6513}, {"name": "SWITZERLAND", "flag": "🇨🇭", "continent": "Europe", "lat": 46.8028, "lon": 8.2123}, {"name": "SYRIA", "flag": "🇸🇾", "continent": "Asia", "lat": 34.8073, "lon": 39.0618}, {"name": "SÃO TOMÉ AND PRINCIPE", "flag": "🇸🇹", "continent": "Africa", "lat": 0.8732, "lon": 6.9603}, {"name": "TAIWAN", "flag": "🌍", "continent": "Asia", "lat": 23.601, "lon": 120.1082}, {"name": "TAJIKISTAN", "flag": "🇹🇯", "continent": "Asia", "lat": 38.8596, "lon": 71.2342}, {"name": "TANZANIA", "flag": "🇹🇿", "continent": "Africa", "lat": -6.3556, "lon": 34.8935}, {"name": "THAILAND", "flag": "🇹🇭", "continent": "Asia", "lat": 13.0306, "lon": 101.5075}, {"name": "TIMOR-LESTE", "flag": "🇹🇱", "continent": "Asia", "lat": -8.8259, "lon": 125.6662}, {"name": "TOGO", "flag": "🇹🇬", "continent": "Africa", "lat": 8.6025, "lon": 0.8439}, {"name": "TONGA", "flag": "🇹🇴", "continent": "Oceania", "lat": -20.008, "lon": -174.6421}, {"name": "TRINIDAD AND TOBAGO", "flag": "🇹🇹", "continent": "North America", "lat": 10.695, "lon": -61.2158}, {"name": "TUNISIA", "flag": "🇹🇳", "continent": "Africa", "lat": 33.7849, "lon": 9.5158}, {"name": "TURKEY", "flag": "🇹🇷", "continent": "Asia / Europe", "lat": 38.9624, "lon": 35.4281}, {"name": "TURKMENISTAN", "flag": "🇹🇲", "continent": "Asia", "lat": 38.9746, "lon": 59.5616}, {"name": "TURKS AND CAICOS IS.", "flag": "🇹🇨", "continent": "North America", "lat": 21.8518, "lon": -71.9896}, {"name": "TUVALU", "flag": "🇹🇻", "continent": "Oceania", "lat": -8.5006, "lon": 179.2062}, {"name": "U.S. VIRGIN IS.", "flag": "🇻🇮", "continent": "North America", "lat": 18.0435, "lon": -64.8021}, {"name": "UGANDA", "flag": "🇺🇬", "continent": "Africa", "lat": 1.3751, "lon": 32.2701}, {"name": "UKRAINE", "flag": "🇺🇦", "continent": "Europe", "lat": 48.7938, "lon": 31.1301}, {"name": "UNITED ARAB EMIRATES", "flag": "🇦🇪", "continent": "Asia", "lat": 24.3448, "lon": 53.9782}, {"name": "UNITED KINGDOM", "flag": "🇬🇧", "continent": "Europe", "lat": 55.3155, "lon": -3.1991}, {"name": "UNITED STATES", "flag": "🇺🇸", "continent": "North America", "lat": 37.2515, "lon": -95.8485}, {"name": "URUGUAY", "flag": "🇺🇾", "continent": "South America", "lat": -32.5169, "lon": -55.7819}, {"name": "UZBEKISTAN", "flag": "🇺🇿", "continent": "Asia", "lat": 41.3638, "lon": 64.5563}, {"name": "VANUATU", "flag": "🇻🇺", "continent": "Oceania", "lat": -16.9756, "lon": 168.2112}, {"name": "VATICAN", "flag": "🇻🇦", "continent": "Europe", "lat": 41.9019, "lon": 12.4333}, {"name": "VENEZUELA", "flag": "🇻🇪", "continent": "South America", "lat": 6.4329, "lon": -66.5976}, {"name": "VIETNAM", "flag": "🇻🇳", "continent": "Asia", "lat": 15.9642, "lon": 105.7862}, {"name": "W. SAHARA", "flag": "🇪🇭", "continent": "Africa", "lat": 24.2313, "lon": -12.8905}, {"name": "WALLIS AND FUTUNA IS.", "flag": "🇼🇫", "continent": "Oceania", "lat": -13.7733, "lon": -177.1612}, {"name": "YEMEN", "flag": "🇾🇪", "continent": "Asia", "lat": 15.6576, "lon": 48.5845}, {"name": "ZAMBIA", "flag": "🇿🇲", "continent": "Africa", "lat": -13.1176, "lon": 27.8202}, {"name": "ZIMBABWE", "flag": "🇿🇼", "continent": "Africa", "lat": -19.0226, "lon": 29.1154}, {"name": "ÅLAND", "flag": "🇦🇽", "continent": "Europe", "lat": 60.2087, "lon": 20.0652}];
 
+const WORLDLE_CITIES = [
+  {
+    "name": "LONDON",
+    "countryCode": "GBR",
+    "countryName": "UNITED KINGDOM",
+    "flag": "🇬🇧",
+    "lat": 51.5074,
+    "lon": -0.1278,
+    "continent": "Europe",
+    "subregion": "Northern Europe",
+    "borders": "River Thames • Big Ben, Tower Bridge & Westminster",
+    "capital": "Located in UNITED KINGDOM (🇬🇧)",
+    "widthKm": 627,
+    "pinX": 153.7,
+    "pinY": 193.4,
+    "svg": "M125.8,191.1 L119.0,195.6 L116.0,195.2 L112.4,191.7 L108.6,192.2 L110.2,190.4 L107.0,188.9 L104.6,188.9 L101.3,191.1 L98.9,189.5 L97.4,186.2 L99.3,184.0 L107.0,180.1 L109.6,177.6 L111.4,173.4 L110.4,172.2 L110.1,166.2 L103.7,168.3 L108.3,161.8 L113.8,158.7 L118.6,157.9 L121.1,159.6 L120.4,157.0 L121.5,156.4 L123.1,158.7 L124.9,158.6 L123.1,157.9 L121.5,154.7 L123.0,150.5 L121.7,148.4 L123.3,146.1 L123.6,141.9 L120.4,142.9 L115.7,134.5 L117.1,130.4 L119.2,127.9 L121.8,127.0 L116.1,127.1 L111.7,130.3 L109.8,130.3 L108.4,129.0 L105.5,130.7 L102.3,129.0 L101.2,132.1 L98.8,128.8 L98.4,126.4 L99.6,126.3 L103.8,116.4 L101.4,112.6 L102.2,108.2 L104.8,108.0 L102.0,105.8 L102.4,103.8 L97.9,109.0 L97.8,105.5 L100.3,102.3 L96.1,106.4 L94.2,118.6 L93.2,119.8 L91.8,119.1 L92.8,114.1 L94.7,110.6 L93.4,110.4 L94.4,102.0 L98.2,92.2 L93.1,96.6 L90.8,96.0 L89.6,93.5 L87.8,93.0 L92.2,90.4 L90.8,89.4 L93.8,85.6 L94.1,83.1 L91.3,79.1 L93.9,77.0 L92.1,75.1 L92.6,72.6 L93.6,70.6 L98.5,70.6 L95.7,66.9 L96.5,63.7 L100.2,63.2 L99.4,58.9 L101.1,56.9 L103.4,58.5 L105.8,57.3 L106.5,58.4 L121.6,56.0 L119.9,62.1 L111.3,69.1 L110.8,71.1 L112.8,71.8 L109.7,76.4 L119.0,73.9 L132.3,74.0 L134.6,75.7 L135.6,78.4 L127.7,94.5 L125.7,96.9 L118.8,99.8 L123.4,99.2 L126.0,100.7 L125.8,101.9 L118.2,106.3 L113.5,105.0 L115.5,106.5 L121.6,107.7 L126.6,106.3 L131.5,108.7 L136.9,115.1 L141.6,131.8 L147.7,135.6 L154.1,143.1 L152.8,144.9 L156.3,152.9 L152.1,150.4 L147.8,150.7 L151.9,151.3 L158.0,158.1 L159.0,161.5 L155.6,166.4 L158.1,168.3 L161.2,165.2 L166.6,165.4 L170.2,166.7 L173.9,170.8 L174.2,174.8 L172.2,182.2 L169.5,184.7 L168.6,184.4 L169.0,186.9 L168.1,187.7 L165.5,187.6 L163.3,189.1 L164.9,189.9 L164.8,192.1 L159.7,194.2 L160.9,193.8 L164.8,196.2 L170.6,196.1 L170.4,199.6 L166.5,202.2 L165.6,204.6 L163.5,204.4 L157.3,207.7 L152.8,206.7 L146.5,207.7 L139.5,205.1 L140.4,206.6 L138.4,208.0 L132.8,208.4 L133.6,210.3 L132.8,210.8 L128.4,210.9 L122.2,208.6 L117.7,210.2 L114.7,217.8 L113.5,218.0 L109.1,214.8 L103.2,216.8 L99.0,221.7 L95.5,220.4 L93.4,221.4 L93.1,219.9 L96.5,217.7 L101.4,212.1 L104.8,207.5 L105.5,203.6 L108.0,202.6 L109.2,199.5 L120.7,199.2 L128.4,188.9 Z M86.9,143.6 L82.2,144.2 L82.2,142.2 L78.2,137.5 L74.8,142.8 L71.7,142.6 L69.0,141.2 L65.8,136.6 L70.1,133.9 L68.3,131.9 L72.3,130.5 L74.2,125.5 L75.9,124.3 L77.2,125.1 L78.9,122.6 L84.1,121.4 L87.9,121.9 L92.4,129.6 L90.6,133.0 L93.9,132.6 L94.5,133.4 L95.0,136.8 L92.9,134.8 L93.1,138.0 L94.1,138.2 L93.6,140.1 L91.2,140.8 L89.1,144.4 Z M87.1,61.3 L85.7,64.6 L83.2,66.5 L84.9,66.8 L84.6,67.9 L78.2,72.9 L77.4,71.9 L79.9,69.8 L77.7,68.2 L78.5,67.3 L77.4,64.8 L78.2,63.9 L81.3,64.6 L80.8,62.5 L86.7,58.6 Z M87.7,77.8 L87.8,81.5 L92.9,82.7 L89.8,86.7 L88.9,83.7 L85.8,83.6 L84.4,81.2 L81.9,80.6 L80.9,79.0 L85.4,74.7 L86.6,75.0 Z M140.7,19.4 L142.4,21.7 L143.5,21.2 L140.8,32.1 L140.9,26.8 L138.8,26.4 L136.8,24.3 L140.0,23.3 L139.2,20.7 L137.8,20.2 L140.1,18.0 Z M91.7,100.2 L85.9,101.2 L87.8,97.4 L85.9,96.2 L86.2,95.0 L88.2,94.4 L91.9,97.4 Z M109.1,158.4 L110.7,158.7 L110.3,159.5 L107.1,162.0 L105.2,159.6 L105.0,157.2 L107.8,156.6 Z M87.9,108.1 L88.7,112.7 L85.9,114.4 L86.2,111.2 L83.9,112.6 L84.2,110.5 Z M121.6,48.4 L124.2,49.4 L124.5,50.8 L120.0,50.5 L119.5,49.0 L118.5,49.6 L118.8,46.5 L121.6,47.1 Z"
+  },
+  {
+    "name": "EDINBURGH",
+    "countryCode": "GBR",
+    "countryName": "UNITED KINGDOM",
+    "flag": "🇬🇧",
+    "lat": 55.9533,
+    "lon": -3.1883,
+    "continent": "Europe",
+    "subregion": "Northern Europe",
+    "borders": "Firth of Forth • Edinburgh Castle & Royal Mile",
+    "capital": "Located in UNITED KINGDOM (🇬🇧)",
+    "widthKm": 627,
+    "pinX": 120.1,
+    "pinY": 107.7,
+    "svg": "M125.8,191.1 L119.0,195.6 L116.0,195.2 L112.4,191.7 L108.6,192.2 L110.2,190.4 L107.0,188.9 L104.6,188.9 L101.3,191.1 L98.9,189.5 L97.4,186.2 L99.3,184.0 L107.0,180.1 L109.6,177.6 L111.4,173.4 L110.4,172.2 L110.1,166.2 L103.7,168.3 L108.3,161.8 L113.8,158.7 L118.6,157.9 L121.1,159.6 L120.4,157.0 L121.5,156.4 L123.1,158.7 L124.9,158.6 L123.1,157.9 L121.5,154.7 L123.0,150.5 L121.7,148.4 L123.3,146.1 L123.6,141.9 L120.4,142.9 L115.7,134.5 L117.1,130.4 L119.2,127.9 L121.8,127.0 L116.1,127.1 L111.7,130.3 L109.8,130.3 L108.4,129.0 L105.5,130.7 L102.3,129.0 L101.2,132.1 L98.8,128.8 L98.4,126.4 L99.6,126.3 L103.8,116.4 L101.4,112.6 L102.2,108.2 L104.8,108.0 L102.0,105.8 L102.4,103.8 L97.9,109.0 L97.8,105.5 L100.3,102.3 L96.1,106.4 L94.2,118.6 L93.2,119.8 L91.8,119.1 L92.8,114.1 L94.7,110.6 L93.4,110.4 L94.4,102.0 L98.2,92.2 L93.1,96.6 L90.8,96.0 L89.6,93.5 L87.8,93.0 L92.2,90.4 L90.8,89.4 L93.8,85.6 L94.1,83.1 L91.3,79.1 L93.9,77.0 L92.1,75.1 L92.6,72.6 L93.6,70.6 L98.5,70.6 L95.7,66.9 L96.5,63.7 L100.2,63.2 L99.4,58.9 L101.1,56.9 L103.4,58.5 L105.8,57.3 L106.5,58.4 L121.6,56.0 L119.9,62.1 L111.3,69.1 L110.8,71.1 L112.8,71.8 L109.7,76.4 L119.0,73.9 L132.3,74.0 L134.6,75.7 L135.6,78.4 L127.7,94.5 L125.7,96.9 L118.8,99.8 L123.4,99.2 L126.0,100.7 L125.8,101.9 L118.2,106.3 L113.5,105.0 L115.5,106.5 L121.6,107.7 L126.6,106.3 L131.5,108.7 L136.9,115.1 L141.6,131.8 L147.7,135.6 L154.1,143.1 L152.8,144.9 L156.3,152.9 L152.1,150.4 L147.8,150.7 L151.9,151.3 L158.0,158.1 L159.0,161.5 L155.6,166.4 L158.1,168.3 L161.2,165.2 L166.6,165.4 L170.2,166.7 L173.9,170.8 L174.2,174.8 L172.2,182.2 L169.5,184.7 L168.6,184.4 L169.0,186.9 L168.1,187.7 L165.5,187.6 L163.3,189.1 L164.9,189.9 L164.8,192.1 L159.7,194.2 L160.9,193.8 L164.8,196.2 L170.6,196.1 L170.4,199.6 L166.5,202.2 L165.6,204.6 L163.5,204.4 L157.3,207.7 L152.8,206.7 L146.5,207.7 L139.5,205.1 L140.4,206.6 L138.4,208.0 L132.8,208.4 L133.6,210.3 L132.8,210.8 L128.4,210.9 L122.2,208.6 L117.7,210.2 L114.7,217.8 L113.5,218.0 L109.1,214.8 L103.2,216.8 L99.0,221.7 L95.5,220.4 L93.4,221.4 L93.1,219.9 L96.5,217.7 L101.4,212.1 L104.8,207.5 L105.5,203.6 L108.0,202.6 L109.2,199.5 L120.7,199.2 L128.4,188.9 Z M86.9,143.6 L82.2,144.2 L82.2,142.2 L78.2,137.5 L74.8,142.8 L71.7,142.6 L69.0,141.2 L65.8,136.6 L70.1,133.9 L68.3,131.9 L72.3,130.5 L74.2,125.5 L75.9,124.3 L77.2,125.1 L78.9,122.6 L84.1,121.4 L87.9,121.9 L92.4,129.6 L90.6,133.0 L93.9,132.6 L94.5,133.4 L95.0,136.8 L92.9,134.8 L93.1,138.0 L94.1,138.2 L93.6,140.1 L91.2,140.8 L89.1,144.4 Z M87.1,61.3 L85.7,64.6 L83.2,66.5 L84.9,66.8 L84.6,67.9 L78.2,72.9 L77.4,71.9 L79.9,69.8 L77.7,68.2 L78.5,67.3 L77.4,64.8 L78.2,63.9 L81.3,64.6 L80.8,62.5 L86.7,58.6 Z M87.7,77.8 L87.8,81.5 L92.9,82.7 L89.8,86.7 L88.9,83.7 L85.8,83.6 L84.4,81.2 L81.9,80.6 L80.9,79.0 L85.4,74.7 L86.6,75.0 Z M140.7,19.4 L142.4,21.7 L143.5,21.2 L140.8,32.1 L140.9,26.8 L138.8,26.4 L136.8,24.3 L140.0,23.3 L139.2,20.7 L137.8,20.2 L140.1,18.0 Z M91.7,100.2 L85.9,101.2 L87.8,97.4 L85.9,96.2 L86.2,95.0 L88.2,94.4 L91.9,97.4 Z M109.1,158.4 L110.7,158.7 L110.3,159.5 L107.1,162.0 L105.2,159.6 L105.0,157.2 L107.8,156.6 Z M87.9,108.1 L88.7,112.7 L85.9,114.4 L86.2,111.2 L83.9,112.6 L84.2,110.5 Z M121.6,48.4 L124.2,49.4 L124.5,50.8 L120.0,50.5 L119.5,49.0 L118.5,49.6 L118.8,46.5 L121.6,47.1 Z"
+  },
+  {
+    "name": "MANCHESTER",
+    "countryCode": "GBR",
+    "countryName": "UNITED KINGDOM",
+    "flag": "🇬🇧",
+    "lat": 53.4808,
+    "lon": -2.2426,
+    "continent": "Europe",
+    "subregion": "Northern Europe",
+    "borders": "Northwest England • Industrial Revolution & Football Hub",
+    "capital": "Located in UNITED KINGDOM (🇬🇧)",
+    "widthKm": 627,
+    "pinX": 130.5,
+    "pinY": 155.3,
+    "svg": "M125.8,191.1 L119.0,195.6 L116.0,195.2 L112.4,191.7 L108.6,192.2 L110.2,190.4 L107.0,188.9 L104.6,188.9 L101.3,191.1 L98.9,189.5 L97.4,186.2 L99.3,184.0 L107.0,180.1 L109.6,177.6 L111.4,173.4 L110.4,172.2 L110.1,166.2 L103.7,168.3 L108.3,161.8 L113.8,158.7 L118.6,157.9 L121.1,159.6 L120.4,157.0 L121.5,156.4 L123.1,158.7 L124.9,158.6 L123.1,157.9 L121.5,154.7 L123.0,150.5 L121.7,148.4 L123.3,146.1 L123.6,141.9 L120.4,142.9 L115.7,134.5 L117.1,130.4 L119.2,127.9 L121.8,127.0 L116.1,127.1 L111.7,130.3 L109.8,130.3 L108.4,129.0 L105.5,130.7 L102.3,129.0 L101.2,132.1 L98.8,128.8 L98.4,126.4 L99.6,126.3 L103.8,116.4 L101.4,112.6 L102.2,108.2 L104.8,108.0 L102.0,105.8 L102.4,103.8 L97.9,109.0 L97.8,105.5 L100.3,102.3 L96.1,106.4 L94.2,118.6 L93.2,119.8 L91.8,119.1 L92.8,114.1 L94.7,110.6 L93.4,110.4 L94.4,102.0 L98.2,92.2 L93.1,96.6 L90.8,96.0 L89.6,93.5 L87.8,93.0 L92.2,90.4 L90.8,89.4 L93.8,85.6 L94.1,83.1 L91.3,79.1 L93.9,77.0 L92.1,75.1 L92.6,72.6 L93.6,70.6 L98.5,70.6 L95.7,66.9 L96.5,63.7 L100.2,63.2 L99.4,58.9 L101.1,56.9 L103.4,58.5 L105.8,57.3 L106.5,58.4 L121.6,56.0 L119.9,62.1 L111.3,69.1 L110.8,71.1 L112.8,71.8 L109.7,76.4 L119.0,73.9 L132.3,74.0 L134.6,75.7 L135.6,78.4 L127.7,94.5 L125.7,96.9 L118.8,99.8 L123.4,99.2 L126.0,100.7 L125.8,101.9 L118.2,106.3 L113.5,105.0 L115.5,106.5 L121.6,107.7 L126.6,106.3 L131.5,108.7 L136.9,115.1 L141.6,131.8 L147.7,135.6 L154.1,143.1 L152.8,144.9 L156.3,152.9 L152.1,150.4 L147.8,150.7 L151.9,151.3 L158.0,158.1 L159.0,161.5 L155.6,166.4 L158.1,168.3 L161.2,165.2 L166.6,165.4 L170.2,166.7 L173.9,170.8 L174.2,174.8 L172.2,182.2 L169.5,184.7 L168.6,184.4 L169.0,186.9 L168.1,187.7 L165.5,187.6 L163.3,189.1 L164.9,189.9 L164.8,192.1 L159.7,194.2 L160.9,193.8 L164.8,196.2 L170.6,196.1 L170.4,199.6 L166.5,202.2 L165.6,204.6 L163.5,204.4 L157.3,207.7 L152.8,206.7 L146.5,207.7 L139.5,205.1 L140.4,206.6 L138.4,208.0 L132.8,208.4 L133.6,210.3 L132.8,210.8 L128.4,210.9 L122.2,208.6 L117.7,210.2 L114.7,217.8 L113.5,218.0 L109.1,214.8 L103.2,216.8 L99.0,221.7 L95.5,220.4 L93.4,221.4 L93.1,219.9 L96.5,217.7 L101.4,212.1 L104.8,207.5 L105.5,203.6 L108.0,202.6 L109.2,199.5 L120.7,199.2 L128.4,188.9 Z M86.9,143.6 L82.2,144.2 L82.2,142.2 L78.2,137.5 L74.8,142.8 L71.7,142.6 L69.0,141.2 L65.8,136.6 L70.1,133.9 L68.3,131.9 L72.3,130.5 L74.2,125.5 L75.9,124.3 L77.2,125.1 L78.9,122.6 L84.1,121.4 L87.9,121.9 L92.4,129.6 L90.6,133.0 L93.9,132.6 L94.5,133.4 L95.0,136.8 L92.9,134.8 L93.1,138.0 L94.1,138.2 L93.6,140.1 L91.2,140.8 L89.1,144.4 Z M87.1,61.3 L85.7,64.6 L83.2,66.5 L84.9,66.8 L84.6,67.9 L78.2,72.9 L77.4,71.9 L79.9,69.8 L77.7,68.2 L78.5,67.3 L77.4,64.8 L78.2,63.9 L81.3,64.6 L80.8,62.5 L86.7,58.6 Z M87.7,77.8 L87.8,81.5 L92.9,82.7 L89.8,86.7 L88.9,83.7 L85.8,83.6 L84.4,81.2 L81.9,80.6 L80.9,79.0 L85.4,74.7 L86.6,75.0 Z M140.7,19.4 L142.4,21.7 L143.5,21.2 L140.8,32.1 L140.9,26.8 L138.8,26.4 L136.8,24.3 L140.0,23.3 L139.2,20.7 L137.8,20.2 L140.1,18.0 Z M91.7,100.2 L85.9,101.2 L87.8,97.4 L85.9,96.2 L86.2,95.0 L88.2,94.4 L91.9,97.4 Z M109.1,158.4 L110.7,158.7 L110.3,159.5 L107.1,162.0 L105.2,159.6 L105.0,157.2 L107.8,156.6 Z M87.9,108.1 L88.7,112.7 L85.9,114.4 L86.2,111.2 L83.9,112.6 L84.2,110.5 Z M121.6,48.4 L124.2,49.4 L124.5,50.8 L120.0,50.5 L119.5,49.0 L118.5,49.6 L118.8,46.5 L121.6,47.1 Z"
+  },
+  {
+    "name": "PARIS",
+    "countryCode": "FRA",
+    "countryName": "FRANCE",
+    "flag": "🇫🇷",
+    "lat": 48.8566,
+    "lon": 2.3522,
+    "continent": "Europe",
+    "subregion": "Western Europe",
+    "borders": "River Seine • Eiffel Tower, Louvre & Arc de Triomphe",
+    "capital": "Located in FRANCE (🇫🇷)",
+    "widthKm": 1102,
+    "pinX": 119.4,
+    "pinY": 66.1,
+    "svg": "M194.3,92.2 L190.5,95.4 L188.5,95.5 L187.5,94.3 L185.1,95.0 L184.2,96.2 L185.6,97.7 L180.8,103.8 L177.8,105.4 L177.2,109.4 L173.6,112.4 L172.3,115.5 L172.7,119.2 L170.9,120.5 L171.4,122.0 L174.2,121.0 L175.2,119.8 L174.7,118.1 L177.4,116.1 L182.4,116.6 L182.3,121.6 L185.9,126.5 L182.8,128.8 L182.6,130.3 L187.8,137.3 L186.7,140.6 L183.3,142.8 L181.2,142.6 L180.4,144.2 L181.8,147.2 L185.5,149.1 L186.0,151.4 L183.3,155.6 L184.2,159.2 L190.1,163.3 L194.7,162.8 L195.2,164.4 L192.4,168.9 L192.6,171.0 L188.2,173.2 L181.5,179.1 L179.5,182.7 L173.0,185.3 L168.6,184.7 L162.9,182.1 L161.6,179.7 L158.1,179.2 L157.9,177.6 L153.0,179.1 L146.0,176.9 L143.6,174.5 L141.6,175.2 L132.3,182.8 L129.3,188.5 L129.9,195.2 L131.6,198.5 L127.0,198.0 L124.3,198.9 L123.6,200.3 L117.2,198.7 L114.8,200.1 L110.2,197.0 L110.2,194.9 L107.2,194.1 L106.2,195.1 L105.1,193.1 L96.7,190.1 L95.4,190.1 L94.8,193.2 L85.3,193.2 L81.6,190.4 L77.5,190.9 L75.0,188.0 L69.1,186.3 L67.3,184.7 L66.3,186.0 L65.0,185.7 L65.8,181.8 L61.4,180.4 L60.3,178.4 L62.6,177.7 L64.7,175.1 L68.1,154.6 L70.5,152.0 L69.4,150.4 L68.1,152.4 L70.4,134.6 L74.1,137.7 L76.0,143.6 L78.0,145.6 L74.6,135.9 L68.8,130.8 L68.6,129.7 L71.2,130.3 L69.5,118.6 L66.0,117.8 L60.4,114.4 L56.5,108.3 L57.1,103.6 L54.5,101.0 L57.0,98.7 L61.0,99.9 L57.7,98.0 L50.2,97.9 L49.8,96.5 L51.3,94.7 L49.5,93.5 L46.4,93.8 L46.1,91.5 L43.6,92.0 L40.8,90.1 L36.8,89.7 L30.3,87.1 L24.4,87.4 L22.8,84.4 L19.2,83.0 L24.2,80.3 L20.6,77.8 L25.4,77.5 L23.3,76.2 L18.6,76.3 L18.0,74.5 L18.6,72.6 L21.3,71.0 L32.9,69.1 L39.8,66.4 L43.1,67.5 L47.5,72.7 L51.0,70.4 L56.2,70.5 L57.3,71.8 L58.7,69.4 L59.9,70.8 L66.2,70.3 L63.5,67.2 L63.3,59.0 L60.0,53.1 L59.4,49.1 L67.9,49.2 L69.6,55.2 L83.5,57.1 L91.8,53.9 L87.7,52.7 L88.5,48.7 L94.6,45.4 L103.6,42.6 L108.5,37.4 L108.4,27.3 L109.7,24.3 L113.1,22.2 L121.8,20.0 L122.8,24.5 L125.2,27.1 L126.3,27.9 L130.1,26.5 L132.5,31.6 L137.1,32.7 L138.4,36.3 L142.1,35.6 L145.3,37.5 L145.3,43.4 L150.6,43.4 L154.5,39.4 L154.1,43.4 L155.2,46.9 L161.1,49.2 L164.3,52.6 L168.3,52.1 L171.5,54.0 L174.8,53.0 L178.9,55.0 L181.8,59.9 L184.0,58.9 L186.1,60.8 L192.0,60.0 L194.3,61.9 L201.7,63.7 L201.8,65.5 L197.5,70.7 L194.4,80.5 L193.1,90.5 Z M220.9,190.8 L221.9,204.7 L216.7,220.0 L211.3,215.8 L212.5,213.5 L210.1,212.3 L210.4,208.9 L208.7,208.8 L209.8,205.4 L208.2,204.0 L207.9,202.9 L209.4,201.5 L207.9,200.0 L211.4,194.8 L216.0,192.3 L218.5,192.7 L219.2,186.4 L220.7,187.2 Z"
+  },
+  {
+    "name": "LYON",
+    "countryCode": "FRA",
+    "countryName": "FRANCE",
+    "flag": "🇫🇷",
+    "lat": 45.764,
+    "lon": 4.8357,
+    "continent": "Europe",
+    "subregion": "Western Europe",
+    "borders": "Confluence of Rhone & Saone • Gastronomy Capital",
+    "capital": "Located in FRANCE (🇫🇷)",
+    "widthKm": 1102,
+    "pinX": 154.7,
+    "pinY": 129.8,
+    "svg": "M194.3,92.2 L190.5,95.4 L188.5,95.5 L187.5,94.3 L185.1,95.0 L184.2,96.2 L185.6,97.7 L180.8,103.8 L177.8,105.4 L177.2,109.4 L173.6,112.4 L172.3,115.5 L172.7,119.2 L170.9,120.5 L171.4,122.0 L174.2,121.0 L175.2,119.8 L174.7,118.1 L177.4,116.1 L182.4,116.6 L182.3,121.6 L185.9,126.5 L182.8,128.8 L182.6,130.3 L187.8,137.3 L186.7,140.6 L183.3,142.8 L181.2,142.6 L180.4,144.2 L181.8,147.2 L185.5,149.1 L186.0,151.4 L183.3,155.6 L184.2,159.2 L190.1,163.3 L194.7,162.8 L195.2,164.4 L192.4,168.9 L192.6,171.0 L188.2,173.2 L181.5,179.1 L179.5,182.7 L173.0,185.3 L168.6,184.7 L162.9,182.1 L161.6,179.7 L158.1,179.2 L157.9,177.6 L153.0,179.1 L146.0,176.9 L143.6,174.5 L141.6,175.2 L132.3,182.8 L129.3,188.5 L129.9,195.2 L131.6,198.5 L127.0,198.0 L124.3,198.9 L123.6,200.3 L117.2,198.7 L114.8,200.1 L110.2,197.0 L110.2,194.9 L107.2,194.1 L106.2,195.1 L105.1,193.1 L96.7,190.1 L95.4,190.1 L94.8,193.2 L85.3,193.2 L81.6,190.4 L77.5,190.9 L75.0,188.0 L69.1,186.3 L67.3,184.7 L66.3,186.0 L65.0,185.7 L65.8,181.8 L61.4,180.4 L60.3,178.4 L62.6,177.7 L64.7,175.1 L68.1,154.6 L70.5,152.0 L69.4,150.4 L68.1,152.4 L70.4,134.6 L74.1,137.7 L76.0,143.6 L78.0,145.6 L74.6,135.9 L68.8,130.8 L68.6,129.7 L71.2,130.3 L69.5,118.6 L66.0,117.8 L60.4,114.4 L56.5,108.3 L57.1,103.6 L54.5,101.0 L57.0,98.7 L61.0,99.9 L57.7,98.0 L50.2,97.9 L49.8,96.5 L51.3,94.7 L49.5,93.5 L46.4,93.8 L46.1,91.5 L43.6,92.0 L40.8,90.1 L36.8,89.7 L30.3,87.1 L24.4,87.4 L22.8,84.4 L19.2,83.0 L24.2,80.3 L20.6,77.8 L25.4,77.5 L23.3,76.2 L18.6,76.3 L18.0,74.5 L18.6,72.6 L21.3,71.0 L32.9,69.1 L39.8,66.4 L43.1,67.5 L47.5,72.7 L51.0,70.4 L56.2,70.5 L57.3,71.8 L58.7,69.4 L59.9,70.8 L66.2,70.3 L63.5,67.2 L63.3,59.0 L60.0,53.1 L59.4,49.1 L67.9,49.2 L69.6,55.2 L83.5,57.1 L91.8,53.9 L87.7,52.7 L88.5,48.7 L94.6,45.4 L103.6,42.6 L108.5,37.4 L108.4,27.3 L109.7,24.3 L113.1,22.2 L121.8,20.0 L122.8,24.5 L125.2,27.1 L126.3,27.9 L130.1,26.5 L132.5,31.6 L137.1,32.7 L138.4,36.3 L142.1,35.6 L145.3,37.5 L145.3,43.4 L150.6,43.4 L154.5,39.4 L154.1,43.4 L155.2,46.9 L161.1,49.2 L164.3,52.6 L168.3,52.1 L171.5,54.0 L174.8,53.0 L178.9,55.0 L181.8,59.9 L184.0,58.9 L186.1,60.8 L192.0,60.0 L194.3,61.9 L201.7,63.7 L201.8,65.5 L197.5,70.7 L194.4,80.5 L193.1,90.5 Z M220.9,190.8 L221.9,204.7 L216.7,220.0 L211.3,215.8 L212.5,213.5 L210.1,212.3 L210.4,208.9 L208.7,208.8 L209.8,205.4 L208.2,204.0 L207.9,202.9 L209.4,201.5 L207.9,200.0 L211.4,194.8 L216.0,192.3 L218.5,192.7 L219.2,186.4 L220.7,187.2 Z"
+  },
+  {
+    "name": "NICE",
+    "countryCode": "FRA",
+    "countryName": "FRANCE",
+    "flag": "🇫🇷",
+    "lat": 43.7102,
+    "lon": 7.262,
+    "continent": "Europe",
+    "subregion": "Western Europe",
+    "borders": "French Riviera (Cote d'Azur) • Promenade des Anglais",
+    "capital": "Located in FRANCE (🇫🇷)",
+    "widthKm": 1102,
+    "pinX": 189.3,
+    "pinY": 172.1,
+    "svg": "M194.3,92.2 L190.5,95.4 L188.5,95.5 L187.5,94.3 L185.1,95.0 L184.2,96.2 L185.6,97.7 L180.8,103.8 L177.8,105.4 L177.2,109.4 L173.6,112.4 L172.3,115.5 L172.7,119.2 L170.9,120.5 L171.4,122.0 L174.2,121.0 L175.2,119.8 L174.7,118.1 L177.4,116.1 L182.4,116.6 L182.3,121.6 L185.9,126.5 L182.8,128.8 L182.6,130.3 L187.8,137.3 L186.7,140.6 L183.3,142.8 L181.2,142.6 L180.4,144.2 L181.8,147.2 L185.5,149.1 L186.0,151.4 L183.3,155.6 L184.2,159.2 L190.1,163.3 L194.7,162.8 L195.2,164.4 L192.4,168.9 L192.6,171.0 L188.2,173.2 L181.5,179.1 L179.5,182.7 L173.0,185.3 L168.6,184.7 L162.9,182.1 L161.6,179.7 L158.1,179.2 L157.9,177.6 L153.0,179.1 L146.0,176.9 L143.6,174.5 L141.6,175.2 L132.3,182.8 L129.3,188.5 L129.9,195.2 L131.6,198.5 L127.0,198.0 L124.3,198.9 L123.6,200.3 L117.2,198.7 L114.8,200.1 L110.2,197.0 L110.2,194.9 L107.2,194.1 L106.2,195.1 L105.1,193.1 L96.7,190.1 L95.4,190.1 L94.8,193.2 L85.3,193.2 L81.6,190.4 L77.5,190.9 L75.0,188.0 L69.1,186.3 L67.3,184.7 L66.3,186.0 L65.0,185.7 L65.8,181.8 L61.4,180.4 L60.3,178.4 L62.6,177.7 L64.7,175.1 L68.1,154.6 L70.5,152.0 L69.4,150.4 L68.1,152.4 L70.4,134.6 L74.1,137.7 L76.0,143.6 L78.0,145.6 L74.6,135.9 L68.8,130.8 L68.6,129.7 L71.2,130.3 L69.5,118.6 L66.0,117.8 L60.4,114.4 L56.5,108.3 L57.1,103.6 L54.5,101.0 L57.0,98.7 L61.0,99.9 L57.7,98.0 L50.2,97.9 L49.8,96.5 L51.3,94.7 L49.5,93.5 L46.4,93.8 L46.1,91.5 L43.6,92.0 L40.8,90.1 L36.8,89.7 L30.3,87.1 L24.4,87.4 L22.8,84.4 L19.2,83.0 L24.2,80.3 L20.6,77.8 L25.4,77.5 L23.3,76.2 L18.6,76.3 L18.0,74.5 L18.6,72.6 L21.3,71.0 L32.9,69.1 L39.8,66.4 L43.1,67.5 L47.5,72.7 L51.0,70.4 L56.2,70.5 L57.3,71.8 L58.7,69.4 L59.9,70.8 L66.2,70.3 L63.5,67.2 L63.3,59.0 L60.0,53.1 L59.4,49.1 L67.9,49.2 L69.6,55.2 L83.5,57.1 L91.8,53.9 L87.7,52.7 L88.5,48.7 L94.6,45.4 L103.6,42.6 L108.5,37.4 L108.4,27.3 L109.7,24.3 L113.1,22.2 L121.8,20.0 L122.8,24.5 L125.2,27.1 L126.3,27.9 L130.1,26.5 L132.5,31.6 L137.1,32.7 L138.4,36.3 L142.1,35.6 L145.3,37.5 L145.3,43.4 L150.6,43.4 L154.5,39.4 L154.1,43.4 L155.2,46.9 L161.1,49.2 L164.3,52.6 L168.3,52.1 L171.5,54.0 L174.8,53.0 L178.9,55.0 L181.8,59.9 L184.0,58.9 L186.1,60.8 L192.0,60.0 L194.3,61.9 L201.7,63.7 L201.8,65.5 L197.5,70.7 L194.4,80.5 L193.1,90.5 Z M220.9,190.8 L221.9,204.7 L216.7,220.0 L211.3,215.8 L212.5,213.5 L210.1,212.3 L210.4,208.9 L208.7,208.8 L209.8,205.4 L208.2,204.0 L207.9,202.9 L209.4,201.5 L207.9,200.0 L211.4,194.8 L216.0,192.3 L218.5,192.7 L219.2,186.4 L220.7,187.2 Z"
+  },
+  {
+    "name": "ROME",
+    "countryCode": "ITA",
+    "countryName": "ITALY",
+    "flag": "🇮🇹",
+    "lat": 41.9028,
+    "lon": 12.4964,
+    "continent": "Europe",
+    "subregion": "Southern Europe",
+    "borders": "Tiber River • Colosseum, Pantheon & Vatican City",
+    "capital": "Located in ITALY (🇮🇹)",
+    "widthKm": 983,
+    "pinX": 119.1,
+    "pinY": 119.7,
+    "svg": "M39.1,40.7 L40.7,41.6 L46.7,39.7 L50.3,40.8 L53.3,38.9 L55.2,36.1 L54.8,33.9 L59.6,30.5 L60.1,34.4 L62.8,37.1 L65.4,37.7 L64.8,39.3 L67.4,42.6 L68.4,42.3 L68.1,38.9 L71.7,33.6 L72.5,29.5 L74.3,29.8 L75.8,33.2 L81.8,32.1 L83.8,34.8 L84.8,34.3 L83.2,29.8 L83.9,27.5 L88.9,28.4 L89.3,22.3 L97.2,24.0 L100.8,20.1 L108.6,19.9 L114.3,18.0 L114.1,20.9 L117.5,25.4 L136.7,29.0 L132.0,34.1 L135.7,35.8 L133.6,39.5 L135.3,39.6 L135.0,42.9 L139.3,46.8 L137.0,47.3 L137.9,46.6 L135.7,43.7 L133.3,44.9 L129.5,43.7 L126.9,46.4 L119.1,49.8 L118.2,49.7 L119.1,48.1 L115.9,50.1 L115.2,54.1 L119.5,59.5 L117.5,62.8 L115.9,62.2 L115.5,64.3 L117.7,74.1 L122.0,78.6 L134.7,86.9 L141.2,104.2 L149.0,112.9 L158.2,119.0 L172.7,119.8 L172.5,122.5 L169.1,125.2 L168.9,127.3 L186.4,136.1 L191.9,140.5 L198.9,144.1 L206.3,152.7 L206.6,154.9 L204.6,160.5 L200.7,158.2 L197.6,151.5 L190.7,150.3 L187.6,147.1 L183.9,148.0 L180.1,154.3 L177.9,161.9 L179.0,164.1 L182.4,165.3 L186.6,169.2 L187.5,176.7 L186.4,178.2 L184.2,177.8 L179.3,180.5 L178.3,188.2 L174.4,191.3 L171.1,197.4 L166.3,197.4 L165.1,195.6 L165.1,192.8 L167.7,190.3 L168.9,186.8 L168.5,184.2 L169.9,182.3 L173.2,181.3 L173.4,177.8 L171.9,176.2 L170.7,169.7 L165.8,157.2 L164.2,156.0 L160.0,155.6 L155.0,152.3 L154.9,147.8 L152.3,143.9 L146.1,145.2 L147.8,142.7 L145.6,141.0 L141.7,141.1 L137.2,132.7 L130.1,131.7 L127.8,132.6 L124.3,129.3 L121.1,128.2 L113.0,118.9 L109.0,116.1 L106.6,112.1 L101.6,109.4 L98.8,109.6 L100.0,108.8 L99.7,107.2 L93.0,99.4 L90.2,98.8 L90.3,94.1 L87.3,88.0 L85.4,79.5 L72.3,72.2 L64.6,70.2 L61.5,71.7 L53.5,80.9 L46.0,83.1 L45.9,81.1 L48.7,76.9 L48.1,75.3 L43.5,75.8 L37.3,71.9 L36.5,68.5 L39.3,64.4 L38.7,62.3 L35.0,60.4 L33.5,57.5 L34.3,56.0 L36.5,56.2 L40.0,54.2 L40.9,51.4 L35.8,44.3 L36.0,42.9 Z M164.1,191.9 L159.1,200.5 L157.2,206.9 L160.0,214.8 L157.4,219.0 L157.3,222.0 L152.4,221.6 L148.4,219.8 L144.9,215.0 L138.2,213.2 L125.4,204.7 L121.2,204.2 L118.2,199.8 L119.9,195.2 L122.6,192.7 L125.1,195.6 L128.8,192.5 L130.7,192.5 L138.0,196.6 L148.5,195.4 L152.6,193.0 L157.4,193.2 L163.0,190.5 L165.0,191.0 Z M77.3,139.7 L79.8,147.2 L77.4,151.7 L78.4,156.7 L76.2,173.4 L75.1,173.9 L68.9,171.9 L67.5,177.3 L66.3,178.3 L62.9,178.1 L59.5,172.6 L59.3,167.2 L61.4,160.2 L59.4,158.6 L60.3,151.3 L56.2,144.2 L56.7,139.1 L58.7,140.4 L61.8,140.3 L65.4,138.4 L71.4,132.3 L77.0,137.0 L76.1,138.7 Z"
+  },
+  {
+    "name": "MILAN",
+    "countryCode": "ITA",
+    "countryName": "ITALY",
+    "flag": "🇮🇹",
+    "lat": 45.4642,
+    "lon": 9.19,
+    "continent": "Europe",
+    "subregion": "Southern Europe",
+    "borders": "Lombardy • Duomo Cathedral & Global Fashion Capital",
+    "capital": "Located in ITALY (🇮🇹)",
+    "widthKm": 983,
+    "pinX": 70.8,
+    "pinY": 49.8,
+    "svg": "M39.1,40.7 L40.7,41.6 L46.7,39.7 L50.3,40.8 L53.3,38.9 L55.2,36.1 L54.8,33.9 L59.6,30.5 L60.1,34.4 L62.8,37.1 L65.4,37.7 L64.8,39.3 L67.4,42.6 L68.4,42.3 L68.1,38.9 L71.7,33.6 L72.5,29.5 L74.3,29.8 L75.8,33.2 L81.8,32.1 L83.8,34.8 L84.8,34.3 L83.2,29.8 L83.9,27.5 L88.9,28.4 L89.3,22.3 L97.2,24.0 L100.8,20.1 L108.6,19.9 L114.3,18.0 L114.1,20.9 L117.5,25.4 L136.7,29.0 L132.0,34.1 L135.7,35.8 L133.6,39.5 L135.3,39.6 L135.0,42.9 L139.3,46.8 L137.0,47.3 L137.9,46.6 L135.7,43.7 L133.3,44.9 L129.5,43.7 L126.9,46.4 L119.1,49.8 L118.2,49.7 L119.1,48.1 L115.9,50.1 L115.2,54.1 L119.5,59.5 L117.5,62.8 L115.9,62.2 L115.5,64.3 L117.7,74.1 L122.0,78.6 L134.7,86.9 L141.2,104.2 L149.0,112.9 L158.2,119.0 L172.7,119.8 L172.5,122.5 L169.1,125.2 L168.9,127.3 L186.4,136.1 L191.9,140.5 L198.9,144.1 L206.3,152.7 L206.6,154.9 L204.6,160.5 L200.7,158.2 L197.6,151.5 L190.7,150.3 L187.6,147.1 L183.9,148.0 L180.1,154.3 L177.9,161.9 L179.0,164.1 L182.4,165.3 L186.6,169.2 L187.5,176.7 L186.4,178.2 L184.2,177.8 L179.3,180.5 L178.3,188.2 L174.4,191.3 L171.1,197.4 L166.3,197.4 L165.1,195.6 L165.1,192.8 L167.7,190.3 L168.9,186.8 L168.5,184.2 L169.9,182.3 L173.2,181.3 L173.4,177.8 L171.9,176.2 L170.7,169.7 L165.8,157.2 L164.2,156.0 L160.0,155.6 L155.0,152.3 L154.9,147.8 L152.3,143.9 L146.1,145.2 L147.8,142.7 L145.6,141.0 L141.7,141.1 L137.2,132.7 L130.1,131.7 L127.8,132.6 L124.3,129.3 L121.1,128.2 L113.0,118.9 L109.0,116.1 L106.6,112.1 L101.6,109.4 L98.8,109.6 L100.0,108.8 L99.7,107.2 L93.0,99.4 L90.2,98.8 L90.3,94.1 L87.3,88.0 L85.4,79.5 L72.3,72.2 L64.6,70.2 L61.5,71.7 L53.5,80.9 L46.0,83.1 L45.9,81.1 L48.7,76.9 L48.1,75.3 L43.5,75.8 L37.3,71.9 L36.5,68.5 L39.3,64.4 L38.7,62.3 L35.0,60.4 L33.5,57.5 L34.3,56.0 L36.5,56.2 L40.0,54.2 L40.9,51.4 L35.8,44.3 L36.0,42.9 Z M164.1,191.9 L159.1,200.5 L157.2,206.9 L160.0,214.8 L157.4,219.0 L157.3,222.0 L152.4,221.6 L148.4,219.8 L144.9,215.0 L138.2,213.2 L125.4,204.7 L121.2,204.2 L118.2,199.8 L119.9,195.2 L122.6,192.7 L125.1,195.6 L128.8,192.5 L130.7,192.5 L138.0,196.6 L148.5,195.4 L152.6,193.0 L157.4,193.2 L163.0,190.5 L165.0,191.0 Z M77.3,139.7 L79.8,147.2 L77.4,151.7 L78.4,156.7 L76.2,173.4 L75.1,173.9 L68.9,171.9 L67.5,177.3 L66.3,178.3 L62.9,178.1 L59.5,172.6 L59.3,167.2 L61.4,160.2 L59.4,158.6 L60.3,151.3 L56.2,144.2 L56.7,139.1 L58.7,140.4 L61.8,140.3 L65.4,138.4 L71.4,132.3 L77.0,137.0 L76.1,138.7 Z"
+  },
+  {
+    "name": "VENICE",
+    "countryCode": "ITA",
+    "countryName": "ITALY",
+    "flag": "🇮🇹",
+    "lat": 45.4408,
+    "lon": 12.3155,
+    "continent": "Europe",
+    "subregion": "Southern Europe",
+    "borders": "Adriatic Lagoon • Grand Canal, Gondolas & St. Mark's",
+    "capital": "Located in ITALY (🇮🇹)",
+    "widthKm": 983,
+    "pinX": 116.5,
+    "pinY": 50.2,
+    "svg": "M39.1,40.7 L40.7,41.6 L46.7,39.7 L50.3,40.8 L53.3,38.9 L55.2,36.1 L54.8,33.9 L59.6,30.5 L60.1,34.4 L62.8,37.1 L65.4,37.7 L64.8,39.3 L67.4,42.6 L68.4,42.3 L68.1,38.9 L71.7,33.6 L72.5,29.5 L74.3,29.8 L75.8,33.2 L81.8,32.1 L83.8,34.8 L84.8,34.3 L83.2,29.8 L83.9,27.5 L88.9,28.4 L89.3,22.3 L97.2,24.0 L100.8,20.1 L108.6,19.9 L114.3,18.0 L114.1,20.9 L117.5,25.4 L136.7,29.0 L132.0,34.1 L135.7,35.8 L133.6,39.5 L135.3,39.6 L135.0,42.9 L139.3,46.8 L137.0,47.3 L137.9,46.6 L135.7,43.7 L133.3,44.9 L129.5,43.7 L126.9,46.4 L119.1,49.8 L118.2,49.7 L119.1,48.1 L115.9,50.1 L115.2,54.1 L119.5,59.5 L117.5,62.8 L115.9,62.2 L115.5,64.3 L117.7,74.1 L122.0,78.6 L134.7,86.9 L141.2,104.2 L149.0,112.9 L158.2,119.0 L172.7,119.8 L172.5,122.5 L169.1,125.2 L168.9,127.3 L186.4,136.1 L191.9,140.5 L198.9,144.1 L206.3,152.7 L206.6,154.9 L204.6,160.5 L200.7,158.2 L197.6,151.5 L190.7,150.3 L187.6,147.1 L183.9,148.0 L180.1,154.3 L177.9,161.9 L179.0,164.1 L182.4,165.3 L186.6,169.2 L187.5,176.7 L186.4,178.2 L184.2,177.8 L179.3,180.5 L178.3,188.2 L174.4,191.3 L171.1,197.4 L166.3,197.4 L165.1,195.6 L165.1,192.8 L167.7,190.3 L168.9,186.8 L168.5,184.2 L169.9,182.3 L173.2,181.3 L173.4,177.8 L171.9,176.2 L170.7,169.7 L165.8,157.2 L164.2,156.0 L160.0,155.6 L155.0,152.3 L154.9,147.8 L152.3,143.9 L146.1,145.2 L147.8,142.7 L145.6,141.0 L141.7,141.1 L137.2,132.7 L130.1,131.7 L127.8,132.6 L124.3,129.3 L121.1,128.2 L113.0,118.9 L109.0,116.1 L106.6,112.1 L101.6,109.4 L98.8,109.6 L100.0,108.8 L99.7,107.2 L93.0,99.4 L90.2,98.8 L90.3,94.1 L87.3,88.0 L85.4,79.5 L72.3,72.2 L64.6,70.2 L61.5,71.7 L53.5,80.9 L46.0,83.1 L45.9,81.1 L48.7,76.9 L48.1,75.3 L43.5,75.8 L37.3,71.9 L36.5,68.5 L39.3,64.4 L38.7,62.3 L35.0,60.4 L33.5,57.5 L34.3,56.0 L36.5,56.2 L40.0,54.2 L40.9,51.4 L35.8,44.3 L36.0,42.9 Z M164.1,191.9 L159.1,200.5 L157.2,206.9 L160.0,214.8 L157.4,219.0 L157.3,222.0 L152.4,221.6 L148.4,219.8 L144.9,215.0 L138.2,213.2 L125.4,204.7 L121.2,204.2 L118.2,199.8 L119.9,195.2 L122.6,192.7 L125.1,195.6 L128.8,192.5 L130.7,192.5 L138.0,196.6 L148.5,195.4 L152.6,193.0 L157.4,193.2 L163.0,190.5 L165.0,191.0 Z M77.3,139.7 L79.8,147.2 L77.4,151.7 L78.4,156.7 L76.2,173.4 L75.1,173.9 L68.9,171.9 L67.5,177.3 L66.3,178.3 L62.9,178.1 L59.5,172.6 L59.3,167.2 L61.4,160.2 L59.4,158.6 L60.3,151.3 L56.2,144.2 L56.7,139.1 L58.7,140.4 L61.8,140.3 L65.4,138.4 L71.4,132.3 L77.0,137.0 L76.1,138.7 Z"
+  },
+  {
+    "name": "NAPLES",
+    "countryCode": "ITA",
+    "countryName": "ITALY",
+    "flag": "🇮🇹",
+    "lat": 40.8518,
+    "lon": 14.2681,
+    "continent": "Europe",
+    "subregion": "Southern Europe",
+    "borders": "Bay of Naples • Near Mount Vesuvius & Pompeii",
+    "capital": "Located in ITALY (🇮🇹)",
+    "widthKm": 983,
+    "pinX": 145.0,
+    "pinY": 140.3,
+    "svg": "M39.1,40.7 L40.7,41.6 L46.7,39.7 L50.3,40.8 L53.3,38.9 L55.2,36.1 L54.8,33.9 L59.6,30.5 L60.1,34.4 L62.8,37.1 L65.4,37.7 L64.8,39.3 L67.4,42.6 L68.4,42.3 L68.1,38.9 L71.7,33.6 L72.5,29.5 L74.3,29.8 L75.8,33.2 L81.8,32.1 L83.8,34.8 L84.8,34.3 L83.2,29.8 L83.9,27.5 L88.9,28.4 L89.3,22.3 L97.2,24.0 L100.8,20.1 L108.6,19.9 L114.3,18.0 L114.1,20.9 L117.5,25.4 L136.7,29.0 L132.0,34.1 L135.7,35.8 L133.6,39.5 L135.3,39.6 L135.0,42.9 L139.3,46.8 L137.0,47.3 L137.9,46.6 L135.7,43.7 L133.3,44.9 L129.5,43.7 L126.9,46.4 L119.1,49.8 L118.2,49.7 L119.1,48.1 L115.9,50.1 L115.2,54.1 L119.5,59.5 L117.5,62.8 L115.9,62.2 L115.5,64.3 L117.7,74.1 L122.0,78.6 L134.7,86.9 L141.2,104.2 L149.0,112.9 L158.2,119.0 L172.7,119.8 L172.5,122.5 L169.1,125.2 L168.9,127.3 L186.4,136.1 L191.9,140.5 L198.9,144.1 L206.3,152.7 L206.6,154.9 L204.6,160.5 L200.7,158.2 L197.6,151.5 L190.7,150.3 L187.6,147.1 L183.9,148.0 L180.1,154.3 L177.9,161.9 L179.0,164.1 L182.4,165.3 L186.6,169.2 L187.5,176.7 L186.4,178.2 L184.2,177.8 L179.3,180.5 L178.3,188.2 L174.4,191.3 L171.1,197.4 L166.3,197.4 L165.1,195.6 L165.1,192.8 L167.7,190.3 L168.9,186.8 L168.5,184.2 L169.9,182.3 L173.2,181.3 L173.4,177.8 L171.9,176.2 L170.7,169.7 L165.8,157.2 L164.2,156.0 L160.0,155.6 L155.0,152.3 L154.9,147.8 L152.3,143.9 L146.1,145.2 L147.8,142.7 L145.6,141.0 L141.7,141.1 L137.2,132.7 L130.1,131.7 L127.8,132.6 L124.3,129.3 L121.1,128.2 L113.0,118.9 L109.0,116.1 L106.6,112.1 L101.6,109.4 L98.8,109.6 L100.0,108.8 L99.7,107.2 L93.0,99.4 L90.2,98.8 L90.3,94.1 L87.3,88.0 L85.4,79.5 L72.3,72.2 L64.6,70.2 L61.5,71.7 L53.5,80.9 L46.0,83.1 L45.9,81.1 L48.7,76.9 L48.1,75.3 L43.5,75.8 L37.3,71.9 L36.5,68.5 L39.3,64.4 L38.7,62.3 L35.0,60.4 L33.5,57.5 L34.3,56.0 L36.5,56.2 L40.0,54.2 L40.9,51.4 L35.8,44.3 L36.0,42.9 Z M164.1,191.9 L159.1,200.5 L157.2,206.9 L160.0,214.8 L157.4,219.0 L157.3,222.0 L152.4,221.6 L148.4,219.8 L144.9,215.0 L138.2,213.2 L125.4,204.7 L121.2,204.2 L118.2,199.8 L119.9,195.2 L122.6,192.7 L125.1,195.6 L128.8,192.5 L130.7,192.5 L138.0,196.6 L148.5,195.4 L152.6,193.0 L157.4,193.2 L163.0,190.5 L165.0,191.0 Z M77.3,139.7 L79.8,147.2 L77.4,151.7 L78.4,156.7 L76.2,173.4 L75.1,173.9 L68.9,171.9 L67.5,177.3 L66.3,178.3 L62.9,178.1 L59.5,172.6 L59.3,167.2 L61.4,160.2 L59.4,158.6 L60.3,151.3 L56.2,144.2 L56.7,139.1 L58.7,140.4 L61.8,140.3 L65.4,138.4 L71.4,132.3 L77.0,137.0 L76.1,138.7 Z"
+  },
+  {
+    "name": "TOKYO",
+    "countryCode": "JPN",
+    "countryName": "JAPAN",
+    "flag": "🇯🇵",
+    "lat": 35.6762,
+    "lon": 139.6503,
+    "continent": "Asia",
+    "subregion": "Eastern Asia",
+    "borders": "Tokyo Bay (Honshu) • Shibuya, Tokyo Tower & Imperial Palace",
+    "capital": "Located in JAPAN (🇯🇵)",
+    "widthKm": 1642,
+    "pinX": 144.8,
+    "pinY": 121.3,
+    "svg": "M158.2,61.5 L160.2,61.1 L160.0,68.3 L163.1,72.8 L164.7,78.1 L164.6,81.9 L164.0,85.2 L160.9,88.9 L160.3,92.7 L157.2,93.4 L156.0,95.3 L156.3,106.2 L152.7,115.5 L155.2,120.8 L151.7,123.1 L150.8,126.5 L146.4,129.3 L146.3,125.3 L148.6,122.3 L146.4,121.5 L144.8,124.1 L145.0,126.9 L143.3,125.3 L141.4,125.5 L140.0,130.1 L137.9,132.4 L137.6,128.7 L138.4,128.2 L136.9,127.1 L132.3,132.7 L126.8,132.0 L122.7,132.8 L124.5,130.8 L121.9,130.2 L121.1,131.2 L121.3,128.1 L120.5,127.9 L118.2,131.8 L121.2,134.4 L121.0,135.5 L116.5,137.1 L113.0,143.5 L111.1,144.3 L109.0,143.6 L106.3,138.9 L106.0,135.9 L108.7,132.4 L102.9,130.9 L98.7,131.4 L96.4,133.4 L89.3,135.8 L85.2,136.3 L82.3,135.5 L80.8,140.6 L77.4,138.4 L70.4,139.2 L70.1,136.2 L71.1,134.8 L74.1,134.6 L87.5,123.1 L96.5,123.1 L106.6,120.6 L107.9,122.9 L111.0,123.1 L112.9,122.1 L114.5,120.4 L114.3,116.7 L119.6,110.1 L120.9,103.4 L125.0,101.9 L121.4,106.2 L122.3,109.1 L124.3,110.0 L126.6,107.9 L133.5,105.1 L138.3,98.5 L142.3,95.9 L146.1,87.6 L148.3,79.8 L147.7,77.4 L145.6,76.7 L147.9,73.2 L147.5,68.8 L150.2,67.0 L151.1,63.0 L153.1,63.3 L154.1,67.2 L155.7,66.0 L157.3,66.6 L158.4,63.2 L154.6,63.9 L154.6,62.7 L155.8,60.1 Z M180.4,32.6 L188.0,34.6 L193.5,30.4 L191.6,37.4 L193.3,41.2 L197.5,40.3 L189.7,44.4 L181.6,45.6 L177.0,50.5 L175.4,54.9 L163.5,48.8 L159.8,49.1 L156.2,51.3 L153.8,49.0 L151.9,49.0 L150.6,51.8 L157.6,56.9 L156.3,57.6 L153.4,56.8 L150.1,60.6 L148.1,60.4 L148.7,55.8 L146.4,52.0 L146.6,48.8 L151.5,44.9 L151.1,41.2 L157.5,42.5 L159.5,41.4 L159.7,37.6 L162.8,28.8 L161.3,21.7 L162.0,19.1 L164.3,18.0 L172.4,26.8 Z M72.6,143.1 L77.0,143.1 L75.7,146.6 L78.7,146.8 L78.3,148.2 L79.6,150.7 L76.7,155.1 L73.9,166.2 L71.7,165.9 L71.9,167.8 L68.4,170.3 L69.2,163.0 L68.1,162.9 L67.3,164.5 L67.6,168.6 L64.3,167.4 L63.8,166.2 L65.1,165.7 L65.3,164.1 L64.2,162.4 L64.2,159.0 L68.0,153.4 L66.8,153.0 L67.2,151.2 L64.6,147.6 L63.6,148.3 L64.0,151.0 L65.3,151.0 L65.5,152.6 L63.0,151.9 L60.6,154.0 L61.1,152.3 L59.8,148.8 L62.5,151.0 L59.0,147.0 L59.2,145.8 L61.2,146.1 L61.1,144.9 L65.7,142.8 L66.7,140.7 L68.6,139.7 L70.7,140.3 Z M99.7,136.2 L102.1,136.6 L102.9,140.8 L99.9,143.1 L98.2,146.8 L96.3,144.7 L93.5,144.1 L90.6,145.7 L87.9,151.1 L86.4,152.0 L85.1,151.9 L85.6,150.5 L83.8,150.3 L83.1,144.9 L79.9,145.9 L85.1,142.2 L87.6,137.9 L89.8,139.6 L93.1,138.8 L93.3,136.4 L96.2,135.3 Z M47.7,216.1 L44.4,218.3 L43.8,221.4 L42.6,222.0 L44.7,215.7 L46.3,216.0 L47.7,213.7 Z M133.7,98.8 L132.6,98.7 L132.9,96.1 L135.0,93.6 L134.6,96.1 L135.6,96.2 Z M57.9,199.8 L57.2,200.6 L55.4,199.4 L59.9,196.5 Z"
+  },
+  {
+    "name": "OSAKA",
+    "countryCode": "JPN",
+    "countryName": "JAPAN",
+    "flag": "🇯🇵",
+    "lat": 34.6937,
+    "lon": 135.5023,
+    "continent": "Asia",
+    "subregion": "Eastern Asia",
+    "borders": "Kansai Region • Dotonbori & Osaka Castle",
+    "capital": "Located in JAPAN (🇯🇵)",
+    "widthKm": 1642,
+    "pinX": 109.4,
+    "pinY": 131.6,
+    "svg": "M158.2,61.5 L160.2,61.1 L160.0,68.3 L163.1,72.8 L164.7,78.1 L164.6,81.9 L164.0,85.2 L160.9,88.9 L160.3,92.7 L157.2,93.4 L156.0,95.3 L156.3,106.2 L152.7,115.5 L155.2,120.8 L151.7,123.1 L150.8,126.5 L146.4,129.3 L146.3,125.3 L148.6,122.3 L146.4,121.5 L144.8,124.1 L145.0,126.9 L143.3,125.3 L141.4,125.5 L140.0,130.1 L137.9,132.4 L137.6,128.7 L138.4,128.2 L136.9,127.1 L132.3,132.7 L126.8,132.0 L122.7,132.8 L124.5,130.8 L121.9,130.2 L121.1,131.2 L121.3,128.1 L120.5,127.9 L118.2,131.8 L121.2,134.4 L121.0,135.5 L116.5,137.1 L113.0,143.5 L111.1,144.3 L109.0,143.6 L106.3,138.9 L106.0,135.9 L108.7,132.4 L102.9,130.9 L98.7,131.4 L96.4,133.4 L89.3,135.8 L85.2,136.3 L82.3,135.5 L80.8,140.6 L77.4,138.4 L70.4,139.2 L70.1,136.2 L71.1,134.8 L74.1,134.6 L87.5,123.1 L96.5,123.1 L106.6,120.6 L107.9,122.9 L111.0,123.1 L112.9,122.1 L114.5,120.4 L114.3,116.7 L119.6,110.1 L120.9,103.4 L125.0,101.9 L121.4,106.2 L122.3,109.1 L124.3,110.0 L126.6,107.9 L133.5,105.1 L138.3,98.5 L142.3,95.9 L146.1,87.6 L148.3,79.8 L147.7,77.4 L145.6,76.7 L147.9,73.2 L147.5,68.8 L150.2,67.0 L151.1,63.0 L153.1,63.3 L154.1,67.2 L155.7,66.0 L157.3,66.6 L158.4,63.2 L154.6,63.9 L154.6,62.7 L155.8,60.1 Z M180.4,32.6 L188.0,34.6 L193.5,30.4 L191.6,37.4 L193.3,41.2 L197.5,40.3 L189.7,44.4 L181.6,45.6 L177.0,50.5 L175.4,54.9 L163.5,48.8 L159.8,49.1 L156.2,51.3 L153.8,49.0 L151.9,49.0 L150.6,51.8 L157.6,56.9 L156.3,57.6 L153.4,56.8 L150.1,60.6 L148.1,60.4 L148.7,55.8 L146.4,52.0 L146.6,48.8 L151.5,44.9 L151.1,41.2 L157.5,42.5 L159.5,41.4 L159.7,37.6 L162.8,28.8 L161.3,21.7 L162.0,19.1 L164.3,18.0 L172.4,26.8 Z M72.6,143.1 L77.0,143.1 L75.7,146.6 L78.7,146.8 L78.3,148.2 L79.6,150.7 L76.7,155.1 L73.9,166.2 L71.7,165.9 L71.9,167.8 L68.4,170.3 L69.2,163.0 L68.1,162.9 L67.3,164.5 L67.6,168.6 L64.3,167.4 L63.8,166.2 L65.1,165.7 L65.3,164.1 L64.2,162.4 L64.2,159.0 L68.0,153.4 L66.8,153.0 L67.2,151.2 L64.6,147.6 L63.6,148.3 L64.0,151.0 L65.3,151.0 L65.5,152.6 L63.0,151.9 L60.6,154.0 L61.1,152.3 L59.8,148.8 L62.5,151.0 L59.0,147.0 L59.2,145.8 L61.2,146.1 L61.1,144.9 L65.7,142.8 L66.7,140.7 L68.6,139.7 L70.7,140.3 Z M99.7,136.2 L102.1,136.6 L102.9,140.8 L99.9,143.1 L98.2,146.8 L96.3,144.7 L93.5,144.1 L90.6,145.7 L87.9,151.1 L86.4,152.0 L85.1,151.9 L85.6,150.5 L83.8,150.3 L83.1,144.9 L79.9,145.9 L85.1,142.2 L87.6,137.9 L89.8,139.6 L93.1,138.8 L93.3,136.4 L96.2,135.3 Z M47.7,216.1 L44.4,218.3 L43.8,221.4 L42.6,222.0 L44.7,215.7 L46.3,216.0 L47.7,213.7 Z M133.7,98.8 L132.6,98.7 L132.9,96.1 L135.0,93.6 L134.6,96.1 L135.6,96.2 Z M57.9,199.8 L57.2,200.6 L55.4,199.4 L59.9,196.5 Z"
+  },
+  {
+    "name": "KYOTO",
+    "countryCode": "JPN",
+    "countryName": "JAPAN",
+    "flag": "🇯🇵",
+    "lat": 35.0116,
+    "lon": 135.7681,
+    "continent": "Asia",
+    "subregion": "Eastern Asia",
+    "borders": "Former Imperial Capital • Fushimi Inari & Bamboo Grove",
+    "capital": "Located in JAPAN (🇯🇵)",
+    "widthKm": 1642,
+    "pinX": 111.7,
+    "pinY": 128.3,
+    "svg": "M158.2,61.5 L160.2,61.1 L160.0,68.3 L163.1,72.8 L164.7,78.1 L164.6,81.9 L164.0,85.2 L160.9,88.9 L160.3,92.7 L157.2,93.4 L156.0,95.3 L156.3,106.2 L152.7,115.5 L155.2,120.8 L151.7,123.1 L150.8,126.5 L146.4,129.3 L146.3,125.3 L148.6,122.3 L146.4,121.5 L144.8,124.1 L145.0,126.9 L143.3,125.3 L141.4,125.5 L140.0,130.1 L137.9,132.4 L137.6,128.7 L138.4,128.2 L136.9,127.1 L132.3,132.7 L126.8,132.0 L122.7,132.8 L124.5,130.8 L121.9,130.2 L121.1,131.2 L121.3,128.1 L120.5,127.9 L118.2,131.8 L121.2,134.4 L121.0,135.5 L116.5,137.1 L113.0,143.5 L111.1,144.3 L109.0,143.6 L106.3,138.9 L106.0,135.9 L108.7,132.4 L102.9,130.9 L98.7,131.4 L96.4,133.4 L89.3,135.8 L85.2,136.3 L82.3,135.5 L80.8,140.6 L77.4,138.4 L70.4,139.2 L70.1,136.2 L71.1,134.8 L74.1,134.6 L87.5,123.1 L96.5,123.1 L106.6,120.6 L107.9,122.9 L111.0,123.1 L112.9,122.1 L114.5,120.4 L114.3,116.7 L119.6,110.1 L120.9,103.4 L125.0,101.9 L121.4,106.2 L122.3,109.1 L124.3,110.0 L126.6,107.9 L133.5,105.1 L138.3,98.5 L142.3,95.9 L146.1,87.6 L148.3,79.8 L147.7,77.4 L145.6,76.7 L147.9,73.2 L147.5,68.8 L150.2,67.0 L151.1,63.0 L153.1,63.3 L154.1,67.2 L155.7,66.0 L157.3,66.6 L158.4,63.2 L154.6,63.9 L154.6,62.7 L155.8,60.1 Z M180.4,32.6 L188.0,34.6 L193.5,30.4 L191.6,37.4 L193.3,41.2 L197.5,40.3 L189.7,44.4 L181.6,45.6 L177.0,50.5 L175.4,54.9 L163.5,48.8 L159.8,49.1 L156.2,51.3 L153.8,49.0 L151.9,49.0 L150.6,51.8 L157.6,56.9 L156.3,57.6 L153.4,56.8 L150.1,60.6 L148.1,60.4 L148.7,55.8 L146.4,52.0 L146.6,48.8 L151.5,44.9 L151.1,41.2 L157.5,42.5 L159.5,41.4 L159.7,37.6 L162.8,28.8 L161.3,21.7 L162.0,19.1 L164.3,18.0 L172.4,26.8 Z M72.6,143.1 L77.0,143.1 L75.7,146.6 L78.7,146.8 L78.3,148.2 L79.6,150.7 L76.7,155.1 L73.9,166.2 L71.7,165.9 L71.9,167.8 L68.4,170.3 L69.2,163.0 L68.1,162.9 L67.3,164.5 L67.6,168.6 L64.3,167.4 L63.8,166.2 L65.1,165.7 L65.3,164.1 L64.2,162.4 L64.2,159.0 L68.0,153.4 L66.8,153.0 L67.2,151.2 L64.6,147.6 L63.6,148.3 L64.0,151.0 L65.3,151.0 L65.5,152.6 L63.0,151.9 L60.6,154.0 L61.1,152.3 L59.8,148.8 L62.5,151.0 L59.0,147.0 L59.2,145.8 L61.2,146.1 L61.1,144.9 L65.7,142.8 L66.7,140.7 L68.6,139.7 L70.7,140.3 Z M99.7,136.2 L102.1,136.6 L102.9,140.8 L99.9,143.1 L98.2,146.8 L96.3,144.7 L93.5,144.1 L90.6,145.7 L87.9,151.1 L86.4,152.0 L85.1,151.9 L85.6,150.5 L83.8,150.3 L83.1,144.9 L79.9,145.9 L85.1,142.2 L87.6,137.9 L89.8,139.6 L93.1,138.8 L93.3,136.4 L96.2,135.3 Z M47.7,216.1 L44.4,218.3 L43.8,221.4 L42.6,222.0 L44.7,215.7 L46.3,216.0 L47.7,213.7 Z M133.7,98.8 L132.6,98.7 L132.9,96.1 L135.0,93.6 L134.6,96.1 L135.6,96.2 Z M57.9,199.8 L57.2,200.6 L55.4,199.4 L59.9,196.5 Z"
+  },
+  {
+    "name": "NEW YORK",
+    "countryCode": "USA",
+    "countryName": "UNITED STATES",
+    "flag": "🇺🇸",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "continent": "North America",
+    "subregion": "Northern America",
+    "borders": "Hudson River & Atlantic Harbor • Statue of Liberty & Manhattan",
+    "capital": "Located in UNITED STATES (🇺🇸)",
+    "widthKm": 5115,
+    "pinX": 197.2,
+    "pinY": 104.6,
+    "svg": "M194.7,85.6 L206.0,85.6 L206.7,84.3 L208.3,84.4 L214.0,74.7 L219.1,76.3 L219.1,82.4 L220.4,82.9 L220.3,84.4 L222.0,86.4 L218.2,88.3 L216.8,87.8 L216.5,88.9 L215.7,87.5 L214.4,89.9 L210.4,91.5 L208.4,95.3 L209.2,96.1 L207.7,97.4 L209.8,100.0 L211.3,99.7 L211.0,98.6 L211.5,100.4 L207.2,101.2 L206.4,99.8 L206.0,101.7 L201.0,102.1 L197.3,104.5 L197.3,102.2 L196.3,105.4 L197.3,106.0 L196.9,108.7 L194.4,112.2 L191.8,110.1 L193.4,107.9 L191.6,109.4 L193.5,114.8 L190.4,120.4 L191.4,116.9 L188.9,113.5 L190.6,110.0 L188.1,111.0 L188.8,115.0 L187.8,114.3 L188.9,116.3 L185.8,114.9 L186.5,112.7 L185.7,114.0 L185.6,115.1 L189.2,117.1 L188.4,118.1 L186.2,115.9 L189.2,119.2 L188.5,119.9 L187.5,118.9 L188.7,121.2 L185.7,119.7 L188.4,121.6 L190.1,121.5 L191.8,126.4 L190.3,122.6 L190.8,125.1 L189.6,124.3 L188.2,125.5 L187.6,124.5 L187.6,125.7 L189.9,125.7 L189.9,126.9 L191.0,126.3 L189.5,128.4 L186.5,127.7 L188.3,128.8 L186.7,129.9 L188.6,130.7 L185.2,131.2 L183.3,134.7 L183.2,133.7 L183.0,134.8 L180.1,135.7 L176.2,140.4 L173.8,141.0 L174.0,142.0 L173.2,141.3 L173.6,142.4 L170.8,147.2 L171.6,153.1 L175.8,166.4 L174.3,173.4 L172.1,173.8 L172.7,173.2 L169.9,170.0 L169.5,166.9 L168.8,167.5 L168.9,165.7 L167.9,166.1 L166.4,163.3 L167.5,161.7 L166.0,161.8 L166.6,157.1 L163.0,152.5 L160.8,151.9 L157.2,153.6 L156.2,150.9 L153.9,150.0 L150.6,150.7 L151.3,149.7 L147.7,151.2 L148.5,150.9 L147.7,149.1 L147.3,150.6 L139.5,151.0 L140.0,152.1 L142.8,152.0 L141.7,153.9 L144.1,155.7 L142.9,156.7 L140.1,154.3 L139.9,156.2 L136.1,155.4 L136.3,154.1 L134.0,152.9 L132.7,154.2 L127.1,153.4 L127.1,152.3 L126.9,153.6 L123.8,154.9 L124.7,154.2 L122.9,153.5 L123.4,155.0 L122.0,156.8 L118.6,158.9 L119.4,158.3 L117.2,157.9 L118.0,159.0 L115.4,160.4 L114.4,164.1 L113.2,163.5 L115.4,169.8 L114.7,170.5 L108.5,168.0 L107.1,163.1 L100.4,153.3 L97.0,152.8 L93.8,156.6 L89.8,154.1 L87.9,149.6 L82.5,144.3 L76.3,144.3 L76.3,146.3 L66.3,146.3 L52.9,141.1 L53.3,140.1 L44.8,140.9 L43.6,137.6 L39.9,134.4 L32.4,131.9 L32.3,129.5 L28.0,124.1 L28.3,121.8 L25.8,118.7 L26.0,117.6 L27.3,119.0 L26.5,116.6 L29.3,116.4 L26.2,116.0 L25.7,117.4 L24.0,116.7 L19.4,106.7 L20.3,101.3 L18.6,95.3 L20.0,91.4 L20.5,80.2 L23.3,80.5 L20.3,79.9 L20.9,78.2 L20.1,77.3 L21.1,76.9 L20.0,76.9 L18.0,70.6 L24.8,71.7 L25.3,72.8 L23.6,75.0 L25.7,72.6 L25.5,75.4 L23.9,76.1 L25.1,76.2 L26.7,72.2 L24.8,67.9 L122.4,67.9 L122.4,66.2 L124.3,69.0 L130.1,69.6 L135.3,72.0 L137.4,71.3 L142.6,72.3 L146.4,70.9 L158.8,77.2 L159.9,79.1 L161.3,78.7 L162.0,80.8 L163.2,80.6 L163.3,82.0 L167.0,84.1 L168.5,91.9 L167.0,96.1 L164.9,98.3 L166.5,100.4 L179.4,95.4 L178.9,92.4 L180.1,91.9 L187.2,91.7 L189.6,88.7 Z"
+  },
+  {
+    "name": "SAN FRANCISCO",
+    "countryCode": "USA",
+    "countryName": "UNITED STATES",
+    "flag": "🇺🇸",
+    "lat": 37.7749,
+    "lon": -122.4194,
+    "continent": "North America",
+    "subregion": "Northern America",
+    "borders": "Northern California Bay • Golden Gate Bridge & Alcatraz",
+    "capital": "Located in UNITED STATES (🇺🇸)",
+    "widthKm": 5115,
+    "pinX": 26.1,
+    "pinY": 117.7,
+    "svg": "M194.7,85.6 L206.0,85.6 L206.7,84.3 L208.3,84.4 L214.0,74.7 L219.1,76.3 L219.1,82.4 L220.4,82.9 L220.3,84.4 L222.0,86.4 L218.2,88.3 L216.8,87.8 L216.5,88.9 L215.7,87.5 L214.4,89.9 L210.4,91.5 L208.4,95.3 L209.2,96.1 L207.7,97.4 L209.8,100.0 L211.3,99.7 L211.0,98.6 L211.5,100.4 L207.2,101.2 L206.4,99.8 L206.0,101.7 L201.0,102.1 L197.3,104.5 L197.3,102.2 L196.3,105.4 L197.3,106.0 L196.9,108.7 L194.4,112.2 L191.8,110.1 L193.4,107.9 L191.6,109.4 L193.5,114.8 L190.4,120.4 L191.4,116.9 L188.9,113.5 L190.6,110.0 L188.1,111.0 L188.8,115.0 L187.8,114.3 L188.9,116.3 L185.8,114.9 L186.5,112.7 L185.7,114.0 L185.6,115.1 L189.2,117.1 L188.4,118.1 L186.2,115.9 L189.2,119.2 L188.5,119.9 L187.5,118.9 L188.7,121.2 L185.7,119.7 L188.4,121.6 L190.1,121.5 L191.8,126.4 L190.3,122.6 L190.8,125.1 L189.6,124.3 L188.2,125.5 L187.6,124.5 L187.6,125.7 L189.9,125.7 L189.9,126.9 L191.0,126.3 L189.5,128.4 L186.5,127.7 L188.3,128.8 L186.7,129.9 L188.6,130.7 L185.2,131.2 L183.3,134.7 L183.2,133.7 L183.0,134.8 L180.1,135.7 L176.2,140.4 L173.8,141.0 L174.0,142.0 L173.2,141.3 L173.6,142.4 L170.8,147.2 L171.6,153.1 L175.8,166.4 L174.3,173.4 L172.1,173.8 L172.7,173.2 L169.9,170.0 L169.5,166.9 L168.8,167.5 L168.9,165.7 L167.9,166.1 L166.4,163.3 L167.5,161.7 L166.0,161.8 L166.6,157.1 L163.0,152.5 L160.8,151.9 L157.2,153.6 L156.2,150.9 L153.9,150.0 L150.6,150.7 L151.3,149.7 L147.7,151.2 L148.5,150.9 L147.7,149.1 L147.3,150.6 L139.5,151.0 L140.0,152.1 L142.8,152.0 L141.7,153.9 L144.1,155.7 L142.9,156.7 L140.1,154.3 L139.9,156.2 L136.1,155.4 L136.3,154.1 L134.0,152.9 L132.7,154.2 L127.1,153.4 L127.1,152.3 L126.9,153.6 L123.8,154.9 L124.7,154.2 L122.9,153.5 L123.4,155.0 L122.0,156.8 L118.6,158.9 L119.4,158.3 L117.2,157.9 L118.0,159.0 L115.4,160.4 L114.4,164.1 L113.2,163.5 L115.4,169.8 L114.7,170.5 L108.5,168.0 L107.1,163.1 L100.4,153.3 L97.0,152.8 L93.8,156.6 L89.8,154.1 L87.9,149.6 L82.5,144.3 L76.3,144.3 L76.3,146.3 L66.3,146.3 L52.9,141.1 L53.3,140.1 L44.8,140.9 L43.6,137.6 L39.9,134.4 L32.4,131.9 L32.3,129.5 L28.0,124.1 L28.3,121.8 L25.8,118.7 L26.0,117.6 L27.3,119.0 L26.5,116.6 L29.3,116.4 L26.2,116.0 L25.7,117.4 L24.0,116.7 L19.4,106.7 L20.3,101.3 L18.6,95.3 L20.0,91.4 L20.5,80.2 L23.3,80.5 L20.3,79.9 L20.9,78.2 L20.1,77.3 L21.1,76.9 L20.0,76.9 L18.0,70.6 L24.8,71.7 L25.3,72.8 L23.6,75.0 L25.7,72.6 L25.5,75.4 L23.9,76.1 L25.1,76.2 L26.7,72.2 L24.8,67.9 L122.4,67.9 L122.4,66.2 L124.3,69.0 L130.1,69.6 L135.3,72.0 L137.4,71.3 L142.6,72.3 L146.4,70.9 L158.8,77.2 L159.9,79.1 L161.3,78.7 L162.0,80.8 L163.2,80.6 L163.3,82.0 L167.0,84.1 L168.5,91.9 L167.0,96.1 L164.9,98.3 L166.5,100.4 L179.4,95.4 L178.9,92.4 L180.1,91.9 L187.2,91.7 L189.6,88.7 Z"
+  },
+  {
+    "name": "LOS ANGELES",
+    "countryCode": "USA",
+    "countryName": "UNITED STATES",
+    "flag": "🇺🇸",
+    "lat": 34.0522,
+    "lon": -118.2437,
+    "continent": "North America",
+    "subregion": "Northern America",
+    "borders": "Southern California Pacific Coast • Hollywood & Santa Monica",
+    "capital": "Located in UNITED STATES (🇺🇸)",
+    "widthKm": 5115,
+    "pinX": 40.9,
+    "pinY": 134.2,
+    "svg": "M194.7,85.6 L206.0,85.6 L206.7,84.3 L208.3,84.4 L214.0,74.7 L219.1,76.3 L219.1,82.4 L220.4,82.9 L220.3,84.4 L222.0,86.4 L218.2,88.3 L216.8,87.8 L216.5,88.9 L215.7,87.5 L214.4,89.9 L210.4,91.5 L208.4,95.3 L209.2,96.1 L207.7,97.4 L209.8,100.0 L211.3,99.7 L211.0,98.6 L211.5,100.4 L207.2,101.2 L206.4,99.8 L206.0,101.7 L201.0,102.1 L197.3,104.5 L197.3,102.2 L196.3,105.4 L197.3,106.0 L196.9,108.7 L194.4,112.2 L191.8,110.1 L193.4,107.9 L191.6,109.4 L193.5,114.8 L190.4,120.4 L191.4,116.9 L188.9,113.5 L190.6,110.0 L188.1,111.0 L188.8,115.0 L187.8,114.3 L188.9,116.3 L185.8,114.9 L186.5,112.7 L185.7,114.0 L185.6,115.1 L189.2,117.1 L188.4,118.1 L186.2,115.9 L189.2,119.2 L188.5,119.9 L187.5,118.9 L188.7,121.2 L185.7,119.7 L188.4,121.6 L190.1,121.5 L191.8,126.4 L190.3,122.6 L190.8,125.1 L189.6,124.3 L188.2,125.5 L187.6,124.5 L187.6,125.7 L189.9,125.7 L189.9,126.9 L191.0,126.3 L189.5,128.4 L186.5,127.7 L188.3,128.8 L186.7,129.9 L188.6,130.7 L185.2,131.2 L183.3,134.7 L183.2,133.7 L183.0,134.8 L180.1,135.7 L176.2,140.4 L173.8,141.0 L174.0,142.0 L173.2,141.3 L173.6,142.4 L170.8,147.2 L171.6,153.1 L175.8,166.4 L174.3,173.4 L172.1,173.8 L172.7,173.2 L169.9,170.0 L169.5,166.9 L168.8,167.5 L168.9,165.7 L167.9,166.1 L166.4,163.3 L167.5,161.7 L166.0,161.8 L166.6,157.1 L163.0,152.5 L160.8,151.9 L157.2,153.6 L156.2,150.9 L153.9,150.0 L150.6,150.7 L151.3,149.7 L147.7,151.2 L148.5,150.9 L147.7,149.1 L147.3,150.6 L139.5,151.0 L140.0,152.1 L142.8,152.0 L141.7,153.9 L144.1,155.7 L142.9,156.7 L140.1,154.3 L139.9,156.2 L136.1,155.4 L136.3,154.1 L134.0,152.9 L132.7,154.2 L127.1,153.4 L127.1,152.3 L126.9,153.6 L123.8,154.9 L124.7,154.2 L122.9,153.5 L123.4,155.0 L122.0,156.8 L118.6,158.9 L119.4,158.3 L117.2,157.9 L118.0,159.0 L115.4,160.4 L114.4,164.1 L113.2,163.5 L115.4,169.8 L114.7,170.5 L108.5,168.0 L107.1,163.1 L100.4,153.3 L97.0,152.8 L93.8,156.6 L89.8,154.1 L87.9,149.6 L82.5,144.3 L76.3,144.3 L76.3,146.3 L66.3,146.3 L52.9,141.1 L53.3,140.1 L44.8,140.9 L43.6,137.6 L39.9,134.4 L32.4,131.9 L32.3,129.5 L28.0,124.1 L28.3,121.8 L25.8,118.7 L26.0,117.6 L27.3,119.0 L26.5,116.6 L29.3,116.4 L26.2,116.0 L25.7,117.4 L24.0,116.7 L19.4,106.7 L20.3,101.3 L18.6,95.3 L20.0,91.4 L20.5,80.2 L23.3,80.5 L20.3,79.9 L20.9,78.2 L20.1,77.3 L21.1,76.9 L20.0,76.9 L18.0,70.6 L24.8,71.7 L25.3,72.8 L23.6,75.0 L25.7,72.6 L25.5,75.4 L23.9,76.1 L25.1,76.2 L26.7,72.2 L24.8,67.9 L122.4,67.9 L122.4,66.2 L124.3,69.0 L130.1,69.6 L135.3,72.0 L137.4,71.3 L142.6,72.3 L146.4,70.9 L158.8,77.2 L159.9,79.1 L161.3,78.7 L162.0,80.8 L163.2,80.6 L163.3,82.0 L167.0,84.1 L168.5,91.9 L167.0,96.1 L164.9,98.3 L166.5,100.4 L179.4,95.4 L178.9,92.4 L180.1,91.9 L187.2,91.7 L189.6,88.7 Z"
+  },
+  {
+    "name": "CHICAGO",
+    "countryCode": "USA",
+    "countryName": "UNITED STATES",
+    "flag": "🇺🇸",
+    "lat": 41.8781,
+    "lon": -87.6298,
+    "continent": "North America",
+    "subregion": "Northern America",
+    "borders": "Lake Michigan Shore • Willis Tower & Cloud Gate",
+    "capital": "Located in UNITED STATES (🇺🇸)",
+    "widthKm": 5115,
+    "pinX": 149.0,
+    "pinY": 99.5,
+    "svg": "M194.7,85.6 L206.0,85.6 L206.7,84.3 L208.3,84.4 L214.0,74.7 L219.1,76.3 L219.1,82.4 L220.4,82.9 L220.3,84.4 L222.0,86.4 L218.2,88.3 L216.8,87.8 L216.5,88.9 L215.7,87.5 L214.4,89.9 L210.4,91.5 L208.4,95.3 L209.2,96.1 L207.7,97.4 L209.8,100.0 L211.3,99.7 L211.0,98.6 L211.5,100.4 L207.2,101.2 L206.4,99.8 L206.0,101.7 L201.0,102.1 L197.3,104.5 L197.3,102.2 L196.3,105.4 L197.3,106.0 L196.9,108.7 L194.4,112.2 L191.8,110.1 L193.4,107.9 L191.6,109.4 L193.5,114.8 L190.4,120.4 L191.4,116.9 L188.9,113.5 L190.6,110.0 L188.1,111.0 L188.8,115.0 L187.8,114.3 L188.9,116.3 L185.8,114.9 L186.5,112.7 L185.7,114.0 L185.6,115.1 L189.2,117.1 L188.4,118.1 L186.2,115.9 L189.2,119.2 L188.5,119.9 L187.5,118.9 L188.7,121.2 L185.7,119.7 L188.4,121.6 L190.1,121.5 L191.8,126.4 L190.3,122.6 L190.8,125.1 L189.6,124.3 L188.2,125.5 L187.6,124.5 L187.6,125.7 L189.9,125.7 L189.9,126.9 L191.0,126.3 L189.5,128.4 L186.5,127.7 L188.3,128.8 L186.7,129.9 L188.6,130.7 L185.2,131.2 L183.3,134.7 L183.2,133.7 L183.0,134.8 L180.1,135.7 L176.2,140.4 L173.8,141.0 L174.0,142.0 L173.2,141.3 L173.6,142.4 L170.8,147.2 L171.6,153.1 L175.8,166.4 L174.3,173.4 L172.1,173.8 L172.7,173.2 L169.9,170.0 L169.5,166.9 L168.8,167.5 L168.9,165.7 L167.9,166.1 L166.4,163.3 L167.5,161.7 L166.0,161.8 L166.6,157.1 L163.0,152.5 L160.8,151.9 L157.2,153.6 L156.2,150.9 L153.9,150.0 L150.6,150.7 L151.3,149.7 L147.7,151.2 L148.5,150.9 L147.7,149.1 L147.3,150.6 L139.5,151.0 L140.0,152.1 L142.8,152.0 L141.7,153.9 L144.1,155.7 L142.9,156.7 L140.1,154.3 L139.9,156.2 L136.1,155.4 L136.3,154.1 L134.0,152.9 L132.7,154.2 L127.1,153.4 L127.1,152.3 L126.9,153.6 L123.8,154.9 L124.7,154.2 L122.9,153.5 L123.4,155.0 L122.0,156.8 L118.6,158.9 L119.4,158.3 L117.2,157.9 L118.0,159.0 L115.4,160.4 L114.4,164.1 L113.2,163.5 L115.4,169.8 L114.7,170.5 L108.5,168.0 L107.1,163.1 L100.4,153.3 L97.0,152.8 L93.8,156.6 L89.8,154.1 L87.9,149.6 L82.5,144.3 L76.3,144.3 L76.3,146.3 L66.3,146.3 L52.9,141.1 L53.3,140.1 L44.8,140.9 L43.6,137.6 L39.9,134.4 L32.4,131.9 L32.3,129.5 L28.0,124.1 L28.3,121.8 L25.8,118.7 L26.0,117.6 L27.3,119.0 L26.5,116.6 L29.3,116.4 L26.2,116.0 L25.7,117.4 L24.0,116.7 L19.4,106.7 L20.3,101.3 L18.6,95.3 L20.0,91.4 L20.5,80.2 L23.3,80.5 L20.3,79.9 L20.9,78.2 L20.1,77.3 L21.1,76.9 L20.0,76.9 L18.0,70.6 L24.8,71.7 L25.3,72.8 L23.6,75.0 L25.7,72.6 L25.5,75.4 L23.9,76.1 L25.1,76.2 L26.7,72.2 L24.8,67.9 L122.4,67.9 L122.4,66.2 L124.3,69.0 L130.1,69.6 L135.3,72.0 L137.4,71.3 L142.6,72.3 L146.4,70.9 L158.8,77.2 L159.9,79.1 L161.3,78.7 L162.0,80.8 L163.2,80.6 L163.3,82.0 L167.0,84.1 L168.5,91.9 L167.0,96.1 L164.9,98.3 L166.5,100.4 L179.4,95.4 L178.9,92.4 L180.1,91.9 L187.2,91.7 L189.6,88.7 Z"
+  },
+  {
+    "name": "MIAMI",
+    "countryCode": "USA",
+    "countryName": "UNITED STATES",
+    "flag": "🇺🇸",
+    "lat": 25.7617,
+    "lon": -80.1918,
+    "continent": "North America",
+    "subregion": "Northern America",
+    "borders": "Southeastern Tip on Atlantic • South Beach & Art Deco",
+    "capital": "Located in UNITED STATES (🇺🇸)",
+    "widthKm": 5115,
+    "pinX": 175.3,
+    "pinY": 171.0,
+    "svg": "M194.7,85.6 L206.0,85.6 L206.7,84.3 L208.3,84.4 L214.0,74.7 L219.1,76.3 L219.1,82.4 L220.4,82.9 L220.3,84.4 L222.0,86.4 L218.2,88.3 L216.8,87.8 L216.5,88.9 L215.7,87.5 L214.4,89.9 L210.4,91.5 L208.4,95.3 L209.2,96.1 L207.7,97.4 L209.8,100.0 L211.3,99.7 L211.0,98.6 L211.5,100.4 L207.2,101.2 L206.4,99.8 L206.0,101.7 L201.0,102.1 L197.3,104.5 L197.3,102.2 L196.3,105.4 L197.3,106.0 L196.9,108.7 L194.4,112.2 L191.8,110.1 L193.4,107.9 L191.6,109.4 L193.5,114.8 L190.4,120.4 L191.4,116.9 L188.9,113.5 L190.6,110.0 L188.1,111.0 L188.8,115.0 L187.8,114.3 L188.9,116.3 L185.8,114.9 L186.5,112.7 L185.7,114.0 L185.6,115.1 L189.2,117.1 L188.4,118.1 L186.2,115.9 L189.2,119.2 L188.5,119.9 L187.5,118.9 L188.7,121.2 L185.7,119.7 L188.4,121.6 L190.1,121.5 L191.8,126.4 L190.3,122.6 L190.8,125.1 L189.6,124.3 L188.2,125.5 L187.6,124.5 L187.6,125.7 L189.9,125.7 L189.9,126.9 L191.0,126.3 L189.5,128.4 L186.5,127.7 L188.3,128.8 L186.7,129.9 L188.6,130.7 L185.2,131.2 L183.3,134.7 L183.2,133.7 L183.0,134.8 L180.1,135.7 L176.2,140.4 L173.8,141.0 L174.0,142.0 L173.2,141.3 L173.6,142.4 L170.8,147.2 L171.6,153.1 L175.8,166.4 L174.3,173.4 L172.1,173.8 L172.7,173.2 L169.9,170.0 L169.5,166.9 L168.8,167.5 L168.9,165.7 L167.9,166.1 L166.4,163.3 L167.5,161.7 L166.0,161.8 L166.6,157.1 L163.0,152.5 L160.8,151.9 L157.2,153.6 L156.2,150.9 L153.9,150.0 L150.6,150.7 L151.3,149.7 L147.7,151.2 L148.5,150.9 L147.7,149.1 L147.3,150.6 L139.5,151.0 L140.0,152.1 L142.8,152.0 L141.7,153.9 L144.1,155.7 L142.9,156.7 L140.1,154.3 L139.9,156.2 L136.1,155.4 L136.3,154.1 L134.0,152.9 L132.7,154.2 L127.1,153.4 L127.1,152.3 L126.9,153.6 L123.8,154.9 L124.7,154.2 L122.9,153.5 L123.4,155.0 L122.0,156.8 L118.6,158.9 L119.4,158.3 L117.2,157.9 L118.0,159.0 L115.4,160.4 L114.4,164.1 L113.2,163.5 L115.4,169.8 L114.7,170.5 L108.5,168.0 L107.1,163.1 L100.4,153.3 L97.0,152.8 L93.8,156.6 L89.8,154.1 L87.9,149.6 L82.5,144.3 L76.3,144.3 L76.3,146.3 L66.3,146.3 L52.9,141.1 L53.3,140.1 L44.8,140.9 L43.6,137.6 L39.9,134.4 L32.4,131.9 L32.3,129.5 L28.0,124.1 L28.3,121.8 L25.8,118.7 L26.0,117.6 L27.3,119.0 L26.5,116.6 L29.3,116.4 L26.2,116.0 L25.7,117.4 L24.0,116.7 L19.4,106.7 L20.3,101.3 L18.6,95.3 L20.0,91.4 L20.5,80.2 L23.3,80.5 L20.3,79.9 L20.9,78.2 L20.1,77.3 L21.1,76.9 L20.0,76.9 L18.0,70.6 L24.8,71.7 L25.3,72.8 L23.6,75.0 L25.7,72.6 L25.5,75.4 L23.9,76.1 L25.1,76.2 L26.7,72.2 L24.8,67.9 L122.4,67.9 L122.4,66.2 L124.3,69.0 L130.1,69.6 L135.3,72.0 L137.4,71.3 L142.6,72.3 L146.4,70.9 L158.8,77.2 L159.9,79.1 L161.3,78.7 L162.0,80.8 L163.2,80.6 L163.3,82.0 L167.0,84.1 L168.5,91.9 L167.0,96.1 L164.9,98.3 L166.5,100.4 L179.4,95.4 L178.9,92.4 L180.1,91.9 L187.2,91.7 L189.6,88.7 Z"
+  },
+  {
+    "name": "SYDNEY",
+    "countryCode": "AUS",
+    "countryName": "AUSTRALIA",
+    "flag": "🇦🇺",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "continent": "Oceania",
+    "subregion": "Australia & NZ",
+    "borders": "Tasman Sea Harbor • Sydney Opera House & Harbour Bridge",
+    "capital": "Located in AUSTRALIA (🇦🇺)",
+    "widthKm": 4004,
+    "pinX": 209.9,
+    "pinY": 158.0,
+    "svg": "M169.3,33.8 L169.0,35.7 L170.5,37.6 L172.2,47.3 L173.3,48.0 L175.9,46.7 L180.0,50.7 L180.7,59.0 L183.1,61.9 L184.2,66.0 L183.7,69.6 L185.3,71.2 L185.5,73.6 L190.7,75.9 L192.4,78.1 L197.5,81.0 L198.1,82.1 L197.1,82.7 L201.0,88.3 L202.3,93.2 L203.6,93.8 L203.9,91.7 L206.5,93.9 L206.9,92.8 L208.0,99.0 L213.0,102.8 L219.7,113.2 L219.5,120.2 L222.0,128.6 L218.6,144.2 L216.2,149.9 L210.3,156.4 L207.8,164.5 L204.7,169.2 L203.4,178.8 L201.1,180.2 L193.0,181.1 L187.9,185.2 L184.7,185.6 L185.9,186.2 L185.6,188.0 L180.5,184.5 L180.9,182.8 L178.3,184.3 L177.1,183.4 L179.1,182.0 L178.0,180.9 L171.2,186.1 L165.7,183.6 L160.5,183.5 L155.3,180.9 L152.2,177.2 L151.9,172.2 L148.1,167.7 L149.7,167.9 L149.7,166.6 L144.1,167.9 L145.8,164.6 L143.7,159.7 L141.6,165.3 L137.6,165.8 L138.2,164.0 L140.1,163.9 L140.7,159.7 L142.9,156.4 L142.1,150.7 L139.4,156.7 L135.3,158.9 L132.6,162.5 L133.0,164.3 L131.3,164.1 L128.7,162.1 L130.3,162.1 L129.2,158.5 L126.7,154.5 L124.5,154.0 L123.5,151.7 L124.2,150.5 L121.3,148.6 L114.0,147.5 L108.6,144.6 L97.5,145.7 L89.3,148.9 L82.2,149.1 L73.8,153.2 L70.1,158.3 L51.7,158.6 L49.6,160.9 L41.6,164.8 L34.8,164.4 L27.2,160.2 L27.1,156.0 L29.0,156.7 L30.6,154.2 L30.7,145.7 L27.6,139.3 L26.4,131.2 L22.9,125.2 L22.3,121.0 L18.0,114.4 L18.9,113.9 L20.0,116.6 L21.3,116.2 L19.3,111.1 L20.7,114.1 L21.4,113.5 L22.1,115.2 L23.2,115.0 L23.2,112.6 L19.2,104.5 L20.9,98.8 L20.5,94.3 L22.2,90.0 L22.8,93.5 L25.7,89.7 L35.8,83.1 L39.3,83.5 L47.9,79.4 L50.3,79.6 L57.4,77.1 L64.2,68.7 L63.2,65.5 L63.8,63.1 L67.4,59.2 L70.4,65.3 L70.5,62.5 L71.7,63.0 L71.9,61.9 L70.0,59.5 L70.6,58.0 L76.5,59.0 L74.6,58.4 L75.8,56.0 L75.1,56.5 L74.5,55.3 L74.8,53.8 L76.1,52.6 L77.9,53.5 L76.8,51.9 L77.8,51.0 L79.4,51.7 L78.5,49.4 L80.8,46.8 L81.0,48.4 L82.8,48.2 L82.9,45.2 L85.5,46.3 L87.2,43.9 L90.0,45.5 L93.8,49.6 L93.1,52.9 L95.7,49.7 L98.1,50.4 L98.9,51.9 L99.1,50.3 L101.0,51.8 L101.0,50.2 L102.1,50.1 L99.7,47.6 L102.0,42.9 L104.2,41.4 L103.7,39.4 L106.0,37.7 L106.0,36.5 L107.2,37.2 L109.4,34.4 L110.1,35.6 L115.0,35.7 L116.5,34.7 L116.3,32.0 L113.3,31.0 L112.0,30.1 L112.7,29.4 L128.2,35.1 L132.7,33.0 L131.6,35.2 L133.2,35.1 L133.5,36.4 L134.4,36.5 L134.5,34.8 L135.8,33.8 L137.9,36.0 L135.8,38.5 L135.4,41.0 L132.7,41.4 L132.9,45.0 L130.4,50.6 L144.4,60.8 L148.3,61.8 L149.5,64.2 L153.5,66.3 L155.9,65.9 L157.5,64.7 L160.4,57.1 L161.5,51.3 L160.7,44.2 L161.4,39.4 L163.0,38.6 L161.8,36.0 L163.2,34.3 L164.2,28.0 L166.4,26.9 L167.8,33.0 Z M178.7,197.3 L185.2,199.4 L194.7,197.6 L195.4,205.4 L194.7,204.0 L193.8,205.6 L193.6,210.7 L192.6,211.1 L191.9,209.9 L192.7,209.4 L191.5,208.9 L190.9,210.0 L190.1,208.6 L189.9,211.0 L188.6,210.7 L188.0,213.3 L183.8,212.9 L183.5,211.9 L184.6,211.6 L182.9,211.5 L181.0,209.4 L179.5,205.4 L180.9,206.9 L181.1,206.1 L177.3,200.7 L177.1,196.6 Z"
+  },
+  {
+    "name": "MELBOURNE",
+    "countryCode": "AUS",
+    "countryName": "AUSTRALIA",
+    "flag": "🇦🇺",
+    "lat": -37.8136,
+    "lon": 144.9631,
+    "continent": "Oceania",
+    "subregion": "Australia & NZ",
+    "borders": "Port Phillip Bay • Cultural & Coffee Capital of Victoria",
+    "capital": "Located in AUSTRALIA (🇦🇺)",
+    "widthKm": 4004,
+    "pinX": 178.3,
+    "pinY": 180.4,
+    "svg": "M169.3,33.8 L169.0,35.7 L170.5,37.6 L172.2,47.3 L173.3,48.0 L175.9,46.7 L180.0,50.7 L180.7,59.0 L183.1,61.9 L184.2,66.0 L183.7,69.6 L185.3,71.2 L185.5,73.6 L190.7,75.9 L192.4,78.1 L197.5,81.0 L198.1,82.1 L197.1,82.7 L201.0,88.3 L202.3,93.2 L203.6,93.8 L203.9,91.7 L206.5,93.9 L206.9,92.8 L208.0,99.0 L213.0,102.8 L219.7,113.2 L219.5,120.2 L222.0,128.6 L218.6,144.2 L216.2,149.9 L210.3,156.4 L207.8,164.5 L204.7,169.2 L203.4,178.8 L201.1,180.2 L193.0,181.1 L187.9,185.2 L184.7,185.6 L185.9,186.2 L185.6,188.0 L180.5,184.5 L180.9,182.8 L178.3,184.3 L177.1,183.4 L179.1,182.0 L178.0,180.9 L171.2,186.1 L165.7,183.6 L160.5,183.5 L155.3,180.9 L152.2,177.2 L151.9,172.2 L148.1,167.7 L149.7,167.9 L149.7,166.6 L144.1,167.9 L145.8,164.6 L143.7,159.7 L141.6,165.3 L137.6,165.8 L138.2,164.0 L140.1,163.9 L140.7,159.7 L142.9,156.4 L142.1,150.7 L139.4,156.7 L135.3,158.9 L132.6,162.5 L133.0,164.3 L131.3,164.1 L128.7,162.1 L130.3,162.1 L129.2,158.5 L126.7,154.5 L124.5,154.0 L123.5,151.7 L124.2,150.5 L121.3,148.6 L114.0,147.5 L108.6,144.6 L97.5,145.7 L89.3,148.9 L82.2,149.1 L73.8,153.2 L70.1,158.3 L51.7,158.6 L49.6,160.9 L41.6,164.8 L34.8,164.4 L27.2,160.2 L27.1,156.0 L29.0,156.7 L30.6,154.2 L30.7,145.7 L27.6,139.3 L26.4,131.2 L22.9,125.2 L22.3,121.0 L18.0,114.4 L18.9,113.9 L20.0,116.6 L21.3,116.2 L19.3,111.1 L20.7,114.1 L21.4,113.5 L22.1,115.2 L23.2,115.0 L23.2,112.6 L19.2,104.5 L20.9,98.8 L20.5,94.3 L22.2,90.0 L22.8,93.5 L25.7,89.7 L35.8,83.1 L39.3,83.5 L47.9,79.4 L50.3,79.6 L57.4,77.1 L64.2,68.7 L63.2,65.5 L63.8,63.1 L67.4,59.2 L70.4,65.3 L70.5,62.5 L71.7,63.0 L71.9,61.9 L70.0,59.5 L70.6,58.0 L76.5,59.0 L74.6,58.4 L75.8,56.0 L75.1,56.5 L74.5,55.3 L74.8,53.8 L76.1,52.6 L77.9,53.5 L76.8,51.9 L77.8,51.0 L79.4,51.7 L78.5,49.4 L80.8,46.8 L81.0,48.4 L82.8,48.2 L82.9,45.2 L85.5,46.3 L87.2,43.9 L90.0,45.5 L93.8,49.6 L93.1,52.9 L95.7,49.7 L98.1,50.4 L98.9,51.9 L99.1,50.3 L101.0,51.8 L101.0,50.2 L102.1,50.1 L99.7,47.6 L102.0,42.9 L104.2,41.4 L103.7,39.4 L106.0,37.7 L106.0,36.5 L107.2,37.2 L109.4,34.4 L110.1,35.6 L115.0,35.7 L116.5,34.7 L116.3,32.0 L113.3,31.0 L112.0,30.1 L112.7,29.4 L128.2,35.1 L132.7,33.0 L131.6,35.2 L133.2,35.1 L133.5,36.4 L134.4,36.5 L134.5,34.8 L135.8,33.8 L137.9,36.0 L135.8,38.5 L135.4,41.0 L132.7,41.4 L132.9,45.0 L130.4,50.6 L144.4,60.8 L148.3,61.8 L149.5,64.2 L153.5,66.3 L155.9,65.9 L157.5,64.7 L160.4,57.1 L161.5,51.3 L160.7,44.2 L161.4,39.4 L163.0,38.6 L161.8,36.0 L163.2,34.3 L164.2,28.0 L166.4,26.9 L167.8,33.0 Z M178.7,197.3 L185.2,199.4 L194.7,197.6 L195.4,205.4 L194.7,204.0 L193.8,205.6 L193.6,210.7 L192.6,211.1 L191.9,209.9 L192.7,209.4 L191.5,208.9 L190.9,210.0 L190.1,208.6 L189.9,211.0 L188.6,210.7 L188.0,213.3 L183.8,212.9 L183.5,211.9 L184.6,211.6 L182.9,211.5 L181.0,209.4 L179.5,205.4 L180.9,206.9 L181.1,206.1 L177.3,200.7 L177.1,196.6 Z"
+  },
+  {
+    "name": "RIO DE JANEIRO",
+    "countryCode": "BRA",
+    "countryName": "BRAZIL",
+    "flag": "🇧🇷",
+    "lat": -22.9068,
+    "lon": -43.1729,
+    "continent": "South America",
+    "subregion": "South America",
+    "borders": "Guanabara Bay • Christ the Redeemer & Copacabana Beach",
+    "capital": "Located in BRAZIL (🇧🇷)",
+    "widthKm": 4229,
+    "pinX": 176.9,
+    "pinY": 165.3,
+    "svg": "M56.8,39.1 L59.4,41.5 L62.8,40.4 L63.9,41.9 L65.8,39.7 L70.3,37.5 L71.3,35.4 L74.2,34.2 L74.4,32.9 L71.1,32.4 L70.2,26.7 L67.3,23.1 L71.2,25.0 L74.7,24.9 L77.1,26.7 L77.9,24.5 L86.5,21.8 L88.4,19.9 L88.3,18.2 L91.7,18.9 L90.9,21.8 L93.1,22.6 L93.9,24.9 L92.4,26.7 L91.7,31.4 L93.3,36.4 L97.4,39.2 L106.2,35.0 L112.1,35.8 L111.2,33.7 L112.1,32.3 L117.1,31.9 L121.4,34.4 L123.2,33.2 L127.3,34.1 L134.9,22.9 L136.1,24.1 L138.7,34.3 L142.5,36.8 L142.8,39.4 L135.8,45.9 L132.3,52.7 L128.8,53.6 L132.5,53.8 L137.8,50.4 L138.8,54.7 L140.3,56.0 L145.8,54.6 L144.2,59.4 L146.3,55.5 L148.9,53.3 L150.7,53.3 L150.2,51.5 L151.9,49.4 L156.2,48.9 L165.4,52.6 L166.0,54.5 L167.3,53.2 L169.4,54.6 L170.0,56.2 L168.9,57.4 L170.5,56.8 L170.8,57.9 L169.1,62.3 L171.6,58.4 L171.8,60.2 L175.9,57.9 L185.5,60.8 L193.2,60.5 L200.8,64.9 L207.4,71.2 L215.6,72.3 L217.2,74.6 L219.4,83.6 L218.5,89.5 L215.3,95.4 L206.4,104.4 L202.0,112.7 L200.6,113.3 L199.7,111.5 L198.8,112.4 L197.6,116.6 L198.7,128.5 L197.3,138.1 L194.8,141.0 L194.1,147.9 L188.2,156.6 L188.0,160.6 L184.4,162.2 L182.7,165.5 L178.0,165.6 L177.0,164.4 L176.7,165.8 L169.5,166.1 L169.9,167.2 L165.3,170.0 L162.7,170.0 L158.2,172.3 L152.5,176.5 L151.4,178.5 L148.8,178.2 L150.4,179.4 L148.7,182.9 L149.7,187.8 L148.4,195.0 L143.6,199.1 L137.7,209.0 L132.0,213.5 L131.9,212.0 L135.9,210.2 L139.4,204.7 L139.5,203.8 L137.1,204.4 L135.7,202.6 L135.8,206.4 L132.3,209.7 L128.9,218.8 L125.2,222.0 L124.4,219.0 L126.5,216.7 L123.3,213.2 L113.9,206.9 L111.9,208.1 L111.7,206.5 L107.7,203.0 L103.8,203.4 L112.5,193.9 L113.5,194.0 L113.3,193.0 L122.9,187.4 L123.7,182.7 L122.0,179.3 L118.9,179.3 L120.8,171.3 L118.9,170.1 L114.9,170.8 L112.9,162.4 L109.6,161.0 L107.2,162.0 L101.8,160.8 L102.6,155.3 L101.0,151.0 L102.5,150.0 L101.1,148.8 L104.3,140.8 L102.6,137.1 L99.8,135.7 L100.0,130.7 L90.7,130.6 L90.4,126.5 L88.7,124.5 L90.2,124.4 L89.1,117.6 L86.2,116.1 L82.6,116.3 L76.1,111.8 L69.2,110.6 L66.3,108.1 L64.3,104.3 L64.3,96.3 L58.3,97.3 L47.9,103.6 L37.7,103.1 L38.2,94.9 L34.7,97.6 L29.9,97.8 L28.9,95.2 L24.7,94.7 L25.8,92.5 L20.6,85.0 L22.1,83.7 L21.9,81.6 L25.0,79.3 L24.5,77.4 L26.3,72.3 L36.9,67.3 L41.1,68.0 L44.0,51.8 L42.8,48.2 L40.6,46.2 L40.7,42.5 L45.2,42.1 L44.4,40.0 L41.7,40.0 L41.7,36.6 L50.2,36.5 L50.1,35.1 L51.4,36.4 L54.1,34.4 L55.7,39.3 Z M144.2,46.7 L150.5,47.1 L148.2,52.8 L144.8,53.4 L143.3,54.9 L139.8,54.9 L138.5,52.0 L139.4,51.3 L138.3,50.2 L139.1,46.9 L141.1,46.1 Z"
+  },
+  {
+    "name": "SAO PAULO",
+    "countryCode": "BRA",
+    "countryName": "BRAZIL",
+    "flag": "🇧🇷",
+    "lat": -23.5505,
+    "lon": -46.6333,
+    "continent": "South America",
+    "subregion": "South America",
+    "borders": "Southeast Highlands • Largest Financial Metropolis in South America",
+    "capital": "Located in BRAZIL (🇧🇷)",
+    "widthKm": 4229,
+    "pinX": 159.4,
+    "pinY": 168.7,
+    "svg": "M56.8,39.1 L59.4,41.5 L62.8,40.4 L63.9,41.9 L65.8,39.7 L70.3,37.5 L71.3,35.4 L74.2,34.2 L74.4,32.9 L71.1,32.4 L70.2,26.7 L67.3,23.1 L71.2,25.0 L74.7,24.9 L77.1,26.7 L77.9,24.5 L86.5,21.8 L88.4,19.9 L88.3,18.2 L91.7,18.9 L90.9,21.8 L93.1,22.6 L93.9,24.9 L92.4,26.7 L91.7,31.4 L93.3,36.4 L97.4,39.2 L106.2,35.0 L112.1,35.8 L111.2,33.7 L112.1,32.3 L117.1,31.9 L121.4,34.4 L123.2,33.2 L127.3,34.1 L134.9,22.9 L136.1,24.1 L138.7,34.3 L142.5,36.8 L142.8,39.4 L135.8,45.9 L132.3,52.7 L128.8,53.6 L132.5,53.8 L137.8,50.4 L138.8,54.7 L140.3,56.0 L145.8,54.6 L144.2,59.4 L146.3,55.5 L148.9,53.3 L150.7,53.3 L150.2,51.5 L151.9,49.4 L156.2,48.9 L165.4,52.6 L166.0,54.5 L167.3,53.2 L169.4,54.6 L170.0,56.2 L168.9,57.4 L170.5,56.8 L170.8,57.9 L169.1,62.3 L171.6,58.4 L171.8,60.2 L175.9,57.9 L185.5,60.8 L193.2,60.5 L200.8,64.9 L207.4,71.2 L215.6,72.3 L217.2,74.6 L219.4,83.6 L218.5,89.5 L215.3,95.4 L206.4,104.4 L202.0,112.7 L200.6,113.3 L199.7,111.5 L198.8,112.4 L197.6,116.6 L198.7,128.5 L197.3,138.1 L194.8,141.0 L194.1,147.9 L188.2,156.6 L188.0,160.6 L184.4,162.2 L182.7,165.5 L178.0,165.6 L177.0,164.4 L176.7,165.8 L169.5,166.1 L169.9,167.2 L165.3,170.0 L162.7,170.0 L158.2,172.3 L152.5,176.5 L151.4,178.5 L148.8,178.2 L150.4,179.4 L148.7,182.9 L149.7,187.8 L148.4,195.0 L143.6,199.1 L137.7,209.0 L132.0,213.5 L131.9,212.0 L135.9,210.2 L139.4,204.7 L139.5,203.8 L137.1,204.4 L135.7,202.6 L135.8,206.4 L132.3,209.7 L128.9,218.8 L125.2,222.0 L124.4,219.0 L126.5,216.7 L123.3,213.2 L113.9,206.9 L111.9,208.1 L111.7,206.5 L107.7,203.0 L103.8,203.4 L112.5,193.9 L113.5,194.0 L113.3,193.0 L122.9,187.4 L123.7,182.7 L122.0,179.3 L118.9,179.3 L120.8,171.3 L118.9,170.1 L114.9,170.8 L112.9,162.4 L109.6,161.0 L107.2,162.0 L101.8,160.8 L102.6,155.3 L101.0,151.0 L102.5,150.0 L101.1,148.8 L104.3,140.8 L102.6,137.1 L99.8,135.7 L100.0,130.7 L90.7,130.6 L90.4,126.5 L88.7,124.5 L90.2,124.4 L89.1,117.6 L86.2,116.1 L82.6,116.3 L76.1,111.8 L69.2,110.6 L66.3,108.1 L64.3,104.3 L64.3,96.3 L58.3,97.3 L47.9,103.6 L37.7,103.1 L38.2,94.9 L34.7,97.6 L29.9,97.8 L28.9,95.2 L24.7,94.7 L25.8,92.5 L20.6,85.0 L22.1,83.7 L21.9,81.6 L25.0,79.3 L24.5,77.4 L26.3,72.3 L36.9,67.3 L41.1,68.0 L44.0,51.8 L42.8,48.2 L40.6,46.2 L40.7,42.5 L45.2,42.1 L44.4,40.0 L41.7,40.0 L41.7,36.6 L50.2,36.5 L50.1,35.1 L51.4,36.4 L54.1,34.4 L55.7,39.3 Z M144.2,46.7 L150.5,47.1 L148.2,52.8 L144.8,53.4 L143.3,54.9 L139.8,54.9 L138.5,52.0 L139.4,51.3 L138.3,50.2 L139.1,46.9 L141.1,46.1 Z"
+  },
+  {
+    "name": "MUMBAI",
+    "countryCode": "IND",
+    "countryName": "INDIA",
+    "flag": "🇮🇳",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "continent": "Asia",
+    "subregion": "Southern Asia",
+    "borders": "Arabian Sea Coast • Gateway of India & Bollywood",
+    "capital": "Located in INDIA (🇮🇳)",
+    "widthKm": 3016,
+    "pinX": 51.8,
+    "pinY": 140.2,
+    "svg": "M19.2,104.6 L23.1,103.8 L23.5,101.2 L30.5,102.3 L35.3,100.5 L36.8,101.8 L39.1,100.6 L36.4,91.1 L33.7,90.8 L32.6,89.3 L32.9,84.9 L28.5,83.1 L28.7,80.3 L34.7,73.6 L37.4,75.9 L44.8,74.1 L48.1,68.2 L51.9,66.1 L55.2,59.4 L58.2,58.2 L58.8,55.7 L63.9,51.2 L63.4,45.4 L68.7,42.4 L68.0,41.2 L64.3,40.3 L64.1,38.4 L62.0,38.3 L61.6,36.6 L59.5,35.2 L60.6,32.8 L59.4,31.2 L61.2,29.5 L58.9,28.6 L59.3,27.4 L58.1,26.3 L59.2,24.3 L61.6,23.4 L71.3,25.4 L77.4,23.7 L85.8,18.0 L87.4,18.1 L89.4,24.6 L93.9,26.9 L92.2,29.0 L92.7,32.9 L95.0,35.3 L95.6,40.3 L93.5,41.3 L92.0,39.6 L89.8,40.1 L92.2,44.3 L92.3,49.0 L94.8,48.5 L97.5,51.5 L102.0,53.0 L102.3,54.7 L108.0,57.7 L103.7,60.9 L101.5,67.6 L113.8,74.8 L119.5,76.2 L119.9,77.4 L123.7,78.5 L129.2,77.6 L132.8,79.0 L133.3,80.9 L137.2,83.1 L139.4,82.4 L141.0,84.2 L156.2,85.8 L157.4,83.3 L156.1,80.2 L157.2,74.2 L160.2,73.1 L161.8,73.7 L161.4,77.3 L162.4,78.9 L161.3,79.9 L164.2,82.6 L168.4,83.4 L172.5,82.0 L175.2,82.9 L183.9,82.3 L184.5,79.1 L181.1,77.1 L181.3,75.6 L187.7,74.7 L192.5,69.1 L196.0,68.3 L202.0,64.0 L207.3,66.1 L211.8,63.0 L214.0,64.5 L212.5,66.9 L214.5,66.0 L215.5,68.1 L213.5,70.7 L215.7,70.4 L220.7,72.2 L220.7,74.2 L217.6,76.8 L219.1,80.4 L216.6,78.7 L212.8,79.3 L205.5,84.2 L205.5,88.3 L201.7,93.7 L202.6,95.7 L198.6,104.5 L193.0,103.1 L193.3,110.0 L191.9,110.7 L191.8,116.7 L190.2,118.5 L188.9,117.4 L187.9,118.6 L185.6,105.9 L183.4,105.9 L181.2,111.1 L180.0,109.5 L179.1,110.2 L178.1,106.7 L179.5,102.8 L183.0,102.1 L184.6,100.5 L185.5,97.0 L187.1,96.5 L184.2,94.8 L173.1,94.9 L168.9,93.9 L167.8,87.1 L167.0,88.6 L165.7,88.6 L163.3,85.6 L162.0,86.8 L158.8,84.5 L159.3,85.9 L156.8,89.5 L162.8,94.2 L159.4,94.7 L156.4,98.9 L161.2,101.5 L160.2,106.0 L161.2,109.1 L162.7,109.6 L163.5,121.0 L162.2,120.3 L161.4,121.5 L160.7,117.5 L160.3,120.9 L158.2,120.2 L157.1,121.1 L157.6,117.4 L155.8,115.6 L157.3,117.5 L155.9,119.7 L150.0,122.1 L148.4,124.1 L149.2,128.1 L147.6,131.0 L145.0,133.2 L144.1,132.9 L143.9,134.1 L139.5,135.6 L139.0,134.1 L137.2,135.1 L136.8,136.3 L138.6,136.1 L133.9,139.8 L129.3,146.0 L117.3,154.9 L116.6,158.9 L113.1,160.6 L109.9,160.6 L107.7,164.9 L105.4,163.8 L103.0,165.2 L101.3,169.9 L103.1,181.8 L102.1,180.1 L101.4,180.9 L103.3,182.7 L98.9,197.9 L99.9,198.8 L99.9,205.3 L96.2,205.8 L93.6,210.9 L94.2,212.7 L96.9,213.7 L93.9,213.1 L90.1,214.4 L88.5,216.0 L87.6,219.7 L83.8,222.0 L80.7,220.2 L77.2,215.9 L75.6,211.8 L75.0,208.2 L76.5,211.2 L75.7,208.3 L71.4,197.6 L66.0,188.6 L62.2,174.3 L59.2,169.9 L58.4,165.6 L57.3,165.2 L54.9,159.6 L51.7,143.4 L52.6,140.6 L52.4,139.6 L51.5,140.9 L51.2,140.1 L51.3,138.5 L52.5,138.7 L51.1,138.0 L50.3,134.6 L51.9,128.3 L50.0,123.1 L50.8,122.4 L49.9,122.4 L53.4,120.3 L49.5,120.7 L50.5,118.6 L49.3,118.6 L49.5,117.2 L51.3,116.7 L47.0,116.4 L47.6,117.7 L46.0,119.7 L47.5,121.9 L45.8,124.7 L39.0,127.8 L35.2,127.0 L24.8,116.3 L25.3,115.2 L26.9,116.3 L33.1,114.2 L35.3,110.3 L29.6,112.8 L26.6,112.1 L22.5,109.6 L20.9,106.7 L23.4,104.6 L19.7,106.5 Z"
+  },
+  {
+    "name": "NEW DELHI",
+    "countryCode": "IND",
+    "countryName": "INDIA",
+    "flag": "🇮🇳",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "continent": "Asia",
+    "subregion": "Southern Asia",
+    "borders": "Yamuna River Plains • Red Fort, India Gate & Qutub Minar",
+    "capital": "Located in INDIA (🇮🇳)",
+    "widthKm": 3016,
+    "pinX": 81.7,
+    "pinY": 69.2,
+    "svg": "M19.2,104.6 L23.1,103.8 L23.5,101.2 L30.5,102.3 L35.3,100.5 L36.8,101.8 L39.1,100.6 L36.4,91.1 L33.7,90.8 L32.6,89.3 L32.9,84.9 L28.5,83.1 L28.7,80.3 L34.7,73.6 L37.4,75.9 L44.8,74.1 L48.1,68.2 L51.9,66.1 L55.2,59.4 L58.2,58.2 L58.8,55.7 L63.9,51.2 L63.4,45.4 L68.7,42.4 L68.0,41.2 L64.3,40.3 L64.1,38.4 L62.0,38.3 L61.6,36.6 L59.5,35.2 L60.6,32.8 L59.4,31.2 L61.2,29.5 L58.9,28.6 L59.3,27.4 L58.1,26.3 L59.2,24.3 L61.6,23.4 L71.3,25.4 L77.4,23.7 L85.8,18.0 L87.4,18.1 L89.4,24.6 L93.9,26.9 L92.2,29.0 L92.7,32.9 L95.0,35.3 L95.6,40.3 L93.5,41.3 L92.0,39.6 L89.8,40.1 L92.2,44.3 L92.3,49.0 L94.8,48.5 L97.5,51.5 L102.0,53.0 L102.3,54.7 L108.0,57.7 L103.7,60.9 L101.5,67.6 L113.8,74.8 L119.5,76.2 L119.9,77.4 L123.7,78.5 L129.2,77.6 L132.8,79.0 L133.3,80.9 L137.2,83.1 L139.4,82.4 L141.0,84.2 L156.2,85.8 L157.4,83.3 L156.1,80.2 L157.2,74.2 L160.2,73.1 L161.8,73.7 L161.4,77.3 L162.4,78.9 L161.3,79.9 L164.2,82.6 L168.4,83.4 L172.5,82.0 L175.2,82.9 L183.9,82.3 L184.5,79.1 L181.1,77.1 L181.3,75.6 L187.7,74.7 L192.5,69.1 L196.0,68.3 L202.0,64.0 L207.3,66.1 L211.8,63.0 L214.0,64.5 L212.5,66.9 L214.5,66.0 L215.5,68.1 L213.5,70.7 L215.7,70.4 L220.7,72.2 L220.7,74.2 L217.6,76.8 L219.1,80.4 L216.6,78.7 L212.8,79.3 L205.5,84.2 L205.5,88.3 L201.7,93.7 L202.6,95.7 L198.6,104.5 L193.0,103.1 L193.3,110.0 L191.9,110.7 L191.8,116.7 L190.2,118.5 L188.9,117.4 L187.9,118.6 L185.6,105.9 L183.4,105.9 L181.2,111.1 L180.0,109.5 L179.1,110.2 L178.1,106.7 L179.5,102.8 L183.0,102.1 L184.6,100.5 L185.5,97.0 L187.1,96.5 L184.2,94.8 L173.1,94.9 L168.9,93.9 L167.8,87.1 L167.0,88.6 L165.7,88.6 L163.3,85.6 L162.0,86.8 L158.8,84.5 L159.3,85.9 L156.8,89.5 L162.8,94.2 L159.4,94.7 L156.4,98.9 L161.2,101.5 L160.2,106.0 L161.2,109.1 L162.7,109.6 L163.5,121.0 L162.2,120.3 L161.4,121.5 L160.7,117.5 L160.3,120.9 L158.2,120.2 L157.1,121.1 L157.6,117.4 L155.8,115.6 L157.3,117.5 L155.9,119.7 L150.0,122.1 L148.4,124.1 L149.2,128.1 L147.6,131.0 L145.0,133.2 L144.1,132.9 L143.9,134.1 L139.5,135.6 L139.0,134.1 L137.2,135.1 L136.8,136.3 L138.6,136.1 L133.9,139.8 L129.3,146.0 L117.3,154.9 L116.6,158.9 L113.1,160.6 L109.9,160.6 L107.7,164.9 L105.4,163.8 L103.0,165.2 L101.3,169.9 L103.1,181.8 L102.1,180.1 L101.4,180.9 L103.3,182.7 L98.9,197.9 L99.9,198.8 L99.9,205.3 L96.2,205.8 L93.6,210.9 L94.2,212.7 L96.9,213.7 L93.9,213.1 L90.1,214.4 L88.5,216.0 L87.6,219.7 L83.8,222.0 L80.7,220.2 L77.2,215.9 L75.6,211.8 L75.0,208.2 L76.5,211.2 L75.7,208.3 L71.4,197.6 L66.0,188.6 L62.2,174.3 L59.2,169.9 L58.4,165.6 L57.3,165.2 L54.9,159.6 L51.7,143.4 L52.6,140.6 L52.4,139.6 L51.5,140.9 L51.2,140.1 L51.3,138.5 L52.5,138.7 L51.1,138.0 L50.3,134.6 L51.9,128.3 L50.0,123.1 L50.8,122.4 L49.9,122.4 L53.4,120.3 L49.5,120.7 L50.5,118.6 L49.3,118.6 L49.5,117.2 L51.3,116.7 L47.0,116.4 L47.6,117.7 L46.0,119.7 L47.5,121.9 L45.8,124.7 L39.0,127.8 L35.2,127.0 L24.8,116.3 L25.3,115.2 L26.9,116.3 L33.1,114.2 L35.3,110.3 L29.6,112.8 L26.6,112.1 L22.5,109.6 L20.9,106.7 L23.4,104.6 L19.7,106.5 Z"
+  },
+  {
+    "name": "BENGALURU",
+    "countryCode": "IND",
+    "countryName": "INDIA",
+    "flag": "🇮🇳",
+    "lat": 12.9716,
+    "lon": 77.5946,
+    "continent": "Asia",
+    "subregion": "Southern Asia",
+    "borders": "Deccan Plateau • Silicon Valley of South Asia",
+    "capital": "Located in INDIA (🇮🇳)",
+    "widthKm": 3016,
+    "pinX": 84.4,
+    "pinY": 185.6,
+    "svg": "M19.2,104.6 L23.1,103.8 L23.5,101.2 L30.5,102.3 L35.3,100.5 L36.8,101.8 L39.1,100.6 L36.4,91.1 L33.7,90.8 L32.6,89.3 L32.9,84.9 L28.5,83.1 L28.7,80.3 L34.7,73.6 L37.4,75.9 L44.8,74.1 L48.1,68.2 L51.9,66.1 L55.2,59.4 L58.2,58.2 L58.8,55.7 L63.9,51.2 L63.4,45.4 L68.7,42.4 L68.0,41.2 L64.3,40.3 L64.1,38.4 L62.0,38.3 L61.6,36.6 L59.5,35.2 L60.6,32.8 L59.4,31.2 L61.2,29.5 L58.9,28.6 L59.3,27.4 L58.1,26.3 L59.2,24.3 L61.6,23.4 L71.3,25.4 L77.4,23.7 L85.8,18.0 L87.4,18.1 L89.4,24.6 L93.9,26.9 L92.2,29.0 L92.7,32.9 L95.0,35.3 L95.6,40.3 L93.5,41.3 L92.0,39.6 L89.8,40.1 L92.2,44.3 L92.3,49.0 L94.8,48.5 L97.5,51.5 L102.0,53.0 L102.3,54.7 L108.0,57.7 L103.7,60.9 L101.5,67.6 L113.8,74.8 L119.5,76.2 L119.9,77.4 L123.7,78.5 L129.2,77.6 L132.8,79.0 L133.3,80.9 L137.2,83.1 L139.4,82.4 L141.0,84.2 L156.2,85.8 L157.4,83.3 L156.1,80.2 L157.2,74.2 L160.2,73.1 L161.8,73.7 L161.4,77.3 L162.4,78.9 L161.3,79.9 L164.2,82.6 L168.4,83.4 L172.5,82.0 L175.2,82.9 L183.9,82.3 L184.5,79.1 L181.1,77.1 L181.3,75.6 L187.7,74.7 L192.5,69.1 L196.0,68.3 L202.0,64.0 L207.3,66.1 L211.8,63.0 L214.0,64.5 L212.5,66.9 L214.5,66.0 L215.5,68.1 L213.5,70.7 L215.7,70.4 L220.7,72.2 L220.7,74.2 L217.6,76.8 L219.1,80.4 L216.6,78.7 L212.8,79.3 L205.5,84.2 L205.5,88.3 L201.7,93.7 L202.6,95.7 L198.6,104.5 L193.0,103.1 L193.3,110.0 L191.9,110.7 L191.8,116.7 L190.2,118.5 L188.9,117.4 L187.9,118.6 L185.6,105.9 L183.4,105.9 L181.2,111.1 L180.0,109.5 L179.1,110.2 L178.1,106.7 L179.5,102.8 L183.0,102.1 L184.6,100.5 L185.5,97.0 L187.1,96.5 L184.2,94.8 L173.1,94.9 L168.9,93.9 L167.8,87.1 L167.0,88.6 L165.7,88.6 L163.3,85.6 L162.0,86.8 L158.8,84.5 L159.3,85.9 L156.8,89.5 L162.8,94.2 L159.4,94.7 L156.4,98.9 L161.2,101.5 L160.2,106.0 L161.2,109.1 L162.7,109.6 L163.5,121.0 L162.2,120.3 L161.4,121.5 L160.7,117.5 L160.3,120.9 L158.2,120.2 L157.1,121.1 L157.6,117.4 L155.8,115.6 L157.3,117.5 L155.9,119.7 L150.0,122.1 L148.4,124.1 L149.2,128.1 L147.6,131.0 L145.0,133.2 L144.1,132.9 L143.9,134.1 L139.5,135.6 L139.0,134.1 L137.2,135.1 L136.8,136.3 L138.6,136.1 L133.9,139.8 L129.3,146.0 L117.3,154.9 L116.6,158.9 L113.1,160.6 L109.9,160.6 L107.7,164.9 L105.4,163.8 L103.0,165.2 L101.3,169.9 L103.1,181.8 L102.1,180.1 L101.4,180.9 L103.3,182.7 L98.9,197.9 L99.9,198.8 L99.9,205.3 L96.2,205.8 L93.6,210.9 L94.2,212.7 L96.9,213.7 L93.9,213.1 L90.1,214.4 L88.5,216.0 L87.6,219.7 L83.8,222.0 L80.7,220.2 L77.2,215.9 L75.6,211.8 L75.0,208.2 L76.5,211.2 L75.7,208.3 L71.4,197.6 L66.0,188.6 L62.2,174.3 L59.2,169.9 L58.4,165.6 L57.3,165.2 L54.9,159.6 L51.7,143.4 L52.6,140.6 L52.4,139.6 L51.5,140.9 L51.2,140.1 L51.3,138.5 L52.5,138.7 L51.1,138.0 L50.3,134.6 L51.9,128.3 L50.0,123.1 L50.8,122.4 L49.9,122.4 L53.4,120.3 L49.5,120.7 L50.5,118.6 L49.3,118.6 L49.5,117.2 L51.3,116.7 L47.0,116.4 L47.6,117.7 L46.0,119.7 L47.5,121.9 L45.8,124.7 L39.0,127.8 L35.2,127.0 L24.8,116.3 L25.3,115.2 L26.9,116.3 L33.1,114.2 L35.3,110.3 L29.6,112.8 L26.6,112.1 L22.5,109.6 L20.9,106.7 L23.4,104.6 L19.7,106.5 Z"
+  },
+  {
+    "name": "BERLIN",
+    "countryCode": "DEU",
+    "countryName": "GERMANY",
+    "flag": "🇩🇪",
+    "lat": 52.52,
+    "lon": 13.405,
+    "continent": "Europe",
+    "subregion": "Western Europe",
+    "borders": "Spree River • Brandenburg Gate & Reichstag",
+    "capital": "Located in GERMANY (🇩🇪)",
+    "widthKm": 640,
+    "pinX": 169.9,
+    "pinY": 81.8,
+    "svg": "M104.7,215.4 L98.9,211.5 L93.9,211.9 L88.7,208.7 L85.8,211.1 L88.6,212.4 L86.3,213.6 L82.4,213.2 L77.8,214.4 L71.7,213.2 L72.6,198.5 L76.3,185.7 L81.4,179.0 L81.3,176.7 L72.5,174.3 L69.8,171.9 L62.9,172.9 L62.3,171.1 L60.4,170.4 L57.8,171.7 L54.4,165.4 L51.2,163.8 L53.6,154.6 L49.7,152.6 L47.8,149.9 L47.3,146.7 L48.4,143.0 L51.6,140.7 L51.2,137.1 L48.4,135.2 L49.4,133.2 L45.3,129.1 L46.3,125.0 L43.0,121.6 L47.6,118.5 L46.7,116.4 L48.8,110.4 L44.6,101.0 L48.2,98.9 L51.4,100.4 L57.9,98.1 L58.9,96.2 L57.6,93.5 L62.6,88.6 L62.3,84.5 L58.0,83.3 L57.1,81.5 L58.0,78.7 L62.5,78.7 L65.3,69.8 L65.6,61.4 L63.1,58.9 L64.0,54.0 L65.7,51.4 L79.2,50.4 L81.9,54.4 L80.9,56.4 L83.2,57.0 L84.7,52.7 L87.3,55.2 L87.4,58.4 L87.9,48.0 L89.4,45.5 L94.1,46.6 L99.3,46.0 L105.7,52.9 L109.0,54.1 L106.5,52.9 L101.1,45.9 L95.5,44.1 L94.2,42.2 L94.3,35.2 L92.2,33.8 L89.9,34.3 L89.9,31.5 L95.0,29.7 L95.1,27.8 L90.5,21.0 L90.3,18.0 L94.2,18.2 L100.1,20.6 L106.2,19.3 L110.8,21.3 L113.0,24.1 L113.1,26.6 L110.4,29.5 L115.1,29.1 L116.2,31.2 L118.7,30.4 L124.9,33.7 L129.7,32.0 L130.5,34.7 L129.6,37.3 L126.3,40.2 L128.1,42.3 L131.2,41.9 L136.2,43.7 L142.8,38.3 L148.1,37.7 L155.9,29.7 L163.6,31.2 L165.5,34.6 L170.6,38.4 L175.2,38.1 L177.6,46.1 L180.3,48.4 L184.2,49.4 L186.8,63.6 L182.0,72.2 L188.5,78.4 L190.3,81.5 L189.2,86.1 L191.3,89.0 L192.5,93.5 L190.0,100.2 L192.1,104.7 L192.1,108.4 L195.1,110.0 L197.0,115.7 L192.8,127.3 L190.2,126.3 L189.0,122.6 L185.2,121.4 L184.2,122.4 L186.1,125.1 L172.4,130.3 L170.4,133.1 L169.4,132.6 L166.1,135.5 L163.3,136.1 L162.1,138.3 L159.1,137.7 L155.5,138.7 L150.9,144.3 L149.2,141.5 L147.8,141.1 L149.8,146.6 L154.9,152.0 L152.8,156.2 L157.7,164.9 L159.9,167.1 L161.7,167.1 L169.8,176.5 L172.3,177.0 L176.8,182.2 L175.2,188.2 L171.2,187.1 L169.4,193.0 L161.3,197.3 L159.0,199.8 L162.3,205.6 L161.3,210.1 L163.6,210.8 L164.0,211.9 L163.3,216.7 L159.9,215.0 L159.2,212.4 L157.8,211.6 L154.4,212.4 L149.8,210.2 L149.4,212.9 L141.5,213.8 L134.5,218.1 L130.2,218.9 L127.3,215.5 L120.0,214.7 L118.9,219.7 L115.7,222.0 L116.0,219.7 L113.8,218.9 L112.2,215.9 L108.4,214.1 Z M175.0,31.9 L175.0,34.6 L173.1,33.1 L171.2,33.1 L169.2,35.6 L166.3,33.5 L166.0,27.6 L168.7,23.5 L170.2,23.5 L171.3,25.7 L174.1,27.2 L172.8,29.8 Z"
+  },
+  {
+    "name": "MUNICH",
+    "countryCode": "DEU",
+    "countryName": "GERMANY",
+    "flag": "🇩🇪",
+    "lat": 48.1351,
+    "lon": 11.582,
+    "continent": "Europe",
+    "subregion": "Western Europe",
+    "borders": "Bavaria near the Alps • Marienplatz & Oktoberfest",
+    "capital": "Located in GERMANY (🇩🇪)",
+    "widthKm": 640,
+    "pinX": 139.2,
+    "pinY": 199.1,
+    "svg": "M104.7,215.4 L98.9,211.5 L93.9,211.9 L88.7,208.7 L85.8,211.1 L88.6,212.4 L86.3,213.6 L82.4,213.2 L77.8,214.4 L71.7,213.2 L72.6,198.5 L76.3,185.7 L81.4,179.0 L81.3,176.7 L72.5,174.3 L69.8,171.9 L62.9,172.9 L62.3,171.1 L60.4,170.4 L57.8,171.7 L54.4,165.4 L51.2,163.8 L53.6,154.6 L49.7,152.6 L47.8,149.9 L47.3,146.7 L48.4,143.0 L51.6,140.7 L51.2,137.1 L48.4,135.2 L49.4,133.2 L45.3,129.1 L46.3,125.0 L43.0,121.6 L47.6,118.5 L46.7,116.4 L48.8,110.4 L44.6,101.0 L48.2,98.9 L51.4,100.4 L57.9,98.1 L58.9,96.2 L57.6,93.5 L62.6,88.6 L62.3,84.5 L58.0,83.3 L57.1,81.5 L58.0,78.7 L62.5,78.7 L65.3,69.8 L65.6,61.4 L63.1,58.9 L64.0,54.0 L65.7,51.4 L79.2,50.4 L81.9,54.4 L80.9,56.4 L83.2,57.0 L84.7,52.7 L87.3,55.2 L87.4,58.4 L87.9,48.0 L89.4,45.5 L94.1,46.6 L99.3,46.0 L105.7,52.9 L109.0,54.1 L106.5,52.9 L101.1,45.9 L95.5,44.1 L94.2,42.2 L94.3,35.2 L92.2,33.8 L89.9,34.3 L89.9,31.5 L95.0,29.7 L95.1,27.8 L90.5,21.0 L90.3,18.0 L94.2,18.2 L100.1,20.6 L106.2,19.3 L110.8,21.3 L113.0,24.1 L113.1,26.6 L110.4,29.5 L115.1,29.1 L116.2,31.2 L118.7,30.4 L124.9,33.7 L129.7,32.0 L130.5,34.7 L129.6,37.3 L126.3,40.2 L128.1,42.3 L131.2,41.9 L136.2,43.7 L142.8,38.3 L148.1,37.7 L155.9,29.7 L163.6,31.2 L165.5,34.6 L170.6,38.4 L175.2,38.1 L177.6,46.1 L180.3,48.4 L184.2,49.4 L186.8,63.6 L182.0,72.2 L188.5,78.4 L190.3,81.5 L189.2,86.1 L191.3,89.0 L192.5,93.5 L190.0,100.2 L192.1,104.7 L192.1,108.4 L195.1,110.0 L197.0,115.7 L192.8,127.3 L190.2,126.3 L189.0,122.6 L185.2,121.4 L184.2,122.4 L186.1,125.1 L172.4,130.3 L170.4,133.1 L169.4,132.6 L166.1,135.5 L163.3,136.1 L162.1,138.3 L159.1,137.7 L155.5,138.7 L150.9,144.3 L149.2,141.5 L147.8,141.1 L149.8,146.6 L154.9,152.0 L152.8,156.2 L157.7,164.9 L159.9,167.1 L161.7,167.1 L169.8,176.5 L172.3,177.0 L176.8,182.2 L175.2,188.2 L171.2,187.1 L169.4,193.0 L161.3,197.3 L159.0,199.8 L162.3,205.6 L161.3,210.1 L163.6,210.8 L164.0,211.9 L163.3,216.7 L159.9,215.0 L159.2,212.4 L157.8,211.6 L154.4,212.4 L149.8,210.2 L149.4,212.9 L141.5,213.8 L134.5,218.1 L130.2,218.9 L127.3,215.5 L120.0,214.7 L118.9,219.7 L115.7,222.0 L116.0,219.7 L113.8,218.9 L112.2,215.9 L108.4,214.1 Z M175.0,31.9 L175.0,34.6 L173.1,33.1 L171.2,33.1 L169.2,35.6 L166.3,33.5 L166.0,27.6 L168.7,23.5 L170.2,23.5 L171.3,25.7 L174.1,27.2 L172.8,29.8 Z"
+  },
+  {
+    "name": "MADRID",
+    "countryCode": "ESP",
+    "countryName": "SPAIN",
+    "flag": "🇪🇸",
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "continent": "Europe",
+    "subregion": "Southern Europe",
+    "borders": "Central Iberian Plateau • Prado Museum & Royal Palace",
+    "capital": "Located in SPAIN (🇪🇸)",
+    "widthKm": 1084,
+    "pinX": 106.9,
+    "pinY": 109.1,
+    "svg": "M137.6,46.5 L138.9,48.6 L143.7,50.0 L142.6,53.5 L143.4,54.2 L145.5,52.9 L147.5,54.5 L154.1,56.2 L157.0,59.2 L161.6,58.6 L165.7,61.5 L176.5,61.5 L177.6,58.2 L188.1,61.5 L189.7,66.8 L193.8,65.4 L198.3,68.4 L201.7,67.1 L209.0,68.8 L209.8,67.4 L212.8,66.4 L218.0,66.9 L219.5,69.9 L217.3,70.6 L217.0,72.5 L218.4,74.2 L218.6,77.1 L214.7,80.8 L203.5,87.1 L199.8,90.8 L183.0,95.6 L177.9,100.6 L180.7,102.7 L176.0,104.9 L161.1,127.9 L163.1,137.4 L169.6,143.8 L158.0,153.0 L153.3,164.5 L154.8,167.4 L154.0,168.1 L145.1,168.9 L140.0,172.5 L137.5,175.8 L135.2,181.8 L131.2,186.0 L127.0,184.2 L121.6,186.6 L115.8,185.7 L111.3,186.7 L104.9,185.7 L96.2,186.5 L91.3,191.0 L87.1,191.1 L83.3,192.7 L80.3,198.7 L78.9,198.4 L78.6,200.0 L76.0,201.0 L69.3,197.6 L66.3,192.6 L65.7,189.1 L63.8,188.2 L63.4,186.3 L66.5,182.4 L64.8,182.5 L63.6,184.2 L62.1,181.6 L55.8,176.6 L56.1,174.8 L54.3,176.5 L47.4,176.9 L45.8,168.4 L49.2,161.6 L50.9,159.6 L53.6,158.8 L54.6,155.8 L52.2,155.9 L48.4,150.1 L49.4,144.7 L53.2,140.7 L54.0,137.6 L51.1,135.9 L48.5,129.0 L45.3,124.9 L52.0,124.5 L54.3,122.0 L55.6,117.3 L53.4,114.3 L57.0,110.6 L56.6,101.5 L55.1,96.7 L65.3,87.3 L66.4,85.1 L65.0,83.4 L61.3,82.8 L60.1,77.1 L51.6,76.3 L50.6,78.1 L47.4,79.4 L39.1,78.4 L35.4,79.9 L34.2,78.1 L35.8,75.5 L33.6,73.0 L24.2,77.5 L23.6,73.7 L26.8,70.2 L24.7,70.0 L26.1,67.3 L24.8,66.1 L24.8,62.5 L21.3,63.5 L23.0,59.2 L21.1,58.9 L18.0,55.5 L18.9,51.3 L23.8,48.0 L27.2,48.4 L32.1,46.7 L33.9,45.8 L33.7,42.8 L42.7,39.0 L45.8,39.5 L49.7,42.5 L52.9,43.4 L72.4,41.5 L93.7,46.3 L108.5,44.1 L117.5,47.2 L120.2,45.5 L128.8,48.1 Z M216.9,122.2 L220.9,122.5 L222.0,124.1 L218.5,130.7 L215.8,132.4 L211.4,130.7 L209.8,127.4 L206.5,128.7 L204.5,126.8 L213.1,119.7 L217.8,118.6 Z"
+  },
+  {
+    "name": "BARCELONA",
+    "countryCode": "ESP",
+    "countryName": "SPAIN",
+    "flag": "🇪🇸",
+    "lat": 41.3874,
+    "lon": 2.1686,
+    "continent": "Europe",
+    "subregion": "Southern Europe",
+    "borders": "Mediterranean Catalonia Coast • Sagrada Familia & Park Guell",
+    "capital": "Located in SPAIN (🇪🇸)",
+    "widthKm": 1084,
+    "pinX": 201.2,
+    "pinY": 88.8,
+    "svg": "M137.6,46.5 L138.9,48.6 L143.7,50.0 L142.6,53.5 L143.4,54.2 L145.5,52.9 L147.5,54.5 L154.1,56.2 L157.0,59.2 L161.6,58.6 L165.7,61.5 L176.5,61.5 L177.6,58.2 L188.1,61.5 L189.7,66.8 L193.8,65.4 L198.3,68.4 L201.7,67.1 L209.0,68.8 L209.8,67.4 L212.8,66.4 L218.0,66.9 L219.5,69.9 L217.3,70.6 L217.0,72.5 L218.4,74.2 L218.6,77.1 L214.7,80.8 L203.5,87.1 L199.8,90.8 L183.0,95.6 L177.9,100.6 L180.7,102.7 L176.0,104.9 L161.1,127.9 L163.1,137.4 L169.6,143.8 L158.0,153.0 L153.3,164.5 L154.8,167.4 L154.0,168.1 L145.1,168.9 L140.0,172.5 L137.5,175.8 L135.2,181.8 L131.2,186.0 L127.0,184.2 L121.6,186.6 L115.8,185.7 L111.3,186.7 L104.9,185.7 L96.2,186.5 L91.3,191.0 L87.1,191.1 L83.3,192.7 L80.3,198.7 L78.9,198.4 L78.6,200.0 L76.0,201.0 L69.3,197.6 L66.3,192.6 L65.7,189.1 L63.8,188.2 L63.4,186.3 L66.5,182.4 L64.8,182.5 L63.6,184.2 L62.1,181.6 L55.8,176.6 L56.1,174.8 L54.3,176.5 L47.4,176.9 L45.8,168.4 L49.2,161.6 L50.9,159.6 L53.6,158.8 L54.6,155.8 L52.2,155.9 L48.4,150.1 L49.4,144.7 L53.2,140.7 L54.0,137.6 L51.1,135.9 L48.5,129.0 L45.3,124.9 L52.0,124.5 L54.3,122.0 L55.6,117.3 L53.4,114.3 L57.0,110.6 L56.6,101.5 L55.1,96.7 L65.3,87.3 L66.4,85.1 L65.0,83.4 L61.3,82.8 L60.1,77.1 L51.6,76.3 L50.6,78.1 L47.4,79.4 L39.1,78.4 L35.4,79.9 L34.2,78.1 L35.8,75.5 L33.6,73.0 L24.2,77.5 L23.6,73.7 L26.8,70.2 L24.7,70.0 L26.1,67.3 L24.8,66.1 L24.8,62.5 L21.3,63.5 L23.0,59.2 L21.1,58.9 L18.0,55.5 L18.9,51.3 L23.8,48.0 L27.2,48.4 L32.1,46.7 L33.9,45.8 L33.7,42.8 L42.7,39.0 L45.8,39.5 L49.7,42.5 L52.9,43.4 L72.4,41.5 L93.7,46.3 L108.5,44.1 L117.5,47.2 L120.2,45.5 L128.8,48.1 Z M216.9,122.2 L220.9,122.5 L222.0,124.1 L218.5,130.7 L215.8,132.4 L211.4,130.7 L209.8,127.4 L206.5,128.7 L204.5,126.8 L213.1,119.7 L217.8,118.6 Z"
+  },
+  {
+    "name": "ATHENS",
+    "countryCode": "GRC",
+    "countryName": "GREECE",
+    "flag": "🇬🇷",
+    "lat": 37.9838,
+    "lon": 23.7275,
+    "continent": "Europe",
+    "subregion": "Southern Europe",
+    "borders": "Attica Basin • Acropolis, Parthenon & Ancient Agora",
+    "capital": "Located in GREECE (🇬🇷)",
+    "widthKm": 750,
+    "pinX": 115.0,
+    "pinY": 130.6,
+    "svg": "M176.0,18.8 L182.1,22.3 L183.1,28.2 L182.6,29.7 L176.2,33.1 L176.7,40.4 L171.0,47.8 L169.3,48.5 L165.0,45.0 L150.8,42.3 L147.4,40.4 L140.1,44.6 L132.6,41.8 L123.4,48.5 L115.9,47.8 L115.4,50.0 L118.6,53.9 L117.5,55.8 L118.3,57.7 L122.1,58.0 L126.4,60.4 L129.5,65.8 L125.2,61.9 L119.4,59.5 L115.0,60.4 L114.9,61.7 L120.7,66.8 L121.4,69.5 L120.2,71.3 L117.6,69.6 L113.5,63.5 L107.9,62.3 L107.0,63.6 L108.1,66.8 L113.8,71.5 L112.7,72.5 L107.2,70.5 L105.3,63.8 L95.5,58.3 L94.4,55.5 L96.1,52.5 L89.2,55.4 L88.3,69.1 L94.1,76.2 L97.4,83.3 L103.4,89.5 L105.6,95.0 L101.6,97.2 L100.7,96.2 L101.7,92.5 L97.8,90.3 L96.1,91.0 L94.1,92.5 L95.3,95.1 L97.1,99.3 L99.5,99.1 L93.3,103.1 L87.8,104.2 L98.4,107.9 L101.2,110.1 L103.9,110.4 L106.6,114.4 L111.3,115.5 L114.0,119.6 L120.7,121.9 L122.0,126.0 L122.7,138.9 L120.8,139.8 L111.6,129.8 L109.7,129.1 L102.5,131.4 L98.8,133.8 L101.4,136.3 L102.6,141.5 L107.2,142.7 L109.4,146.9 L101.7,150.1 L100.3,149.2 L100.2,146.9 L98.3,145.7 L92.6,142.6 L91.5,143.9 L99.3,164.5 L98.9,170.8 L101.7,176.7 L97.5,174.2 L92.8,166.5 L91.3,166.3 L88.7,166.7 L85.9,173.1 L85.9,176.7 L84.5,175.8 L83.2,174.7 L83.3,169.0 L76.3,159.3 L73.4,160.4 L71.9,168.0 L68.3,164.2 L64.6,157.7 L64.5,154.1 L67.2,150.9 L66.9,148.5 L64.4,143.9 L58.7,140.1 L57.7,136.9 L54.2,134.5 L54.3,132.6 L58.2,129.3 L60.4,124.3 L66.4,124.9 L70.3,120.3 L73.3,120.5 L80.2,124.5 L87.5,126.8 L94.3,131.1 L96.1,131.4 L95.4,128.6 L100.8,128.0 L102.2,126.2 L100.1,124.3 L94.0,123.1 L84.3,117.0 L82.0,119.5 L73.6,117.8 L62.0,120.5 L58.7,115.6 L58.1,119.0 L55.2,119.8 L53.6,118.6 L50.8,110.6 L48.0,106.9 L45.7,106.0 L45.5,104.0 L45.7,102.4 L48.4,102.0 L53.6,103.3 L54.5,102.5 L53.7,99.3 L45.8,99.9 L38.4,92.6 L34.5,90.4 L31.9,83.8 L27.5,78.9 L30.5,80.4 L33.3,79.9 L34.6,76.3 L36.4,76.2 L34.7,70.9 L37.0,68.8 L42.9,66.7 L46.4,56.9 L49.8,55.4 L51.7,51.6 L50.1,44.8 L58.5,44.3 L60.4,43.1 L64.5,44.2 L69.3,41.8 L74.3,36.4 L78.8,35.5 L86.0,36.7 L91.5,34.9 L92.9,30.3 L101.6,30.6 L103.6,28.8 L112.9,28.7 L121.7,26.5 L122.7,24.5 L133.6,23.7 L135.4,27.0 L139.6,29.6 L141.3,28.5 L144.8,29.3 L150.8,33.0 L163.4,30.4 L166.6,30.9 L171.6,28.7 L170.4,19.2 L173.1,18.0 Z M118.0,204.0 L121.7,204.2 L123.6,202.2 L125.3,202.2 L126.1,203.9 L124.0,205.2 L127.4,206.0 L127.9,208.5 L129.7,209.3 L138.4,207.3 L145.0,207.8 L147.4,209.6 L156.1,210.9 L162.1,209.6 L162.4,215.8 L163.5,216.4 L169.1,213.6 L172.4,213.6 L176.0,210.6 L174.2,218.7 L172.3,219.5 L164.4,219.3 L140.2,222.0 L138.9,221.5 L138.1,217.4 L132.3,215.2 L111.9,212.3 L110.8,207.6 L111.3,204.0 L112.2,203.1 L113.7,204.6 L115.2,200.4 L116.6,203.4 Z M107.7,101.4 L110.3,105.8 L118.6,109.6 L124.4,110.7 L126.1,114.0 L127.9,123.6 L129.9,125.3 L135.3,126.4 L134.0,130.8 L129.9,129.6 L126.4,126.6 L122.4,118.5 L115.8,118.1 L113.2,116.9 L112.4,113.6 L101.3,104.9 L98.6,104.0 L95.1,104.8 L104.0,99.3 L105.3,99.2 Z M178.1,90.3 L177.7,92.1 L180.9,95.1 L182.4,98.7 L179.9,98.0 L181.3,100.4 L179.4,101.0 L172.2,99.4 L171.0,97.8 L174.8,94.3 L172.6,94.4 L170.1,97.3 L166.2,96.0 L164.8,94.2 L166.3,91.6 L170.5,91.1 L172.3,90.3 L172.3,89.0 L176.6,88.7 Z M211.7,192.2 L209.4,192.7 L208.7,191.4 L209.7,188.0 L208.8,184.9 L213.4,179.7 L220.9,177.1 L217.0,186.2 L217.5,188.1 L214.6,188.7 Z M170.6,123.6 L168.4,125.3 L165.9,122.9 L165.5,122.1 L168.2,119.6 L164.9,114.9 L164.8,113.0 L168.7,112.1 L172.2,114.0 L172.1,121.1 Z M41.8,118.7 L42.1,122.1 L46.0,125.9 L45.3,128.0 L41.7,126.6 L39.7,127.0 L38.1,123.1 L35.7,124.8 L37.0,120.1 L39.6,120.2 L40.7,115.9 Z M29.3,87.2 L29.8,88.9 L24.7,86.4 L19.1,77.2 L23.6,75.6 L25.7,77.0 L23.8,80.2 L26.4,86.1 Z M155.2,70.7 L153.3,76.0 L151.1,75.5 L150.8,73.4 L149.3,75.3 L146.4,74.7 L146.3,70.3 L150.4,70.1 L151.6,71.6 L155.5,69.2 Z M187.8,135.8 L192.9,137.1 L193.2,138.9 L188.3,140.8 L182.1,138.4 L183.4,136.7 Z M139.6,51.8 L136.6,52.9 L133.5,50.9 L133.6,49.7 L136.1,46.5 L138.3,46.7 L139.9,49.2 Z M48.3,136.0 L50.8,138.9 L48.8,138.2 L46.7,140.2 L42.0,134.5 L43.7,132.3 L45.3,134.6 Z M157.8,161.1 L155.7,162.2 L153.4,158.0 L157.3,154.2 L158.7,155.5 Z M144.7,137.4 L144.0,139.4 L138.2,133.2 L137.9,131.3 L140.0,130.5 L141.5,132.7 L143.9,133.0 Z M196.1,206.1 L195.2,207.8 L194.3,206.4 L193.6,202.1 L195.6,196.4 L197.2,195.5 L195.6,201.2 L197.4,205.7 Z M43.6,111.9 L40.5,112.7 L41.4,107.4 L43.7,104.9 Z"
+  },
+  {
+    "name": "OSLO",
+    "countryCode": "NOR",
+    "countryName": "NORWAY",
+    "flag": "🇳🇴",
+    "lat": 59.9139,
+    "lon": 10.7522,
+    "continent": "Europe",
+    "subregion": "Scandinavia",
+    "borders": "Head of Oslofjord • Viking Ship Museum & Opera House",
+    "capital": "Located in NORWAY (🇳🇴)",
+    "widthKm": 1246,
+    "pinX": 71.8,
+    "pinY": 192.5,
+    "svg": "M138.0,50.1 L134.6,50.3 L136.2,53.0 L133.6,57.8 L135.5,58.8 L133.6,60.7 L122.5,57.6 L121.5,58.0 L121.6,63.1 L119.9,66.8 L115.9,64.6 L112.3,67.9 L110.9,72.2 L107.9,75.2 L109.7,81.0 L103.2,89.8 L103.6,92.7 L100.6,94.8 L97.3,95.4 L97.9,100.7 L96.8,108.4 L91.3,119.6 L94.1,121.4 L94.0,127.2 L93.3,128.5 L88.3,127.5 L85.5,128.7 L81.4,135.0 L80.2,139.7 L81.7,144.3 L81.0,150.7 L82.2,155.4 L81.2,164.3 L86.1,170.0 L84.9,174.6 L82.2,175.5 L84.1,184.1 L83.5,189.4 L79.7,193.2 L78.1,197.5 L78.8,202.2 L77.8,207.9 L76.7,208.1 L75.9,205.1 L72.4,203.8 L70.8,194.8 L68.0,206.6 L65.7,207.4 L63.8,205.0 L64.5,207.2 L62.2,209.0 L62.2,210.7 L54.5,220.1 L49.8,222.0 L46.7,221.9 L45.8,220.0 L44.9,221.3 L43.9,220.8 L44.4,218.2 L40.3,216.5 L36.7,211.0 L37.4,206.5 L40.6,208.7 L42.4,206.7 L40.6,207.5 L39.2,205.2 L39.6,202.1 L42.7,198.0 L35.7,204.1 L34.1,203.2 L35.3,196.7 L36.4,195.6 L38.4,196.4 L41.4,193.9 L38.9,194.3 L38.2,193.2 L40.9,187.5 L43.4,184.8 L43.5,188.7 L44.8,184.6 L46.6,183.1 L41.0,185.7 L34.2,196.7 L34.6,189.7 L37.9,189.2 L35.2,187.9 L34.2,184.2 L37.6,180.4 L34.9,182.2 L34.0,181.2 L33.3,174.9 L45.2,173.3 L46.9,176.2 L46.9,174.1 L50.7,172.2 L49.0,170.8 L49.6,168.7 L47.8,172.9 L44.4,172.3 L44.0,171.0 L42.5,173.4 L36.3,173.9 L34.0,172.6 L33.3,168.7 L35.5,167.9 L32.8,164.4 L32.8,161.8 L36.4,161.5 L40.1,163.2 L44.9,161.9 L35.1,160.9 L33.9,159.5 L34.2,157.4 L35.7,157.5 L36.8,155.0 L39.4,153.4 L40.5,154.4 L43.9,153.5 L44.6,152.6 L40.9,153.5 L42.3,150.4 L46.4,150.1 L50.5,151.3 L51.3,150.8 L50.3,149.4 L54.0,148.5 L44.9,148.6 L46.3,145.4 L50.5,142.7 L54.1,142.9 L57.6,146.7 L54.4,141.8 L55.2,139.8 L57.6,138.9 L55.8,136.5 L57.2,134.9 L59.0,134.2 L61.0,135.0 L61.1,137.1 L62.3,135.4 L64.8,134.5 L66.9,138.2 L69.1,137.0 L71.9,137.1 L71.7,134.5 L76.0,131.7 L74.7,130.3 L76.4,128.3 L74.0,128.9 L72.9,129.9 L73.8,131.1 L73.1,132.3 L67.2,136.3 L65.2,133.4 L64.1,133.7 L64.2,131.9 L70.6,122.2 L77.0,117.1 L77.3,115.9 L75.5,116.9 L76.8,113.4 L81.3,110.3 L82.3,111.7 L85.2,109.7 L86.3,107.8 L83.0,110.2 L81.0,107.4 L84.8,99.0 L87.1,98.1 L85.5,95.9 L91.4,94.7 L93.8,92.8 L87.7,93.9 L88.3,87.5 L91.1,85.1 L93.3,85.1 L91.3,83.3 L94.3,80.0 L103.1,78.7 L96.6,77.6 L100.1,72.9 L104.3,76.4 L105.0,73.7 L102.0,72.5 L102.4,69.9 L99.3,71.5 L99.0,69.2 L101.2,66.7 L104.5,67.1 L102.4,65.2 L107.1,62.7 L109.1,68.1 L109.6,64.8 L108.4,61.3 L109.6,60.2 L113.4,60.7 L117.4,59.6 L116.6,58.7 L110.9,59.0 L110.5,57.9 L116.3,53.8 L118.5,49.1 L121.1,48.2 L122.2,43.3 L126.2,45.7 L124.6,43.0 L127.1,41.9 L128.5,39.0 L131.7,38.1 L131.4,44.0 L133.6,37.8 L136.0,35.9 L136.1,41.0 L134.6,45.3 L137.1,42.2 L138.8,42.5 L137.4,39.8 L138.0,36.4 L141.6,36.8 L142.3,35.0 L143.5,34.8 L147.1,37.6 L145.9,34.0 L142.9,31.4 L148.7,30.2 L149.4,30.9 L151.8,29.2 L153.6,30.3 L154.3,33.4 L156.3,35.3 L156.5,31.2 L163.5,24.1 L162.4,22.1 L165.1,19.4 L169.1,21.9 L170.3,20.8 L172.5,21.7 L169.2,26.4 L167.3,31.6 L167.7,33.3 L168.8,32.9 L177.5,20.8 L178.5,20.4 L179.0,21.7 L177.8,24.6 L178.0,28.6 L180.7,27.1 L182.0,23.4 L184.4,22.5 L182.4,20.2 L184.8,18.0 L190.1,19.8 L189.7,22.2 L186.8,24.5 L189.3,24.6 L188.8,31.2 L193.1,21.5 L194.9,21.6 L199.1,24.9 L201.3,24.1 L202.3,26.6 L204.9,26.9 L207.1,28.8 L207.2,30.7 L202.7,33.1 L192.7,32.8 L198.2,35.4 L198.9,39.0 L201.5,39.4 L202.5,37.2 L203.8,39.4 L204.1,38.2 L206.7,38.4 L206.9,41.9 L205.0,42.3 L202.1,40.7 L201.5,43.9 L196.8,46.0 L195.6,49.1 L194.0,50.3 L193.2,47.9 L196.4,43.3 L195.1,40.2 L185.8,34.0 L181.6,36.5 L177.6,36.4 L174.6,39.8 L172.5,46.2 L172.4,50.8 L169.0,53.4 L167.0,57.0 L159.7,53.7 L156.1,56.1 L150.0,55.0 L144.5,46.4 L141.0,47.3 L141.0,50.0 Z M105.4,57.5 L108.9,52.7 L110.2,53.7 L110.5,56.4 L106.9,60.0 L103.2,61.4 L102.2,60.4 L97.8,63.2 L95.3,63.3 L95.3,62.2 L97.5,60.0 L101.0,59.4 L103.1,56.6 L104.1,52.6 L103.6,50.0 L107.3,45.9 L107.8,47.3 L105.8,50.3 L106.5,54.8 Z M117.1,41.3 L120.5,42.8 L120.1,47.5 L117.0,47.6 L114.3,50.4 L112.5,49.5 L113.5,48.5 L113.7,45.0 L116.1,44.7 L115.3,43.2 Z M128.8,34.0 L131.2,34.7 L129.4,37.8 L127.2,38.8 L125.7,41.6 L121.3,41.9 L121.0,40.9 L122.8,38.7 L125.0,38.4 L125.0,36.7 L127.5,34.4 L128.0,31.2 Z M101.7,51.5 L103.0,54.0 L101.8,56.6 L96.3,55.9 L97.3,53.5 L99.0,53.9 L99.5,52.0 L100.6,52.3 L100.6,50.6 Z M156.9,22.3 L152.8,26.6 L149.7,27.0 L147.2,24.8 L153.7,23.9 Z"
+  },
+  {
+    "name": "STOCKHOLM",
+    "countryCode": "SWE",
+    "countryName": "SWEDEN",
+    "flag": "🇸🇪",
+    "lat": 59.3293,
+    "lon": 18.0686,
+    "continent": "Europe",
+    "subregion": "Scandinavia",
+    "borders": "Built across 14 Baltic Islands • Gamla Stan & Vasa Museum",
+    "capital": "Located in SWEDEN (🇸🇪)",
+    "widthKm": 676,
+    "pinX": 122.9,
+    "pinY": 162.7,
+    "svg": "M76.5,167.0 L77.0,168.9 L78.2,168.7 L79.3,163.2 L78.5,158.7 L80.2,154.7 L84.1,151.1 L84.8,145.9 L82.8,137.7 L85.6,136.9 L86.8,132.5 L81.8,127.0 L82.8,118.6 L81.5,114.0 L82.2,107.9 L80.7,103.6 L81.9,99.1 L86.2,93.1 L89.1,91.9 L94.3,92.8 L95.1,91.6 L95.2,86.1 L92.2,84.4 L98.0,73.7 L99.0,66.3 L98.4,61.3 L101.8,60.8 L104.9,58.7 L104.5,56.0 L111.3,47.5 L109.4,42.0 L112.5,39.1 L114.0,35.0 L117.7,31.9 L121.8,34.0 L123.7,30.5 L123.6,25.6 L124.5,25.2 L136.1,28.1 L138.0,26.3 L136.1,25.4 L138.7,20.8 L137.1,18.2 L140.7,18.0 L150.2,25.7 L156.2,28.0 L161.6,34.1 L160.7,35.3 L160.3,41.5 L162.3,42.0 L161.6,46.4 L164.1,51.2 L162.1,56.1 L162.0,59.5 L165.2,66.2 L162.0,65.8 L157.9,67.2 L155.4,65.2 L154.0,66.3 L153.0,65.3 L152.0,69.2 L150.8,69.0 L151.3,69.9 L149.7,70.2 L149.4,71.8 L147.2,72.1 L147.5,74.3 L146.1,73.4 L147.3,76.3 L144.2,81.0 L146.9,86.2 L143.4,90.4 L141.6,95.0 L135.7,98.9 L134.4,101.1 L131.8,100.8 L129.6,104.4 L126.6,105.3 L124.6,108.0 L125.9,108.1 L125.6,109.5 L123.6,111.1 L121.6,109.8 L122.7,113.9 L120.0,116.1 L118.3,115.3 L118.5,117.9 L119.9,119.4 L118.1,124.8 L118.7,127.6 L116.8,127.0 L116.4,129.2 L117.2,142.2 L119.6,143.3 L120.1,144.7 L122.1,143.9 L126.3,148.9 L126.1,150.4 L127.9,151.5 L129.3,155.2 L126.4,159.1 L122.2,162.2 L123.3,162.8 L126.3,161.7 L126.7,162.7 L125.3,163.2 L124.4,165.9 L115.3,172.7 L110.0,173.0 L114.0,173.7 L114.9,175.1 L113.1,176.0 L113.9,179.3 L112.4,185.3 L113.1,189.9 L111.8,193.4 L112.2,196.3 L108.5,208.9 L107.3,210.4 L105.9,209.5 L99.6,210.3 L99.9,211.8 L98.5,211.5 L96.1,214.8 L97.0,219.3 L95.8,221.3 L93.3,220.8 L89.9,222.0 L86.9,221.0 L87.5,216.0 L84.0,207.9 L86.3,208.3 L85.3,205.7 L86.7,205.5 L86.9,203.1 L83.6,198.8 L79.9,187.2 L78.9,186.7 L78.7,182.9 L76.9,180.7 L76.8,177.4 L75.5,177.0 L74.8,167.7 L75.1,166.4 Z M129.9,184.9 L128.1,186.8 L128.7,191.4 L123.4,198.5 L124.4,196.1 L123.2,193.3 L123.4,189.1 L126.2,185.0 L128.0,184.9 L128.7,183.7 Z"
+  },
+  {
+    "name": "CAIRO",
+    "countryCode": "EGY",
+    "countryName": "EGYPT",
+    "flag": "🇪🇬",
+    "lat": 30.0444,
+    "lon": 31.2357,
+    "continent": "Africa",
+    "subregion": "Northern Africa",
+    "borders": "Nile Delta Apex • Adjacent to the Giza Pyramids & Sphinx",
+    "capital": "Located in EGYPT (🇪🇬)",
+    "widthKm": 1209,
+    "pinX": 127.5,
+    "pinY": 59.5,
+    "svg": "M222.0,210.7 L130.8,210.7 L131.7,207.9 L130.3,206.8 L127.1,210.7 L22.6,210.7 L22.6,75.7 L18.0,56.6 L22.3,47.6 L20.5,35.3 L24.9,29.8 L25.5,29.3 L26.8,31.5 L29.4,31.9 L38.0,29.9 L60.7,34.5 L65.6,37.6 L70.4,37.9 L72.7,39.7 L81.9,40.6 L91.2,44.8 L97.2,42.9 L105.6,37.3 L110.5,36.7 L113.4,33.0 L122.3,30.9 L116.2,33.7 L123.6,32.9 L125.0,30.2 L132.4,33.0 L138.5,31.4 L142.6,35.2 L138.5,32.5 L136.5,36.1 L140.5,37.4 L142.0,39.8 L145.1,37.8 L144.0,36.0 L150.4,40.3 L159.3,38.4 L160.4,40.0 L168.3,39.1 L177.2,35.5 L189.0,70.2 L186.2,74.1 L181.3,91.2 L180.6,97.6 L177.6,102.4 L169.8,97.0 L161.2,87.3 L159.3,79.5 L152.4,69.3 L149.8,60.8 L148.3,61.8 L146.4,67.3 L150.4,73.1 L150.9,79.3 L155.4,87.3 L166.3,99.8 L166.3,105.3 L171.3,113.2 L173.2,123.3 L183.3,141.3 L193.9,164.1 L198.6,170.2 L203.8,174.2 L199.7,174.6 L199.1,177.2 L199.4,183.5 L202.3,192.9 L205.9,196.7 L211.2,198.8 L214.3,203.2 L221.3,208.8 Z"
+  },
+  {
+    "name": "CAPE TOWN",
+    "countryCode": "ZAF",
+    "countryName": "SOUTH AFRICA",
+    "flag": "🇿🇦",
+    "lat": -33.9249,
+    "lon": 18.4241,
+    "continent": "Africa",
+    "subregion": "Southern Africa",
+    "borders": "Table Bay Peninsula • Table Mountain & Cape of Good Hope",
+    "capital": "Located in SOUTH AFRICA (🇿🇦)",
+    "widthKm": 1609,
+    "pinX": 42.5,
+    "pinY": 197.1,
+    "svg": "M178.3,31.5 L182.0,30.8 L188.5,32.8 L197.6,32.8 L202.2,34.4 L205.4,49.6 L210.6,62.3 L210.4,84.6 L203.7,81.6 L201.2,83.0 L196.2,91.0 L196.2,96.3 L197.1,96.4 L199.4,100.9 L202.0,102.7 L207.8,103.7 L210.5,103.6 L210.9,96.7 L222.0,97.2 L217.6,116.2 L215.7,120.5 L202.8,132.9 L189.8,155.3 L172.0,174.0 L159.6,184.8 L144.2,194.0 L134.1,194.4 L131.3,198.6 L124.2,197.7 L122.0,200.5 L119.1,200.6 L108.0,198.0 L102.6,199.3 L93.8,198.3 L90.0,199.1 L84.3,203.4 L74.4,203.3 L68.7,204.7 L62.3,209.2 L57.6,208.8 L53.4,206.8 L53.8,205.1 L50.9,203.1 L47.6,203.3 L46.6,199.3 L43.5,199.7 L43.0,203.0 L41.4,199.2 L41.7,197.3 L43.0,196.5 L42.6,194.1 L37.2,186.2 L35.4,181.6 L36.8,179.9 L38.8,180.5 L41.3,177.0 L39.9,166.3 L29.2,147.9 L24.2,133.2 L18.0,122.1 L21.8,119.8 L23.3,115.2 L25.6,113.9 L29.3,117.2 L29.2,120.5 L30.4,123.3 L38.5,125.7 L52.7,126.1 L53.0,124.4 L56.4,121.5 L61.8,119.8 L61.8,67.9 L67.4,73.1 L71.9,84.0 L72.2,87.5 L69.9,91.5 L70.6,96.8 L83.1,97.1 L94.3,87.1 L97.8,77.5 L100.0,75.5 L104.1,75.2 L110.4,79.6 L121.0,82.6 L129.6,81.2 L131.4,79.6 L135.5,67.5 L141.5,65.6 L146.9,60.4 L150.0,51.0 L158.4,45.6 L164.0,38.5 L171.8,35.5 L175.4,31.7 Z"
+  },
+  {
+    "name": "TORONTO",
+    "countryCode": "CAN",
+    "countryName": "CANADA",
+    "flag": "🇨🇦",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "continent": "North America",
+    "subregion": "Northern America",
+    "borders": "Northwest Shore of Lake Ontario • CN Tower",
+    "capital": "Located in CANADA (🇨🇦)",
+    "widthKm": 4557,
+    "pinX": 159.8,
+    "pinY": 212.3,
+    "svg": "M44.3,152.0 L44.1,150.9 L40.2,148.6 L36.6,139.6 L31.8,132.8 L27.4,137.2 L23.4,131.4 L23.6,130.1 L19.2,130.3 L19.2,84.3 L23.4,85.0 L32.3,89.0 L30.9,86.9 L34.3,84.1 L35.5,85.0 L34.8,86.2 L45.1,81.6 L45.1,82.6 L38.2,86.2 L37.0,88.8 L40.3,85.4 L41.9,85.3 L42.1,86.5 L44.1,83.9 L46.8,82.7 L47.0,83.8 L49.6,81.3 L48.9,79.7 L54.5,85.8 L56.8,81.8 L57.2,85.7 L59.1,85.6 L60.2,83.5 L62.4,83.5 L73.5,87.9 L78.6,88.2 L80.9,90.4 L78.3,91.8 L78.2,93.3 L84.2,94.0 L89.8,92.4 L94.5,96.1 L93.4,96.9 L96.2,100.3 L95.1,97.5 L96.4,97.9 L94.6,93.3 L99.6,89.5 L93.9,91.7 L92.9,90.9 L93.8,89.4 L98.7,87.9 L102.5,92.1 L104.8,91.8 L107.5,93.7 L115.2,93.8 L116.4,93.4 L115.9,92.1 L118.6,94.3 L119.1,93.1 L116.9,92.8 L115.8,90.6 L118.7,90.0 L119.7,91.2 L120.9,90.9 L120.2,92.2 L122.0,91.2 L121.0,94.8 L123.2,97.3 L120.9,97.1 L122.4,99.2 L121.8,97.6 L123.3,97.6 L123.6,96.0 L123.1,92.3 L127.7,89.4 L126.8,87.5 L125.1,88.5 L125.9,85.9 L127.3,85.4 L127.0,86.4 L127.5,85.1 L122.0,83.5 L120.6,81.5 L122.2,79.9 L120.6,78.6 L120.9,76.5 L122.9,76.0 L122.3,74.7 L125.1,72.8 L128.7,76.0 L128.8,78.4 L132.0,81.7 L130.3,81.4 L129.8,82.1 L131.1,82.4 L129.0,84.2 L134.6,85.2 L132.8,86.1 L134.5,88.1 L135.0,91.1 L137.2,86.2 L140.0,88.4 L140.5,90.9 L139.3,91.0 L139.4,92.7 L141.6,96.5 L143.4,95.0 L145.4,89.1 L147.3,88.6 L145.8,83.3 L153.0,84.3 L152.1,85.1 L155.2,86.6 L153.9,88.1 L155.5,88.8 L152.6,90.2 L155.4,94.9 L155.0,97.0 L150.6,100.4 L148.0,97.5 L146.7,97.8 L148.8,98.9 L149.6,101.2 L147.8,101.2 L145.6,99.5 L143.1,99.7 L144.8,101.7 L141.4,105.5 L136.1,102.6 L132.4,102.5 L135.7,103.3 L137.9,105.5 L142.4,106.2 L139.9,111.2 L137.6,112.3 L135.5,111.4 L135.2,113.6 L133.7,114.2 L127.1,111.4 L127.5,112.8 L130.7,113.6 L130.0,114.3 L131.4,113.6 L134.0,115.5 L133.8,117.2 L130.2,117.9 L131.2,119.0 L129.8,119.3 L129.8,121.1 L128.3,120.2 L128.9,120.9 L127.4,122.2 L128.0,123.1 L124.7,129.3 L124.3,136.4 L125.8,138.1 L125.7,140.2 L126.2,138.0 L128.3,138.1 L130.0,145.0 L129.2,146.9 L134.2,145.5 L145.4,153.4 L146.1,156.0 L146.8,155.0 L149.5,154.9 L152.9,156.1 L154.2,170.1 L156.9,172.4 L157.4,174.2 L156.4,175.5 L158.1,174.7 L159.9,177.3 L159.1,174.4 L160.0,173.0 L160.9,175.1 L160.7,172.3 L161.9,169.9 L160.7,161.3 L159.0,158.0 L163.5,155.0 L166.3,149.0 L165.5,142.8 L161.8,138.4 L164.6,131.7 L163.9,127.7 L162.5,127.8 L164.1,124.1 L162.6,120.6 L164.4,119.1 L170.6,121.4 L172.7,119.6 L175.1,121.3 L176.1,124.0 L177.5,123.8 L177.9,126.1 L181.2,127.6 L182.4,126.8 L181.9,131.4 L179.7,131.7 L181.8,132.2 L182.7,135.2 L182.3,137.4 L180.8,137.9 L184.2,137.2 L184.9,138.0 L184.9,140.8 L183.4,142.1 L185.7,139.2 L186.5,141.7 L189.5,137.7 L190.3,139.5 L191.5,134.4 L192.5,134.8 L191.6,132.9 L192.5,132.9 L193.0,130.2 L193.7,130.5 L193.1,131.7 L194.2,131.5 L196.2,135.8 L194.9,136.4 L196.6,136.4 L197.4,138.3 L195.9,140.0 L198.1,139.3 L196.6,141.6 L198.3,140.9 L199.5,142.1 L199.5,143.5 L198.3,144.2 L201.0,146.5 L200.9,148.1 L198.3,147.5 L200.8,149.7 L200.7,151.5 L203.2,152.5 L202.6,156.1 L204.6,154.9 L205.3,155.5 L204.4,157.3 L205.7,155.4 L206.8,157.2 L208.7,157.0 L209.9,158.4 L203.1,163.0 L203.3,164.9 L208.7,160.9 L207.9,160.3 L209.9,160.5 L210.1,163.9 L211.9,162.5 L213.2,163.9 L213.6,168.0 L212.4,168.5 L213.7,168.8 L213.9,170.2 L210.9,173.8 L207.4,174.6 L203.8,179.8 L189.2,180.0 L187.2,184.2 L185.1,185.0 L181.9,189.9 L178.9,188.6 L181.7,190.4 L178.3,196.8 L171.4,203.0 L172.1,203.9 L168.9,206.8 L165.6,212.4 L161.0,212.6 L160.6,216.4 L152.2,222.0 L151.2,219.7 L153.5,212.7 L152.6,203.9 L149.3,200.3 L148.9,198.0 L148.0,198.5 L147.3,196.3 L139.3,189.4 L136.8,190.9 L133.5,189.8 L132.1,190.6 L128.7,187.9 L125.0,187.2 L123.8,184.1 L123.8,186.0 L60.1,186.0 L59.9,182.6 L59.1,184.0 L58.0,183.0 L59.0,182.6 L58.4,180.3 L57.4,182.1 L56.2,180.9 L56.1,176.7 L55.6,178.5 L53.2,178.6 L52.4,178.1 L53.7,177.5 L52.3,177.7 L52.3,175.8 L51.0,176.7 L49.6,175.4 L50.2,173.1 L51.9,172.6 L49.5,173.7 L49.4,170.2 L50.6,169.2 L51.8,170.9 L50.7,168.9 L51.1,167.0 L48.7,172.2 L48.8,166.7 L48.1,167.1 L46.2,163.6 L46.9,162.8 L49.1,164.9 L47.4,163.5 L47.7,162.0 L45.3,165.0 L43.6,162.7 L45.2,160.2 L43.4,159.3 L45.3,154.1 L44.2,156.1 Z M143.4,77.6 L147.4,77.5 L147.7,74.5 L144.9,72.8 L146.2,71.6 L148.6,72.5 L145.5,69.2 L146.4,68.0 L148.7,68.8 L145.9,67.3 L153.4,64.2 L155.2,64.7 L157.8,68.9 L155.6,71.2 L157.0,70.5 L156.3,73.2 L158.6,71.8 L158.8,70.5 L161.6,73.3 L161.4,71.0 L164.0,71.8 L162.0,69.9 L165.5,69.2 L169.5,70.9 L167.7,74.1 L169.5,72.4 L171.5,72.5 L169.3,74.2 L170.5,74.3 L169.8,76.6 L172.4,73.8 L171.6,75.7 L172.7,74.8 L173.9,76.3 L174.6,74.3 L177.9,75.4 L178.4,76.5 L175.2,78.5 L179.7,77.4 L176.9,80.4 L178.3,80.1 L177.9,81.9 L181.0,78.5 L184.7,79.6 L181.1,82.4 L184.0,81.6 L184.1,82.9 L186.1,81.2 L187.5,83.9 L182.9,85.0 L187.5,85.2 L188.8,86.5 L183.4,87.0 L186.1,87.2 L186.0,88.6 L182.7,88.1 L188.6,90.2 L188.2,92.1 L189.8,91.0 L189.3,93.2 L190.4,92.1 L191.7,94.0 L192.8,92.3 L192.6,93.5 L195.2,94.5 L194.9,95.6 L193.3,95.6 L197.1,96.2 L195.6,98.2 L199.2,97.1 L201.0,99.1 L199.2,99.1 L200.4,100.2 L199.8,100.7 L198.2,100.3 L199.5,102.1 L198.0,102.2 L197.9,104.0 L196.1,103.0 L195.8,107.5 L194.1,106.3 L194.3,105.2 L193.6,106.6 L191.7,103.4 L193.9,100.7 L190.7,102.3 L191.1,101.2 L190.2,101.6 L188.1,99.2 L187.5,100.7 L186.0,100.0 L187.2,102.6 L184.0,101.3 L185.3,101.9 L185.9,104.4 L187.8,105.0 L188.7,108.1 L188.9,107.2 L189.8,108.5 L190.5,107.7 L191.6,108.5 L191.4,109.6 L192.4,110.0 L191.3,110.7 L193.9,113.5 L193.4,115.8 L192.2,113.3 L193.3,117.4 L192.2,117.4 L192.4,118.9 L186.0,113.4 L186.3,115.0 L183.7,113.6 L190.4,120.9 L190.2,122.4 L184.5,120.7 L182.1,118.2 L178.1,116.7 L176.6,115.0 L178.0,114.2 L175.5,113.0 L173.3,110.1 L173.7,109.2 L171.9,110.0 L170.5,108.0 L170.5,109.7 L165.6,110.9 L162.8,109.6 L162.7,107.5 L164.5,104.9 L167.9,106.1 L168.8,108.0 L168.0,105.7 L173.1,104.8 L171.1,101.4 L176.1,96.1 L173.7,90.7 L172.5,90.6 L172.5,89.0 L171.5,89.7 L170.0,88.4 L170.4,87.3 L166.2,89.0 L166.2,87.4 L168.3,86.4 L166.4,85.2 L167.0,84.2 L165.0,84.4 L165.5,83.7 L163.9,83.3 L163.5,81.4 L160.5,79.6 L159.7,80.6 L161.1,82.5 L159.5,83.1 L154.8,82.0 L156.3,83.9 L154.8,82.8 L145.2,82.4 L144.0,81.8 L143.8,80.3 L140.5,81.4 L138.2,80.0 L136.8,77.3 L142.1,77.6 L135.9,75.2 L135.9,70.7 L137.3,67.3 L140.8,64.2 L147.0,64.0 L143.2,69.0 L144.2,73.2 L146.9,75.9 Z M182.4,18.5 L189.4,18.9 L184.7,20.3 L195.7,19.5 L196.6,21.3 L200.1,21.1 L201.1,22.1 L184.2,27.0 L193.0,26.3 L182.2,31.5 L179.6,30.7 L180.6,32.2 L176.5,32.7 L179.9,32.9 L178.0,34.5 L171.2,34.0 L173.3,34.5 L173.5,35.8 L165.5,35.7 L171.0,37.1 L170.9,38.0 L161.6,37.9 L171.1,39.6 L166.6,40.7 L169.3,41.6 L167.6,43.2 L162.9,43.5 L161.8,46.3 L157.1,46.6 L154.6,45.5 L155.5,46.3 L154.2,47.1 L162.3,48.2 L162.3,50.2 L156.6,52.2 L156.2,50.7 L152.6,49.5 L153.3,50.7 L149.5,50.8 L148.7,49.7 L148.6,51.3 L146.7,51.5 L143.7,50.2 L143.1,51.2 L141.3,50.1 L141.3,51.1 L139.2,51.0 L139.0,49.2 L138.9,51.0 L136.6,50.6 L136.7,49.0 L138.9,47.8 L142.8,47.2 L140.3,45.2 L140.7,44.0 L143.8,44.1 L147.6,46.3 L149.9,46.1 L152.2,43.9 L149.8,45.5 L146.3,45.4 L145.7,43.5 L148.8,42.3 L147.2,42.0 L147.5,40.6 L145.6,42.6 L144.2,42.8 L144.9,41.5 L141.2,42.3 L142.9,39.4 L154.4,38.4 L148.3,38.3 L150.2,38.0 L143.7,34.1 L143.6,32.1 L149.9,32.2 L157.3,35.3 L151.6,31.8 L165.5,29.1 L161.3,28.7 L165.5,26.3 L156.1,30.1 L151.8,30.5 L153.3,29.5 L146.6,30.8 L143.7,29.8 L150.9,27.7 L145.2,28.2 L140.8,30.1 L137.5,28.7 L147.1,27.0 L136.4,28.3 L135.7,27.6 L137.4,27.2 L136.3,26.8 L141.1,25.8 L134.6,26.4 L136.0,25.3 L131.8,25.1 L140.0,23.0 L146.9,23.6 L143.3,22.4 L147.2,21.3 L159.6,24.2 L152.8,21.5 L154.5,20.9 L153.6,20.4 L156.4,20.7 L156.1,19.7 L161.2,20.1 L158.0,19.0 L163.8,19.1 L167.5,20.9 L168.3,20.3 L164.9,18.5 L171.1,18.5 L175.1,19.9 L173.3,19.0 L174.8,18.2 Z M79.6,69.8 L83.7,67.9 L87.1,69.2 L86.1,71.2 L89.5,69.5 L88.4,67.8 L89.9,67.9 L92.8,70.0 L94.9,74.6 L96.1,73.2 L94.0,67.1 L94.5,66.1 L98.0,66.8 L100.4,68.8 L102.8,74.8 L102.5,77.3 L104.6,79.5 L110.3,81.9 L110.6,84.0 L107.8,83.3 L106.8,84.8 L104.9,84.2 L105.6,86.5 L107.9,85.1 L108.7,86.6 L106.2,88.4 L101.1,87.9 L101.3,87.1 L98.8,86.7 L97.6,85.3 L95.8,87.5 L91.2,89.1 L82.8,90.0 L81.5,86.5 L75.1,85.4 L73.5,82.3 L86.2,81.0 L81.4,79.2 L72.6,79.5 L71.1,77.5 L77.9,75.2 L71.9,75.7 L71.2,75.3 L72.3,74.4 L69.5,73.9 L71.2,71.4 L70.9,70.1 L75.0,67.5 L80.1,66.2 L80.7,68.0 Z M187.8,204.8 L186.2,202.1 L186.2,195.4 L185.2,194.1 L183.6,194.7 L182.9,193.5 L179.2,204.3 L178.2,204.2 L177.7,205.6 L170.5,205.6 L173.1,203.5 L176.4,198.0 L180.0,195.6 L184.8,188.2 L191.7,184.7 L194.3,186.3 L194.1,188.8 L192.0,190.8 L190.5,189.9 L188.7,190.8 L191.2,192.5 L193.3,192.2 L191.9,195.3 L193.0,195.5 L193.6,199.5 L197.7,202.4 L199.5,201.4 L201.7,204.2 L195.8,207.2 L195.8,208.2 L194.2,207.8 L191.5,212.9 L190.0,211.5 L190.1,208.1 L193.9,204.0 L194.6,205.5 L196.3,203.8 L192.9,203.9 L194.2,201.5 L193.4,201.0 L190.6,204.5 L190.3,203.6 L189.3,205.2 Z M67.7,62.3 L72.8,61.7 L77.7,65.3 L69.2,69.6 L66.7,71.7 L65.7,75.2 L60.1,77.2 L58.0,74.3 L53.8,72.9 L58.5,64.0 L56.4,61.2 L63.7,60.2 Z M131.3,27.8 L134.1,30.4 L137.3,30.8 L138.2,32.5 L139.7,32.8 L138.9,31.3 L140.9,31.5 L140.3,32.9 L142.5,33.9 L141.7,35.4 L145.5,35.3 L146.9,36.9 L141.0,39.9 L140.0,38.3 L140.2,40.5 L138.4,40.3 L138.3,42.3 L135.5,40.2 L136.7,42.4 L129.5,41.3 L131.3,40.5 L128.1,40.2 L127.3,39.5 L128.4,39.4 L126.1,38.3 L132.6,36.4 L123.9,36.8 L122.7,35.7 L125.5,34.6 L122.2,34.9 L120.1,32.7 L125.9,32.4 L121.0,31.8 L122.9,31.5 L121.5,30.6 L122.1,29.8 L126.6,30.6 L123.0,29.2 L128.1,27.9 L126.0,26.7 Z M125.8,48.5 L128.2,49.2 L127.5,50.8 L132.6,49.7 L134.3,50.6 L132.3,50.8 L137.2,51.5 L132.4,51.9 L137.2,54.0 L136.4,55.2 L138.0,55.7 L138.7,54.7 L144.8,56.0 L149.4,53.9 L153.5,53.9 L159.2,55.7 L159.5,56.7 L157.5,57.8 L159.7,58.4 L157.6,58.4 L157.8,60.0 L154.0,60.5 L151.7,60.1 L150.4,58.4 L150.3,60.0 L148.3,60.4 L139.2,60.4 L138.9,58.8 L136.6,60.1 L133.6,58.8 L132.0,59.6 L130.1,56.5 L130.6,53.8 L128.5,51.3 L123.5,51.7 L121.8,50.6 L122.7,50.2 L119.9,49.4 L121.0,49.1 L120.2,48.2 L122.2,47.8 Z M93.8,52.7 L95.1,53.1 L94.5,54.0 L96.3,53.6 L97.0,54.6 L97.5,52.9 L99.9,53.3 L99.1,57.3 L96.7,58.3 L92.6,57.6 L84.2,60.8 L81.6,60.6 L80.1,59.4 L87.5,56.7 L81.5,57.6 L82.0,55.9 L80.8,55.8 L79.8,57.5 L76.9,58.1 L72.6,56.6 L78.2,54.6 L73.6,54.8 L78.6,53.5 L74.8,53.2 L75.8,52.1 L79.1,52.2 L76.7,51.7 L78.6,50.6 L83.8,52.0 L87.6,55.3 L92.0,55.5 L92.4,54.5 L90.3,53.4 L91.3,52.5 L89.2,51.1 L92.6,49.0 Z M214.4,173.5 L213.1,174.5 L213.6,175.9 L211.3,182.9 L212.7,180.5 L212.8,181.3 L214.3,181.1 L212.8,182.9 L212.9,183.7 L214.9,183.4 L214.6,185.5 L216.5,183.3 L216.7,184.3 L218.6,184.4 L217.4,188.9 L219.9,188.0 L218.1,192.2 L220.2,190.1 L219.6,193.3 L220.5,192.0 L220.8,193.1 L219.6,197.5 L218.6,197.6 L218.6,195.1 L217.3,196.4 L218.0,193.6 L217.3,191.6 L216.6,193.8 L213.6,196.4 L215.9,192.5 L214.1,193.5 L212.8,193.3 L213.5,191.8 L211.4,193.0 L207.8,192.2 L206.0,193.0 L205.6,192.2 L207.8,188.3 L205.9,188.1 L206.6,187.2 L206.9,187.9 L207.6,185.5 L208.6,186.0 L208.1,184.0 L209.0,183.5 L210.8,176.0 L213.1,173.3 Z M112.8,63.1 L119.6,64.3 L116.3,68.0 L118.2,67.7 L119.3,69.6 L120.7,69.3 L120.5,73.5 L118.3,74.5 L116.6,73.4 L116.9,75.5 L115.8,76.2 L106.6,69.0 L107.7,67.4 L109.9,69.2 L112.5,68.3 L111.5,66.8 L113.2,66.7 L109.3,65.4 L111.6,65.6 L110.6,63.9 Z M147.2,105.9 L148.1,104.9 L150.4,106.5 L153.7,108.9 L154.1,112.0 L156.5,111.7 L157.7,113.3 L156.0,114.8 L150.8,111.4 L146.1,116.4 L145.2,113.6 L142.1,114.1 L144.1,111.4 L145.1,103.1 L146.4,103.3 Z M128.3,62.1 L134.7,63.7 L130.7,69.0 L126.0,69.0 L127.5,70.3 L126.4,72.6 L123.7,72.6 L122.7,64.4 L124.9,64.5 L124.2,62.7 Z M77.3,46.3 L75.5,47.4 L76.4,49.5 L73.5,51.6 L71.7,51.0 L72.0,49.1 L69.9,50.5 L69.4,52.3 L68.1,51.4 L67.3,53.7 L66.2,53.9 L65.2,52.1 L61.7,53.3 L60.5,52.4 L69.2,46.6 L74.3,46.4 L73.9,45.8 L75.1,45.4 Z M118.0,50.7 L117.6,54.2 L118.8,55.9 L117.6,55.9 L117.3,57.7 L112.1,57.8 L112.4,56.7 L111.1,56.0 L114.6,54.5 L106.4,55.0 L107.9,53.6 L110.5,54.0 L107.9,51.6 L108.7,50.8 L113.1,53.4 L112.5,52.5 L113.8,52.3 L110.9,50.5 L115.3,50.7 L115.7,49.6 Z M104.9,36.7 L106.9,38.9 L108.9,37.9 L112.7,39.6 L114.8,43.8 L112.1,44.0 L110.3,42.2 L106.5,41.4 L101.9,41.5 L101.6,40.5 L104.6,40.5 L103.6,40.1 L105.1,39.6 L103.2,39.3 L103.3,38.3 L101.6,39.2 L101.9,38.1 L100.1,38.0 L100.4,36.8 Z M50.7,177.9 L54.6,179.5 L59.6,188.8 L56.0,187.6 L56.2,184.9 L54.6,186.3 L53.6,184.0 L52.2,183.9 L53.2,182.6 L50.9,181.6 L50.6,180.3 L49.2,180.4 L50.1,178.1 L48.8,178.6 L48.2,177.1 Z"
+  },
+  {
+    "name": "VANCOUVER",
+    "countryCode": "CAN",
+    "countryName": "CANADA",
+    "flag": "🇨🇦",
+    "lat": 49.2827,
+    "lon": -123.1207,
+    "continent": "North America",
+    "subregion": "Northern America",
+    "borders": "Pacific Coast & Coast Mountains • Stanley Park",
+    "capital": "Located in CANADA (🇨🇦)",
+    "widthKm": 4557,
+    "pinX": 60.0,
+    "pinY": 184.5,
+    "svg": "M44.3,152.0 L44.1,150.9 L40.2,148.6 L36.6,139.6 L31.8,132.8 L27.4,137.2 L23.4,131.4 L23.6,130.1 L19.2,130.3 L19.2,84.3 L23.4,85.0 L32.3,89.0 L30.9,86.9 L34.3,84.1 L35.5,85.0 L34.8,86.2 L45.1,81.6 L45.1,82.6 L38.2,86.2 L37.0,88.8 L40.3,85.4 L41.9,85.3 L42.1,86.5 L44.1,83.9 L46.8,82.7 L47.0,83.8 L49.6,81.3 L48.9,79.7 L54.5,85.8 L56.8,81.8 L57.2,85.7 L59.1,85.6 L60.2,83.5 L62.4,83.5 L73.5,87.9 L78.6,88.2 L80.9,90.4 L78.3,91.8 L78.2,93.3 L84.2,94.0 L89.8,92.4 L94.5,96.1 L93.4,96.9 L96.2,100.3 L95.1,97.5 L96.4,97.9 L94.6,93.3 L99.6,89.5 L93.9,91.7 L92.9,90.9 L93.8,89.4 L98.7,87.9 L102.5,92.1 L104.8,91.8 L107.5,93.7 L115.2,93.8 L116.4,93.4 L115.9,92.1 L118.6,94.3 L119.1,93.1 L116.9,92.8 L115.8,90.6 L118.7,90.0 L119.7,91.2 L120.9,90.9 L120.2,92.2 L122.0,91.2 L121.0,94.8 L123.2,97.3 L120.9,97.1 L122.4,99.2 L121.8,97.6 L123.3,97.6 L123.6,96.0 L123.1,92.3 L127.7,89.4 L126.8,87.5 L125.1,88.5 L125.9,85.9 L127.3,85.4 L127.0,86.4 L127.5,85.1 L122.0,83.5 L120.6,81.5 L122.2,79.9 L120.6,78.6 L120.9,76.5 L122.9,76.0 L122.3,74.7 L125.1,72.8 L128.7,76.0 L128.8,78.4 L132.0,81.7 L130.3,81.4 L129.8,82.1 L131.1,82.4 L129.0,84.2 L134.6,85.2 L132.8,86.1 L134.5,88.1 L135.0,91.1 L137.2,86.2 L140.0,88.4 L140.5,90.9 L139.3,91.0 L139.4,92.7 L141.6,96.5 L143.4,95.0 L145.4,89.1 L147.3,88.6 L145.8,83.3 L153.0,84.3 L152.1,85.1 L155.2,86.6 L153.9,88.1 L155.5,88.8 L152.6,90.2 L155.4,94.9 L155.0,97.0 L150.6,100.4 L148.0,97.5 L146.7,97.8 L148.8,98.9 L149.6,101.2 L147.8,101.2 L145.6,99.5 L143.1,99.7 L144.8,101.7 L141.4,105.5 L136.1,102.6 L132.4,102.5 L135.7,103.3 L137.9,105.5 L142.4,106.2 L139.9,111.2 L137.6,112.3 L135.5,111.4 L135.2,113.6 L133.7,114.2 L127.1,111.4 L127.5,112.8 L130.7,113.6 L130.0,114.3 L131.4,113.6 L134.0,115.5 L133.8,117.2 L130.2,117.9 L131.2,119.0 L129.8,119.3 L129.8,121.1 L128.3,120.2 L128.9,120.9 L127.4,122.2 L128.0,123.1 L124.7,129.3 L124.3,136.4 L125.8,138.1 L125.7,140.2 L126.2,138.0 L128.3,138.1 L130.0,145.0 L129.2,146.9 L134.2,145.5 L145.4,153.4 L146.1,156.0 L146.8,155.0 L149.5,154.9 L152.9,156.1 L154.2,170.1 L156.9,172.4 L157.4,174.2 L156.4,175.5 L158.1,174.7 L159.9,177.3 L159.1,174.4 L160.0,173.0 L160.9,175.1 L160.7,172.3 L161.9,169.9 L160.7,161.3 L159.0,158.0 L163.5,155.0 L166.3,149.0 L165.5,142.8 L161.8,138.4 L164.6,131.7 L163.9,127.7 L162.5,127.8 L164.1,124.1 L162.6,120.6 L164.4,119.1 L170.6,121.4 L172.7,119.6 L175.1,121.3 L176.1,124.0 L177.5,123.8 L177.9,126.1 L181.2,127.6 L182.4,126.8 L181.9,131.4 L179.7,131.7 L181.8,132.2 L182.7,135.2 L182.3,137.4 L180.8,137.9 L184.2,137.2 L184.9,138.0 L184.9,140.8 L183.4,142.1 L185.7,139.2 L186.5,141.7 L189.5,137.7 L190.3,139.5 L191.5,134.4 L192.5,134.8 L191.6,132.9 L192.5,132.9 L193.0,130.2 L193.7,130.5 L193.1,131.7 L194.2,131.5 L196.2,135.8 L194.9,136.4 L196.6,136.4 L197.4,138.3 L195.9,140.0 L198.1,139.3 L196.6,141.6 L198.3,140.9 L199.5,142.1 L199.5,143.5 L198.3,144.2 L201.0,146.5 L200.9,148.1 L198.3,147.5 L200.8,149.7 L200.7,151.5 L203.2,152.5 L202.6,156.1 L204.6,154.9 L205.3,155.5 L204.4,157.3 L205.7,155.4 L206.8,157.2 L208.7,157.0 L209.9,158.4 L203.1,163.0 L203.3,164.9 L208.7,160.9 L207.9,160.3 L209.9,160.5 L210.1,163.9 L211.9,162.5 L213.2,163.9 L213.6,168.0 L212.4,168.5 L213.7,168.8 L213.9,170.2 L210.9,173.8 L207.4,174.6 L203.8,179.8 L189.2,180.0 L187.2,184.2 L185.1,185.0 L181.9,189.9 L178.9,188.6 L181.7,190.4 L178.3,196.8 L171.4,203.0 L172.1,203.9 L168.9,206.8 L165.6,212.4 L161.0,212.6 L160.6,216.4 L152.2,222.0 L151.2,219.7 L153.5,212.7 L152.6,203.9 L149.3,200.3 L148.9,198.0 L148.0,198.5 L147.3,196.3 L139.3,189.4 L136.8,190.9 L133.5,189.8 L132.1,190.6 L128.7,187.9 L125.0,187.2 L123.8,184.1 L123.8,186.0 L60.1,186.0 L59.9,182.6 L59.1,184.0 L58.0,183.0 L59.0,182.6 L58.4,180.3 L57.4,182.1 L56.2,180.9 L56.1,176.7 L55.6,178.5 L53.2,178.6 L52.4,178.1 L53.7,177.5 L52.3,177.7 L52.3,175.8 L51.0,176.7 L49.6,175.4 L50.2,173.1 L51.9,172.6 L49.5,173.7 L49.4,170.2 L50.6,169.2 L51.8,170.9 L50.7,168.9 L51.1,167.0 L48.7,172.2 L48.8,166.7 L48.1,167.1 L46.2,163.6 L46.9,162.8 L49.1,164.9 L47.4,163.5 L47.7,162.0 L45.3,165.0 L43.6,162.7 L45.2,160.2 L43.4,159.3 L45.3,154.1 L44.2,156.1 Z M143.4,77.6 L147.4,77.5 L147.7,74.5 L144.9,72.8 L146.2,71.6 L148.6,72.5 L145.5,69.2 L146.4,68.0 L148.7,68.8 L145.9,67.3 L153.4,64.2 L155.2,64.7 L157.8,68.9 L155.6,71.2 L157.0,70.5 L156.3,73.2 L158.6,71.8 L158.8,70.5 L161.6,73.3 L161.4,71.0 L164.0,71.8 L162.0,69.9 L165.5,69.2 L169.5,70.9 L167.7,74.1 L169.5,72.4 L171.5,72.5 L169.3,74.2 L170.5,74.3 L169.8,76.6 L172.4,73.8 L171.6,75.7 L172.7,74.8 L173.9,76.3 L174.6,74.3 L177.9,75.4 L178.4,76.5 L175.2,78.5 L179.7,77.4 L176.9,80.4 L178.3,80.1 L177.9,81.9 L181.0,78.5 L184.7,79.6 L181.1,82.4 L184.0,81.6 L184.1,82.9 L186.1,81.2 L187.5,83.9 L182.9,85.0 L187.5,85.2 L188.8,86.5 L183.4,87.0 L186.1,87.2 L186.0,88.6 L182.7,88.1 L188.6,90.2 L188.2,92.1 L189.8,91.0 L189.3,93.2 L190.4,92.1 L191.7,94.0 L192.8,92.3 L192.6,93.5 L195.2,94.5 L194.9,95.6 L193.3,95.6 L197.1,96.2 L195.6,98.2 L199.2,97.1 L201.0,99.1 L199.2,99.1 L200.4,100.2 L199.8,100.7 L198.2,100.3 L199.5,102.1 L198.0,102.2 L197.9,104.0 L196.1,103.0 L195.8,107.5 L194.1,106.3 L194.3,105.2 L193.6,106.6 L191.7,103.4 L193.9,100.7 L190.7,102.3 L191.1,101.2 L190.2,101.6 L188.1,99.2 L187.5,100.7 L186.0,100.0 L187.2,102.6 L184.0,101.3 L185.3,101.9 L185.9,104.4 L187.8,105.0 L188.7,108.1 L188.9,107.2 L189.8,108.5 L190.5,107.7 L191.6,108.5 L191.4,109.6 L192.4,110.0 L191.3,110.7 L193.9,113.5 L193.4,115.8 L192.2,113.3 L193.3,117.4 L192.2,117.4 L192.4,118.9 L186.0,113.4 L186.3,115.0 L183.7,113.6 L190.4,120.9 L190.2,122.4 L184.5,120.7 L182.1,118.2 L178.1,116.7 L176.6,115.0 L178.0,114.2 L175.5,113.0 L173.3,110.1 L173.7,109.2 L171.9,110.0 L170.5,108.0 L170.5,109.7 L165.6,110.9 L162.8,109.6 L162.7,107.5 L164.5,104.9 L167.9,106.1 L168.8,108.0 L168.0,105.7 L173.1,104.8 L171.1,101.4 L176.1,96.1 L173.7,90.7 L172.5,90.6 L172.5,89.0 L171.5,89.7 L170.0,88.4 L170.4,87.3 L166.2,89.0 L166.2,87.4 L168.3,86.4 L166.4,85.2 L167.0,84.2 L165.0,84.4 L165.5,83.7 L163.9,83.3 L163.5,81.4 L160.5,79.6 L159.7,80.6 L161.1,82.5 L159.5,83.1 L154.8,82.0 L156.3,83.9 L154.8,82.8 L145.2,82.4 L144.0,81.8 L143.8,80.3 L140.5,81.4 L138.2,80.0 L136.8,77.3 L142.1,77.6 L135.9,75.2 L135.9,70.7 L137.3,67.3 L140.8,64.2 L147.0,64.0 L143.2,69.0 L144.2,73.2 L146.9,75.9 Z M182.4,18.5 L189.4,18.9 L184.7,20.3 L195.7,19.5 L196.6,21.3 L200.1,21.1 L201.1,22.1 L184.2,27.0 L193.0,26.3 L182.2,31.5 L179.6,30.7 L180.6,32.2 L176.5,32.7 L179.9,32.9 L178.0,34.5 L171.2,34.0 L173.3,34.5 L173.5,35.8 L165.5,35.7 L171.0,37.1 L170.9,38.0 L161.6,37.9 L171.1,39.6 L166.6,40.7 L169.3,41.6 L167.6,43.2 L162.9,43.5 L161.8,46.3 L157.1,46.6 L154.6,45.5 L155.5,46.3 L154.2,47.1 L162.3,48.2 L162.3,50.2 L156.6,52.2 L156.2,50.7 L152.6,49.5 L153.3,50.7 L149.5,50.8 L148.7,49.7 L148.6,51.3 L146.7,51.5 L143.7,50.2 L143.1,51.2 L141.3,50.1 L141.3,51.1 L139.2,51.0 L139.0,49.2 L138.9,51.0 L136.6,50.6 L136.7,49.0 L138.9,47.8 L142.8,47.2 L140.3,45.2 L140.7,44.0 L143.8,44.1 L147.6,46.3 L149.9,46.1 L152.2,43.9 L149.8,45.5 L146.3,45.4 L145.7,43.5 L148.8,42.3 L147.2,42.0 L147.5,40.6 L145.6,42.6 L144.2,42.8 L144.9,41.5 L141.2,42.3 L142.9,39.4 L154.4,38.4 L148.3,38.3 L150.2,38.0 L143.7,34.1 L143.6,32.1 L149.9,32.2 L157.3,35.3 L151.6,31.8 L165.5,29.1 L161.3,28.7 L165.5,26.3 L156.1,30.1 L151.8,30.5 L153.3,29.5 L146.6,30.8 L143.7,29.8 L150.9,27.7 L145.2,28.2 L140.8,30.1 L137.5,28.7 L147.1,27.0 L136.4,28.3 L135.7,27.6 L137.4,27.2 L136.3,26.8 L141.1,25.8 L134.6,26.4 L136.0,25.3 L131.8,25.1 L140.0,23.0 L146.9,23.6 L143.3,22.4 L147.2,21.3 L159.6,24.2 L152.8,21.5 L154.5,20.9 L153.6,20.4 L156.4,20.7 L156.1,19.7 L161.2,20.1 L158.0,19.0 L163.8,19.1 L167.5,20.9 L168.3,20.3 L164.9,18.5 L171.1,18.5 L175.1,19.9 L173.3,19.0 L174.8,18.2 Z M79.6,69.8 L83.7,67.9 L87.1,69.2 L86.1,71.2 L89.5,69.5 L88.4,67.8 L89.9,67.9 L92.8,70.0 L94.9,74.6 L96.1,73.2 L94.0,67.1 L94.5,66.1 L98.0,66.8 L100.4,68.8 L102.8,74.8 L102.5,77.3 L104.6,79.5 L110.3,81.9 L110.6,84.0 L107.8,83.3 L106.8,84.8 L104.9,84.2 L105.6,86.5 L107.9,85.1 L108.7,86.6 L106.2,88.4 L101.1,87.9 L101.3,87.1 L98.8,86.7 L97.6,85.3 L95.8,87.5 L91.2,89.1 L82.8,90.0 L81.5,86.5 L75.1,85.4 L73.5,82.3 L86.2,81.0 L81.4,79.2 L72.6,79.5 L71.1,77.5 L77.9,75.2 L71.9,75.7 L71.2,75.3 L72.3,74.4 L69.5,73.9 L71.2,71.4 L70.9,70.1 L75.0,67.5 L80.1,66.2 L80.7,68.0 Z M187.8,204.8 L186.2,202.1 L186.2,195.4 L185.2,194.1 L183.6,194.7 L182.9,193.5 L179.2,204.3 L178.2,204.2 L177.7,205.6 L170.5,205.6 L173.1,203.5 L176.4,198.0 L180.0,195.6 L184.8,188.2 L191.7,184.7 L194.3,186.3 L194.1,188.8 L192.0,190.8 L190.5,189.9 L188.7,190.8 L191.2,192.5 L193.3,192.2 L191.9,195.3 L193.0,195.5 L193.6,199.5 L197.7,202.4 L199.5,201.4 L201.7,204.2 L195.8,207.2 L195.8,208.2 L194.2,207.8 L191.5,212.9 L190.0,211.5 L190.1,208.1 L193.9,204.0 L194.6,205.5 L196.3,203.8 L192.9,203.9 L194.2,201.5 L193.4,201.0 L190.6,204.5 L190.3,203.6 L189.3,205.2 Z M67.7,62.3 L72.8,61.7 L77.7,65.3 L69.2,69.6 L66.7,71.7 L65.7,75.2 L60.1,77.2 L58.0,74.3 L53.8,72.9 L58.5,64.0 L56.4,61.2 L63.7,60.2 Z M131.3,27.8 L134.1,30.4 L137.3,30.8 L138.2,32.5 L139.7,32.8 L138.9,31.3 L140.9,31.5 L140.3,32.9 L142.5,33.9 L141.7,35.4 L145.5,35.3 L146.9,36.9 L141.0,39.9 L140.0,38.3 L140.2,40.5 L138.4,40.3 L138.3,42.3 L135.5,40.2 L136.7,42.4 L129.5,41.3 L131.3,40.5 L128.1,40.2 L127.3,39.5 L128.4,39.4 L126.1,38.3 L132.6,36.4 L123.9,36.8 L122.7,35.7 L125.5,34.6 L122.2,34.9 L120.1,32.7 L125.9,32.4 L121.0,31.8 L122.9,31.5 L121.5,30.6 L122.1,29.8 L126.6,30.6 L123.0,29.2 L128.1,27.9 L126.0,26.7 Z M125.8,48.5 L128.2,49.2 L127.5,50.8 L132.6,49.7 L134.3,50.6 L132.3,50.8 L137.2,51.5 L132.4,51.9 L137.2,54.0 L136.4,55.2 L138.0,55.7 L138.7,54.7 L144.8,56.0 L149.4,53.9 L153.5,53.9 L159.2,55.7 L159.5,56.7 L157.5,57.8 L159.7,58.4 L157.6,58.4 L157.8,60.0 L154.0,60.5 L151.7,60.1 L150.4,58.4 L150.3,60.0 L148.3,60.4 L139.2,60.4 L138.9,58.8 L136.6,60.1 L133.6,58.8 L132.0,59.6 L130.1,56.5 L130.6,53.8 L128.5,51.3 L123.5,51.7 L121.8,50.6 L122.7,50.2 L119.9,49.4 L121.0,49.1 L120.2,48.2 L122.2,47.8 Z M93.8,52.7 L95.1,53.1 L94.5,54.0 L96.3,53.6 L97.0,54.6 L97.5,52.9 L99.9,53.3 L99.1,57.3 L96.7,58.3 L92.6,57.6 L84.2,60.8 L81.6,60.6 L80.1,59.4 L87.5,56.7 L81.5,57.6 L82.0,55.9 L80.8,55.8 L79.8,57.5 L76.9,58.1 L72.6,56.6 L78.2,54.6 L73.6,54.8 L78.6,53.5 L74.8,53.2 L75.8,52.1 L79.1,52.2 L76.7,51.7 L78.6,50.6 L83.8,52.0 L87.6,55.3 L92.0,55.5 L92.4,54.5 L90.3,53.4 L91.3,52.5 L89.2,51.1 L92.6,49.0 Z M214.4,173.5 L213.1,174.5 L213.6,175.9 L211.3,182.9 L212.7,180.5 L212.8,181.3 L214.3,181.1 L212.8,182.9 L212.9,183.7 L214.9,183.4 L214.6,185.5 L216.5,183.3 L216.7,184.3 L218.6,184.4 L217.4,188.9 L219.9,188.0 L218.1,192.2 L220.2,190.1 L219.6,193.3 L220.5,192.0 L220.8,193.1 L219.6,197.5 L218.6,197.6 L218.6,195.1 L217.3,196.4 L218.0,193.6 L217.3,191.6 L216.6,193.8 L213.6,196.4 L215.9,192.5 L214.1,193.5 L212.8,193.3 L213.5,191.8 L211.4,193.0 L207.8,192.2 L206.0,193.0 L205.6,192.2 L207.8,188.3 L205.9,188.1 L206.6,187.2 L206.9,187.9 L207.6,185.5 L208.6,186.0 L208.1,184.0 L209.0,183.5 L210.8,176.0 L213.1,173.3 Z M112.8,63.1 L119.6,64.3 L116.3,68.0 L118.2,67.7 L119.3,69.6 L120.7,69.3 L120.5,73.5 L118.3,74.5 L116.6,73.4 L116.9,75.5 L115.8,76.2 L106.6,69.0 L107.7,67.4 L109.9,69.2 L112.5,68.3 L111.5,66.8 L113.2,66.7 L109.3,65.4 L111.6,65.6 L110.6,63.9 Z M147.2,105.9 L148.1,104.9 L150.4,106.5 L153.7,108.9 L154.1,112.0 L156.5,111.7 L157.7,113.3 L156.0,114.8 L150.8,111.4 L146.1,116.4 L145.2,113.6 L142.1,114.1 L144.1,111.4 L145.1,103.1 L146.4,103.3 Z M128.3,62.1 L134.7,63.7 L130.7,69.0 L126.0,69.0 L127.5,70.3 L126.4,72.6 L123.7,72.6 L122.7,64.4 L124.9,64.5 L124.2,62.7 Z M77.3,46.3 L75.5,47.4 L76.4,49.5 L73.5,51.6 L71.7,51.0 L72.0,49.1 L69.9,50.5 L69.4,52.3 L68.1,51.4 L67.3,53.7 L66.2,53.9 L65.2,52.1 L61.7,53.3 L60.5,52.4 L69.2,46.6 L74.3,46.4 L73.9,45.8 L75.1,45.4 Z M118.0,50.7 L117.6,54.2 L118.8,55.9 L117.6,55.9 L117.3,57.7 L112.1,57.8 L112.4,56.7 L111.1,56.0 L114.6,54.5 L106.4,55.0 L107.9,53.6 L110.5,54.0 L107.9,51.6 L108.7,50.8 L113.1,53.4 L112.5,52.5 L113.8,52.3 L110.9,50.5 L115.3,50.7 L115.7,49.6 Z M104.9,36.7 L106.9,38.9 L108.9,37.9 L112.7,39.6 L114.8,43.8 L112.1,44.0 L110.3,42.2 L106.5,41.4 L101.9,41.5 L101.6,40.5 L104.6,40.5 L103.6,40.1 L105.1,39.6 L103.2,39.3 L103.3,38.3 L101.6,39.2 L101.9,38.1 L100.1,38.0 L100.4,36.8 Z M50.7,177.9 L54.6,179.5 L59.6,188.8 L56.0,187.6 L56.2,184.9 L54.6,186.3 L53.6,184.0 L52.2,183.9 L53.2,182.6 L50.9,181.6 L50.6,180.3 L49.2,180.4 L50.1,178.1 L48.8,178.6 L48.2,177.1 Z"
+  },
+  {
+    "name": "MEXICO CITY",
+    "countryCode": "MEX",
+    "countryName": "MEXICO",
+    "flag": "🇲🇽",
+    "lat": 19.4326,
+    "lon": -99.1332,
+    "continent": "North America",
+    "subregion": "Central/North America",
+    "borders": "High Valley of Mexico (2,240m) • Zocalo & Aztec Templo Mayor",
+    "capital": "Located in MEXICO (🇲🇽)",
+    "widthKm": 3096,
+    "pinX": 138.9,
+    "pinY": 150.8,
+    "svg": "M18.0,54.7 L34.2,53.4 L33.4,54.9 L58.9,63.6 L77.9,63.5 L77.9,60.2 L89.7,60.3 L100.1,69.0 L103.5,76.4 L111.2,80.6 L113.7,79.0 L115.5,75.1 L117.9,74.2 L123.4,74.9 L128.0,79.3 L131.1,85.5 L136.4,91.3 L136.8,94.9 L139.1,99.3 L150.7,103.6 L152.3,102.9 L148.8,114.4 L147.6,128.2 L148.1,131.2 L151.2,135.2 L150.5,137.3 L150.7,135.1 L148.2,131.8 L152.0,141.4 L156.9,147.6 L158.0,151.4 L161.5,155.4 L160.5,155.3 L165.5,156.2 L170.3,160.1 L183.9,156.3 L187.0,156.0 L187.4,157.4 L190.0,158.0 L191.7,156.7 L190.7,154.8 L195.3,151.4 L197.9,139.2 L201.5,137.3 L210.6,135.1 L218.8,136.0 L219.2,135.3 L217.9,135.2 L219.6,134.7 L221.6,136.2 L222.0,138.2 L215.8,149.3 L217.6,149.7 L216.0,151.4 L217.1,151.9 L214.7,159.3 L213.3,155.2 L208.3,161.6 L206.1,161.5 L205.9,162.7 L193.7,162.6 L193.6,166.8 L190.8,166.8 L197.5,173.1 L197.3,175.4 L188.6,175.5 L185.5,181.3 L186.4,182.8 L185.3,186.6 L179.0,180.0 L170.9,173.9 L173.4,175.8 L169.0,174.5 L169.3,173.4 L168.1,173.9 L167.4,172.9 L166.6,173.9 L168.1,174.4 L156.6,178.5 L148.2,176.2 L141.4,172.0 L135.2,170.7 L127.4,167.2 L120.2,161.6 L110.0,158.9 L106.8,155.2 L99.9,151.7 L96.3,146.8 L95.0,143.8 L97.8,142.4 L96.1,140.7 L97.9,138.4 L98.1,135.7 L95.1,132.0 L94.2,127.4 L86.5,118.2 L80.9,113.8 L82.5,114.6 L82.6,113.7 L79.7,112.8 L77.5,109.4 L79.0,109.5 L74.1,106.0 L72.4,106.4 L73.4,104.6 L71.3,105.6 L70.0,104.6 L69.8,102.4 L71.8,100.8 L70.8,98.7 L67.6,97.5 L66.3,94.7 L62.7,92.9 L62.3,88.9 L58.4,88.2 L51.4,80.5 L45.4,68.5 L45.4,64.6 L32.7,59.3 L34.8,72.1 L46.6,84.8 L47.5,89.2 L50.3,91.4 L53.4,97.6 L54.5,98.4 L53.8,96.2 L55.4,97.4 L57.2,104.2 L61.3,110.9 L61.5,114.8 L63.4,116.6 L64.1,114.8 L69.8,121.1 L69.3,123.5 L65.9,125.4 L63.5,120.2 L52.0,111.1 L52.0,105.8 L49.9,101.0 L45.6,98.3 L44.7,95.7 L41.7,97.3 L32.3,89.9 L32.1,89.1 L37.0,88.9 L38.6,90.3 L37.2,88.4 L38.7,84.8 L32.7,78.0 L27.8,75.1 L25.2,67.4 L23.6,66.2 L21.1,61.8 L21.4,59.7 Z"
+  },
+  {
+    "name": "BUENOS AIRES",
+    "countryCode": "ARG",
+    "countryName": "ARGENTINA",
+    "flag": "🇦🇷",
+    "lat": -34.6037,
+    "lon": -58.3816,
+    "continent": "South America",
+    "subregion": "South America",
+    "borders": "Rio de la Plata Estuary • Obelisco, Tango & La Boca",
+    "capital": "Located in ARGENTINA (🇦🇷)",
+    "widthKm": 1736,
+    "pinX": 145.2,
+    "pinY": 96.6,
+    "svg": "M148.9,69.5 L146.1,80.1 L146.2,86.5 L145.0,87.4 L144.5,94.7 L145.7,97.1 L151.0,101.2 L150.0,104.5 L151.5,107.0 L153.2,107.5 L153.2,111.0 L149.2,118.0 L146.2,120.1 L132.1,123.5 L126.2,122.3 L126.4,125.1 L127.5,125.9 L125.9,130.9 L126.6,133.9 L125.9,135.2 L120.0,136.8 L113.0,134.7 L113.4,142.6 L116.2,144.7 L119.2,142.7 L120.0,146.3 L118.0,147.4 L115.8,145.1 L113.5,146.1 L116.6,147.9 L112.2,151.6 L112.1,156.0 L110.3,158.3 L110.3,160.5 L107.6,160.2 L104.0,162.0 L100.9,166.9 L101.3,169.3 L104.8,172.7 L109.3,173.7 L109.6,176.2 L107.5,177.8 L109.5,178.5 L101.5,184.7 L99.4,191.0 L97.7,191.7 L95.7,189.6 L95.8,190.7 L94.2,191.1 L96.9,192.1 L94.4,193.5 L92.4,197.4 L93.2,197.2 L93.9,200.6 L91.9,200.8 L94.3,201.4 L97.0,205.3 L89.5,203.4 L80.1,203.3 L77.7,200.6 L78.1,195.3 L74.2,195.6 L72.1,188.5 L72.7,186.9 L74.2,186.8 L74.7,185.1 L76.7,183.7 L78.3,180.2 L77.2,178.1 L81.1,170.5 L80.3,167.5 L81.5,166.3 L80.9,164.0 L82.8,161.8 L79.4,159.0 L83.3,159.0 L83.7,157.7 L80.6,156.6 L80.9,149.6 L79.0,148.1 L79.2,143.5 L80.9,142.3 L80.0,134.0 L82.6,123.2 L85.2,121.1 L83.6,110.3 L87.4,105.5 L86.7,100.5 L90.0,94.3 L90.2,88.5 L88.9,88.0 L86.7,76.4 L88.5,70.7 L90.1,69.4 L89.2,64.2 L91.0,58.6 L93.3,55.6 L94.9,50.9 L97.4,49.7 L96.1,46.7 L96.9,44.7 L96.5,35.4 L102.0,31.7 L103.7,25.4 L102.8,24.3 L107.5,18.0 L109.7,19.8 L115.3,20.6 L116.6,24.3 L118.6,19.4 L123.7,19.2 L132.5,30.0 L137.9,32.1 L148.8,39.6 L149.1,40.9 L146.5,44.9 L144.1,51.8 L154.6,53.3 L155.9,51.9 L158.0,52.5 L162.3,47.8 L163.3,41.2 L166.2,41.2 L167.9,45.2 L167.1,50.7 L158.0,57.3 L158.2,58.4 L157.2,58.3 Z M95.8,220.9 L95.9,207.4 L97.8,210.0 L96.9,209.9 L96.6,211.1 L98.2,211.4 L102.3,216.0 L107.4,218.9 L112.5,219.8 L111.1,221.3 L106.1,222.0 Z"
+  },
+  {
+    "name": "SEOUL",
+    "countryCode": "KOR",
+    "countryName": "SOUTH KOREA",
+    "flag": "🇰🇷",
+    "lat": 37.5665,
+    "lon": 126.978,
+    "continent": "Asia",
+    "subregion": "Eastern Asia",
+    "borders": "Han River Basin • Gyeongbokgung Palace & N Seoul Tower",
+    "capital": "Located in SOUTH KOREA (🇰🇷)",
+    "widthKm": 312,
+    "pinX": 93.7,
+    "pinY": 57.8,
+    "svg": "M83.2,49.7 L84.2,49.0 L84.2,44.6 L97.1,30.8 L103.3,29.7 L126.0,29.8 L130.0,27.9 L136.3,18.0 L143.7,34.8 L156.9,53.6 L165.5,68.8 L168.1,76.9 L169.8,88.8 L167.3,104.6 L167.6,114.7 L169.3,116.5 L172.8,114.8 L168.1,135.6 L161.9,147.5 L154.7,150.5 L140.4,150.5 L137.6,153.7 L138.4,159.2 L127.7,156.8 L126.0,153.5 L121.0,155.6 L116.2,156.0 L113.9,158.5 L117.0,162.5 L116.2,164.8 L113.7,166.0 L110.3,160.3 L106.7,161.0 L106.3,164.0 L109.0,168.4 L104.3,174.5 L99.7,171.4 L102.3,167.1 L101.9,163.5 L95.3,169.1 L91.3,175.4 L89.1,175.0 L86.9,172.7 L82.5,176.8 L81.7,180.0 L80.1,180.1 L78.6,173.4 L74.0,169.8 L72.0,166.6 L73.1,164.9 L79.9,165.7 L78.3,163.5 L82.0,160.9 L76.7,161.0 L72.8,148.5 L74.9,146.2 L78.9,135.5 L82.6,132.8 L78.7,131.5 L78.8,130.0 L85.8,125.4 L86.9,121.5 L83.6,119.6 L85.0,116.2 L80.4,110.5 L80.6,98.7 L78.8,90.6 L75.8,92.2 L69.4,90.7 L68.8,87.7 L70.5,83.9 L78.7,78.8 L81.5,78.3 L84.8,80.6 L87.8,81.0 L90.5,85.7 L93.7,81.4 L90.4,80.0 L86.7,71.8 L88.0,68.0 L83.7,62.3 L83.9,58.3 L81.1,52.1 Z M73.9,221.2 L71.2,221.5 L69.0,217.8 L74.2,212.3 L85.1,208.9 L91.4,210.2 L92.3,212.9 L90.5,216.7 L81.6,220.6 Z M147.4,161.9 L144.6,164.2 L139.8,159.4 L145.2,154.0 L146.9,153.8 Z M126.9,161.6 L126.5,165.3 L124.4,165.5 L123.1,163.1 L121.0,164.3 L119.7,159.1 L122.3,157.3 L126.0,158.9 Z M71.0,178.0 L69.1,178.6 L67.2,177.0 L67.7,175.3 L71.4,170.8 L74.4,171.5 L75.5,173.2 L74.1,175.9 Z"
+  },
+  {
+    "name": "BEIJING",
+    "countryCode": "CHN",
+    "countryName": "CHINA",
+    "flag": "🇨🇳",
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "continent": "Asia",
+    "subregion": "Eastern Asia",
+    "borders": "Northern Plains • Forbidden City, Temple of Heaven & Great Wall",
+    "capital": "Located in CHINA (🇨🇳)",
+    "widthKm": 5515,
+    "pinX": 160.8,
+    "pinY": 103.5,
+    "svg": "M132.7,179.2 L128.3,177.3 L128.7,174.0 L125.5,173.4 L123.7,171.6 L119.2,175.0 L118.1,174.0 L116.0,175.3 L114.3,174.1 L113.2,175.6 L111.8,175.2 L111.8,180.7 L110.2,180.5 L109.7,178.2 L106.5,179.3 L105.8,177.1 L103.3,176.6 L104.4,173.2 L102.3,172.3 L102.2,168.5 L97.9,169.3 L98.8,163.8 L101.6,161.3 L101.6,154.2 L100.4,154.3 L98.2,150.4 L97.1,151.6 L93.6,150.8 L94.6,149.3 L94.2,148.2 L93.2,148.7 L93.9,147.3 L92.8,146.5 L90.7,148.2 L88.1,147.1 L79.3,153.6 L72.4,151.3 L69.0,155.3 L68.1,152.1 L64.8,153.2 L61.4,152.1 L59.3,152.8 L46.1,142.9 L44.1,142.9 L43.0,144.1 L36.3,138.5 L35.2,138.9 L34.0,133.9 L36.7,133.9 L35.1,127.7 L35.9,126.5 L33.6,125.1 L32.8,121.7 L26.6,120.3 L25.4,116.9 L20.6,114.9 L23.0,113.8 L22.1,109.6 L18.6,108.8 L18.1,105.3 L19.3,102.9 L22.1,101.1 L24.5,100.5 L24.9,101.8 L27.0,101.6 L29.0,98.8 L33.1,98.6 L40.1,94.6 L39.9,92.1 L41.9,90.0 L40.5,86.2 L40.9,83.6 L38.9,83.0 L45.0,81.0 L47.7,82.0 L47.1,80.0 L49.4,73.5 L55.3,74.9 L57.6,74.0 L58.3,68.8 L61.2,67.9 L62.8,65.5 L65.4,65.3 L66.0,67.8 L73.7,71.5 L76.1,76.0 L74.9,80.3 L75.6,81.7 L84.4,82.7 L90.5,85.4 L94.0,91.9 L111.0,92.6 L113.2,94.2 L118.4,95.9 L121.1,95.3 L121.1,96.2 L122.7,96.5 L128.6,93.6 L137.6,92.9 L145.9,87.8 L144.1,85.1 L145.8,82.2 L151.4,83.5 L154.6,80.9 L158.4,80.6 L161.3,77.2 L164.2,75.9 L172.3,75.6 L171.8,73.6 L167.8,70.2 L165.3,70.2 L163.9,71.6 L162.0,70.7 L159.1,71.4 L157.9,69.6 L161.7,62.6 L165.7,63.9 L170.3,61.6 L170.0,60.2 L175.3,53.2 L175.0,51.3 L173.1,50.4 L176.1,48.4 L183.8,47.2 L191.6,49.4 L193.9,52.2 L198.1,61.0 L198.0,62.7 L204.5,64.4 L208.0,66.6 L209.4,71.3 L214.4,71.3 L220.5,68.6 L221.7,69.1 L222.0,71.3 L220.0,73.0 L216.5,81.9 L212.3,81.1 L209.4,83.1 L210.3,89.2 L209.7,91.1 L207.6,91.8 L207.9,92.6 L205.8,90.7 L205.1,93.0 L202.6,94.7 L199.6,94.9 L200.0,97.3 L195.2,96.0 L192.8,99.3 L187.0,103.4 L182.3,104.7 L176.7,108.3 L178.8,105.6 L177.0,104.9 L180.3,101.0 L178.9,99.1 L176.7,99.4 L170.7,104.1 L169.4,106.4 L165.4,106.6 L165.0,109.6 L169.2,111.1 L169.3,114.1 L170.4,114.8 L172.0,114.8 L175.3,112.0 L181.7,113.8 L180.6,116.1 L179.2,115.6 L175.5,116.9 L174.9,119.0 L173.4,118.7 L173.7,119.6 L170.0,124.3 L173.7,126.6 L175.6,133.3 L178.9,136.4 L178.7,137.2 L174.5,135.6 L172.9,136.3 L175.2,136.1 L178.9,139.9 L173.4,143.2 L177.0,143.0 L179.7,144.8 L177.8,146.4 L179.3,146.3 L179.2,147.8 L177.6,147.8 L178.2,151.3 L175.3,152.4 L172.9,158.1 L171.4,157.5 L172.4,159.3 L169.9,160.2 L171.5,160.7 L171.5,163.2 L170.0,163.0 L170.4,163.9 L169.4,164.0 L168.3,166.4 L165.6,167.0 L166.3,167.9 L164.0,170.6 L162.5,170.4 L161.0,173.3 L152.8,175.1 L151.2,172.6 L151.3,176.3 L140.8,179.9 L139.9,181.5 L141.1,183.3 L140.6,184.2 L139.0,183.9 L138.3,181.6 L139.2,179.3 L138.0,178.5 L136.6,179.6 L134.3,177.6 L134.4,178.7 Z M142.4,185.5 L142.8,186.8 L139.6,191.8 L137.8,192.8 L135.1,191.5 L135.0,188.3 L137.0,185.9 Z"
+  },
+  {
+    "name": "SHANGHAI",
+    "countryCode": "CHN",
+    "countryName": "CHINA",
+    "flag": "🇨🇳",
+    "lat": 31.2304,
+    "lon": 121.4737,
+    "continent": "Asia",
+    "subregion": "Eastern Asia",
+    "borders": "Yangtze River Estuary • The Bund & Oriental Pearl Tower",
+    "capital": "Located in CHINA (🇨🇳)",
+    "widthKm": 5515,
+    "pinX": 177.7,
+    "pinY": 139.2,
+    "svg": "M132.7,179.2 L128.3,177.3 L128.7,174.0 L125.5,173.4 L123.7,171.6 L119.2,175.0 L118.1,174.0 L116.0,175.3 L114.3,174.1 L113.2,175.6 L111.8,175.2 L111.8,180.7 L110.2,180.5 L109.7,178.2 L106.5,179.3 L105.8,177.1 L103.3,176.6 L104.4,173.2 L102.3,172.3 L102.2,168.5 L97.9,169.3 L98.8,163.8 L101.6,161.3 L101.6,154.2 L100.4,154.3 L98.2,150.4 L97.1,151.6 L93.6,150.8 L94.6,149.3 L94.2,148.2 L93.2,148.7 L93.9,147.3 L92.8,146.5 L90.7,148.2 L88.1,147.1 L79.3,153.6 L72.4,151.3 L69.0,155.3 L68.1,152.1 L64.8,153.2 L61.4,152.1 L59.3,152.8 L46.1,142.9 L44.1,142.9 L43.0,144.1 L36.3,138.5 L35.2,138.9 L34.0,133.9 L36.7,133.9 L35.1,127.7 L35.9,126.5 L33.6,125.1 L32.8,121.7 L26.6,120.3 L25.4,116.9 L20.6,114.9 L23.0,113.8 L22.1,109.6 L18.6,108.8 L18.1,105.3 L19.3,102.9 L22.1,101.1 L24.5,100.5 L24.9,101.8 L27.0,101.6 L29.0,98.8 L33.1,98.6 L40.1,94.6 L39.9,92.1 L41.9,90.0 L40.5,86.2 L40.9,83.6 L38.9,83.0 L45.0,81.0 L47.7,82.0 L47.1,80.0 L49.4,73.5 L55.3,74.9 L57.6,74.0 L58.3,68.8 L61.2,67.9 L62.8,65.5 L65.4,65.3 L66.0,67.8 L73.7,71.5 L76.1,76.0 L74.9,80.3 L75.6,81.7 L84.4,82.7 L90.5,85.4 L94.0,91.9 L111.0,92.6 L113.2,94.2 L118.4,95.9 L121.1,95.3 L121.1,96.2 L122.7,96.5 L128.6,93.6 L137.6,92.9 L145.9,87.8 L144.1,85.1 L145.8,82.2 L151.4,83.5 L154.6,80.9 L158.4,80.6 L161.3,77.2 L164.2,75.9 L172.3,75.6 L171.8,73.6 L167.8,70.2 L165.3,70.2 L163.9,71.6 L162.0,70.7 L159.1,71.4 L157.9,69.6 L161.7,62.6 L165.7,63.9 L170.3,61.6 L170.0,60.2 L175.3,53.2 L175.0,51.3 L173.1,50.4 L176.1,48.4 L183.8,47.2 L191.6,49.4 L193.9,52.2 L198.1,61.0 L198.0,62.7 L204.5,64.4 L208.0,66.6 L209.4,71.3 L214.4,71.3 L220.5,68.6 L221.7,69.1 L222.0,71.3 L220.0,73.0 L216.5,81.9 L212.3,81.1 L209.4,83.1 L210.3,89.2 L209.7,91.1 L207.6,91.8 L207.9,92.6 L205.8,90.7 L205.1,93.0 L202.6,94.7 L199.6,94.9 L200.0,97.3 L195.2,96.0 L192.8,99.3 L187.0,103.4 L182.3,104.7 L176.7,108.3 L178.8,105.6 L177.0,104.9 L180.3,101.0 L178.9,99.1 L176.7,99.4 L170.7,104.1 L169.4,106.4 L165.4,106.6 L165.0,109.6 L169.2,111.1 L169.3,114.1 L170.4,114.8 L172.0,114.8 L175.3,112.0 L181.7,113.8 L180.6,116.1 L179.2,115.6 L175.5,116.9 L174.9,119.0 L173.4,118.7 L173.7,119.6 L170.0,124.3 L173.7,126.6 L175.6,133.3 L178.9,136.4 L178.7,137.2 L174.5,135.6 L172.9,136.3 L175.2,136.1 L178.9,139.9 L173.4,143.2 L177.0,143.0 L179.7,144.8 L177.8,146.4 L179.3,146.3 L179.2,147.8 L177.6,147.8 L178.2,151.3 L175.3,152.4 L172.9,158.1 L171.4,157.5 L172.4,159.3 L169.9,160.2 L171.5,160.7 L171.5,163.2 L170.0,163.0 L170.4,163.9 L169.4,164.0 L168.3,166.4 L165.6,167.0 L166.3,167.9 L164.0,170.6 L162.5,170.4 L161.0,173.3 L152.8,175.1 L151.2,172.6 L151.3,176.3 L140.8,179.9 L139.9,181.5 L141.1,183.3 L140.6,184.2 L139.0,183.9 L138.3,181.6 L139.2,179.3 L138.0,178.5 L136.6,179.6 L134.3,177.6 L134.4,178.7 Z M142.4,185.5 L142.8,186.8 L139.6,191.8 L137.8,192.8 L135.1,191.5 L135.0,188.3 L137.0,185.9 Z"
+  },
+  {
+    "name": "BANGKOK",
+    "countryCode": "THA",
+    "countryName": "THAILAND",
+    "flag": "🇹🇭",
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "continent": "Asia",
+    "subregion": "Southeast Asia",
+    "borders": "Chao Phraya River Delta • Grand Palace & Wat Arun",
+    "capital": "Located in THAILAND (🇹🇭)",
+    "widthKm": 897,
+    "pinX": 106.5,
+    "pinY": 110.0,
+    "svg": "M101.4,19.5 L101.6,20.5 L104.0,18.5 L106.7,21.4 L105.1,27.2 L106.6,30.0 L109.7,30.5 L112.7,29.2 L116.0,30.1 L117.0,38.0 L113.8,45.3 L115.1,49.5 L111.9,57.2 L112.6,57.8 L115.4,58.4 L123.6,51.0 L128.0,48.5 L134.0,51.9 L135.5,54.0 L140.8,51.1 L143.9,45.8 L152.8,47.0 L164.5,61.1 L163.5,66.8 L164.5,72.6 L167.6,76.8 L172.4,79.2 L172.3,81.4 L175.6,83.8 L173.5,89.3 L174.3,93.8 L173.3,99.3 L167.9,103.5 L166.5,101.6 L164.0,100.7 L153.3,101.7 L148.1,100.8 L142.7,102.0 L138.8,104.7 L134.0,112.3 L130.9,113.0 L133.3,125.0 L136.8,128.3 L136.5,133.0 L139.2,138.3 L134.6,131.4 L133.9,132.7 L130.1,128.8 L129.7,129.6 L124.4,125.4 L111.8,125.2 L112.7,114.5 L107.8,112.6 L100.0,115.5 L100.9,119.8 L99.3,124.7 L99.6,131.9 L94.7,141.6 L92.8,149.5 L88.5,157.4 L88.5,165.5 L90.2,169.9 L89.7,171.9 L91.6,172.7 L97.5,171.6 L99.6,181.3 L101.5,183.5 L101.9,182.4 L103.5,185.7 L107.1,200.1 L105.6,199.3 L104.9,195.7 L103.6,195.6 L103.2,192.5 L101.9,193.1 L101.9,194.9 L105.4,200.6 L107.6,200.8 L113.4,205.1 L119.9,205.1 L123.9,210.4 L128.0,213.6 L124.9,219.4 L122.3,220.0 L120.7,218.3 L116.6,219.9 L114.7,222.0 L112.9,220.1 L114.2,217.6 L113.9,213.6 L111.5,213.6 L109.9,210.6 L104.4,209.4 L103.3,207.6 L102.1,207.7 L101.3,210.9 L95.7,204.9 L96.0,201.7 L93.7,200.2 L94.3,198.3 L91.1,198.1 L89.8,194.7 L87.3,193.3 L87.0,190.9 L83.5,188.6 L82.3,185.9 L80.6,184.6 L77.7,186.8 L76.1,183.6 L76.1,178.8 L82.9,157.0 L83.0,152.7 L88.9,146.6 L94.6,137.2 L91.7,126.7 L89.3,124.0 L88.0,120.0 L88.1,110.5 L85.4,105.9 L80.5,101.7 L75.6,93.2 L75.4,90.0 L80.3,87.8 L80.8,78.3 L83.9,76.5 L84.8,74.2 L84.1,73.3 L81.7,74.5 L78.8,65.6 L68.9,54.2 L69.4,52.3 L67.9,47.4 L65.5,46.5 L64.4,44.3 L69.4,43.3 L68.9,38.6 L70.2,35.9 L70.4,31.3 L73.1,27.3 L77.8,28.1 L85.2,27.0 L87.3,22.5 L90.8,22.8 L92.8,21.8 L92.5,18.8 L96.0,19.4 L98.3,18.0 Z"
+  },
+  {
+    "name": "AMSTERDAM",
+    "countryCode": "NLD",
+    "countryName": "NETHERLANDS",
+    "flag": "🇳🇱",
+    "lat": 52.3676,
+    "lon": 4.9041,
+    "continent": "Europe",
+    "subregion": "Western Europe",
+    "borders": "UNESCO Canal Ring • Rijksmuseum & Anne Frank House",
+    "capital": "Located in NETHERLANDS (🇳🇱)",
+    "widthKm": 263,
+    "pinX": 102.8,
+    "pinY": 99.4,
+    "svg": "M153.5,222.0 L142.0,221.3 L139.6,220.2 L137.0,214.9 L142.2,206.9 L142.2,203.9 L145.4,196.5 L145.8,193.6 L144.4,191.5 L135.6,188.0 L129.5,181.5 L121.7,183.4 L117.2,181.9 L111.9,176.8 L110.0,168.7 L108.7,167.5 L104.6,172.2 L100.2,172.5 L95.9,165.8 L90.2,171.1 L88.1,171.1 L84.1,167.1 L78.6,170.7 L79.5,175.2 L78.1,176.1 L74.9,175.7 L61.0,169.5 L52.4,172.0 L46.4,169.0 L41.4,168.7 L35.0,162.1 L39.7,158.4 L48.7,157.9 L55.4,159.5 L67.3,168.5 L73.4,167.3 L71.8,164.9 L64.4,161.3 L60.9,157.9 L69.2,156.8 L66.9,152.1 L58.2,141.6 L64.6,127.7 L70.4,122.8 L83.2,103.8 L86.9,93.7 L92.3,65.9 L96.5,55.9 L102.0,58.4 L110.1,54.4 L123.9,44.1 L128.0,35.2 L132.0,31.1 L147.9,23.0 L156.7,20.6 L191.8,18.0 L198.9,26.6 L209.6,30.0 L209.3,51.5 L202.8,70.8 L201.9,77.9 L201.0,79.2 L188.7,79.2 L186.9,80.4 L187.3,83.8 L186.0,87.1 L188.7,92.1 L192.6,93.7 L198.9,93.6 L200.5,95.5 L202.0,98.4 L201.3,107.1 L199.3,111.7 L187.6,121.2 L187.2,124.5 L191.2,128.8 L188.4,134.0 L177.9,138.3 L173.6,138.0 L170.4,140.6 L161.6,136.3 L151.4,142.2 L151.4,145.3 L158.0,154.7 L158.1,157.7 L162.8,166.0 L163.1,169.0 L161.6,176.2 L157.4,186.1 L157.7,189.4 L160.2,190.6 L159.9,191.9 L151.0,200.0 L147.7,199.6 L147.2,200.8 L148.9,204.3 L154.1,206.9 L156.1,210.3 Z M71.2,173.8 L68.7,179.8 L62.5,184.3 L56.1,187.3 L52.8,187.0 L45.9,182.2 L41.1,181.4 L36.1,184.7 L34.2,184.4 L31.8,181.0 L30.4,174.4 L41.6,172.8 L47.5,175.1 L55.2,176.2 L61.2,173.1 L65.9,175.7 Z M58.3,147.0 L62.9,151.2 L64.2,153.9 L58.4,155.5 L52.2,150.5 L48.2,151.7 L46.7,149.3 L46.6,147.8 L50.9,146.5 Z M101.9,46.1 L97.3,51.5 L93.7,48.7 L95.1,44.5 L102.0,37.6 Z"
+  },
+  {
+    "name": "ZURICH",
+    "countryCode": "CHE",
+    "countryName": "SWITZERLAND",
+    "flag": "🇨🇭",
+    "lat": 47.3769,
+    "lon": 8.5417,
+    "continent": "Europe",
+    "subregion": "Central Europe",
+    "borders": "Northern Tip of Lake Zurich • Global Banking & Alpine Gateway",
+    "capital": "Located in SWITZERLAND (🇨🇭)",
+    "widthKm": 342,
+    "pinX": 135.0,
+    "pinY": 81.9,
+    "svg": "M179.7,72.1 L184.3,75.9 L183.5,80.9 L177.9,95.4 L178.0,102.8 L184.0,103.1 L194.3,106.4 L195.8,111.0 L201.2,114.5 L207.4,116.8 L209.5,116.0 L217.2,107.9 L220.2,109.3 L222.0,113.6 L219.4,129.2 L221.3,132.2 L220.9,136.8 L213.7,135.8 L210.2,132.1 L205.3,133.5 L203.1,141.2 L206.3,149.2 L207.9,156.5 L207.2,157.5 L203.2,157.5 L198.6,149.3 L196.1,148.9 L184.9,153.7 L179.9,153.0 L177.7,150.2 L175.3,141.3 L169.7,140.4 L167.7,141.8 L167.3,154.3 L156.0,172.4 L158.0,181.6 L156.9,183.6 L153.7,184.6 L151.5,182.5 L150.6,178.8 L145.7,173.6 L147.6,168.2 L139.5,166.0 L131.2,157.0 L129.6,143.7 L127.2,143.8 L120.9,150.7 L114.7,155.3 L114.1,156.3 L116.0,162.7 L110.0,172.3 L100.7,178.5 L89.4,174.8 L79.8,179.2 L70.7,181.3 L67.4,179.7 L62.7,172.2 L54.5,162.4 L56.5,155.1 L53.8,145.7 L45.7,144.3 L38.9,144.7 L34.0,147.2 L30.0,151.2 L29.6,152.1 L31.8,156.6 L28.4,160.5 L23.3,163.6 L18.1,163.3 L18.0,159.1 L23.7,154.8 L25.0,148.2 L22.1,144.9 L26.7,132.7 L38.0,123.2 L40.1,110.3 L49.7,105.1 L62.7,89.1 L64.9,84.3 L61.3,82.9 L60.3,80.7 L63.4,76.8 L67.3,74.4 L71.0,74.3 L74.1,78.1 L76.9,78.6 L84.0,76.6 L87.4,70.5 L92.9,67.5 L96.6,69.0 L107.0,69.4 L114.6,68.6 L119.4,66.6 L131.0,67.3 L135.8,65.4 L136.1,63.6 L130.9,63.6 L129.1,62.9 L128.7,61.2 L130.2,58.3 L136.4,55.4 L143.5,60.4 L146.4,59.3 L148.2,60.1 L150.4,63.3 L164.1,62.3 Z"
+  },
+  {
+    "name": "VIENNA",
+    "countryCode": "AUT",
+    "countryName": "AUSTRIA",
+    "flag": "🇦🇹",
+    "lat": 48.2082,
+    "lon": 16.3738,
+    "continent": "Europe",
+    "subregion": "Central Europe",
+    "borders": "Danube River • Schonbrunn Palace & Classical Music Capital",
+    "capital": "Located in AUSTRIA (🇦🇹)",
+    "widthKm": 571,
+    "pinX": 201.3,
+    "pinY": 99.8,
+    "svg": "M18.1,137.1 L20.7,129.3 L18.0,127.0 L21.4,126.9 L24.0,125.0 L30.0,127.8 L32.3,130.0 L32.5,132.2 L36.1,133.4 L35.6,136.8 L39.1,135.4 L40.6,133.3 L42.5,125.9 L54.1,127.2 L57.0,132.0 L58.6,132.2 L65.5,131.0 L68.0,128.5 L76.7,124.6 L89.2,123.2 L89.9,119.3 L97.2,122.5 L102.6,121.2 L104.9,122.4 L105.9,126.3 L111.4,128.8 L112.5,121.8 L111.9,120.1 L108.3,119.1 L109.8,115.7 L109.8,112.4 L104.6,105.1 L106.0,101.7 L121.0,93.7 L124.0,85.0 L129.1,87.3 L130.4,86.5 L132.0,84.7 L132.8,77.6 L137.5,80.6 L139.1,84.1 L147.6,85.2 L150.9,83.2 L156.3,84.3 L156.7,81.4 L158.8,78.4 L159.8,77.3 L162.5,77.4 L164.4,68.3 L166.3,68.4 L168.9,70.5 L172.9,69.4 L183.3,73.9 L186.6,73.7 L192.8,78.1 L201.1,78.7 L204.1,76.3 L205.8,76.4 L214.9,80.1 L216.8,84.3 L214.5,92.7 L220.4,106.5 L222.0,107.9 L218.9,114.6 L219.8,119.7 L212.3,120.9 L207.1,118.0 L202.6,121.0 L208.4,123.6 L209.4,126.5 L208.0,130.1 L203.1,132.0 L203.7,137.0 L202.5,139.0 L203.0,142.0 L204.5,143.0 L203.6,147.0 L198.1,149.0 L192.3,154.0 L190.7,155.7 L190.2,160.7 L185.1,159.3 L181.5,159.8 L176.3,162.6 L170.3,162.0 L161.7,163.5 L158.0,167.8 L152.5,171.7 L97.1,160.9 L94.6,159.7 L88.4,150.4 L87.8,148.5 L89.6,145.4 L88.8,144.6 L78.3,148.4 L64.0,148.8 L61.1,150.4 L58.2,155.9 L55.6,157.0 L51.1,156.1 L49.2,154.0 L42.9,153.2 L41.8,149.3 L40.1,148.5 L34.3,153.8 L27.5,150.3 L26.6,147.6 L19.5,145.6 L20.3,143.6 Z"
+  },
+  {
+    "name": "LISBON",
+    "countryCode": "PRT",
+    "countryName": "PORTUGAL",
+    "flag": "🇵🇹",
+    "lat": 38.7223,
+    "lon": -9.1393,
+    "continent": "Europe",
+    "subregion": "Southern Europe",
+    "borders": "Tagus River Estuary on Atlantic • Belem Tower & Yellow Trams",
+    "capital": "Located in PORTUGAL (🇵🇹)",
+    "widthKm": 280,
+    "pinX": 80.4,
+    "pinY": 153.8,
+    "svg": "M91.5,25.8 L97.2,21.4 L107.1,18.0 L108.8,18.1 L111.3,22.7 L108.4,27.6 L110.6,30.9 L117.7,28.1 L124.7,27.9 L133.6,30.1 L139.5,27.6 L139.9,25.2 L141.4,24.2 L145.0,25.4 L157.6,25.8 L159.5,28.5 L160.0,36.5 L167.1,37.7 L169.1,39.3 L170.1,42.1 L164.2,48.3 L155.4,54.7 L152.8,58.9 L149.5,60.7 L148.1,62.8 L151.0,72.1 L150.5,85.3 L151.7,89.3 L145.5,94.7 L144.9,96.3 L149.1,102.1 L146.7,111.0 L144.8,114.3 L142.3,115.6 L129.5,116.4 L132.3,121.4 L135.6,124.2 L136.6,129.3 L140.6,137.3 L144.6,138.5 L146.0,140.5 L144.5,146.4 L137.3,154.1 L135.4,164.3 L142.7,175.3 L147.2,175.0 L145.2,180.7 L140.2,182.2 L132.3,193.3 L130.5,198.9 L133.5,215.1 L130.8,215.5 L120.4,222.0 L117.1,222.0 L111.1,219.2 L97.0,217.4 L92.6,219.2 L89.3,219.2 L86.6,221.6 L84.7,220.9 L90.3,205.1 L91.0,193.1 L88.4,184.1 L90.7,175.2 L90.4,170.5 L88.3,164.7 L94.8,165.6 L90.8,161.9 L78.1,164.7 L78.4,161.0 L77.0,156.4 L81.8,154.8 L84.0,152.8 L85.3,150.5 L84.6,146.6 L86.5,142.8 L91.0,139.6 L86.0,142.1 L80.5,152.9 L73.7,154.7 L70.1,153.4 L71.9,138.3 L73.8,132.9 L73.2,129.3 L80.1,121.1 L89.6,98.4 L88.1,95.8 L88.5,92.7 L91.6,78.9 L94.3,73.0 L95.1,59.8 L90.6,41.0 L90.4,37.3 L92.1,35.5 L89.4,35.2 L88.1,32.8 L88.4,30.1 Z"
+  },
+  {
+    "name": "DUBLIN",
+    "countryCode": "IRL",
+    "countryName": "IRELAND",
+    "flag": "🇮🇪",
+    "lat": 53.3498,
+    "lon": -6.2603,
+    "continent": "Europe",
+    "subregion": "Northern Europe",
+    "borders": "River Liffey on East Coast • Trinity College & Temple Bar",
+    "capital": "Located in IRELAND (🇮🇪)",
+    "widthKm": 289,
+    "pinX": 180.9,
+    "pinY": 123.7,
+    "svg": "M150.9,32.4 L146.0,35.7 L143.7,43.6 L140.6,49.3 L134.7,52.4 L130.5,52.0 L129.3,53.0 L130.1,54.7 L134.4,57.3 L134.2,58.4 L125.1,62.7 L122.0,65.8 L122.8,67.9 L130.1,74.7 L131.1,78.3 L136.6,79.8 L138.8,82.0 L147.6,82.6 L152.9,77.0 L151.4,73.8 L156.2,68.2 L157.5,68.3 L161.6,72.3 L163.9,78.4 L168.8,81.0 L168.7,86.5 L176.4,86.4 L179.5,84.6 L182.2,84.9 L183.5,86.8 L184.1,88.7 L179.4,89.0 L178.1,92.7 L184.6,111.7 L184.3,122.8 L187.6,137.2 L188.1,145.8 L183.7,155.7 L182.2,165.9 L178.2,173.3 L174.5,176.3 L178.8,181.5 L175.3,183.8 L171.5,184.5 L164.6,183.4 L161.2,186.1 L158.8,181.3 L157.7,185.7 L155.2,187.1 L151.0,186.8 L141.3,189.2 L138.2,194.8 L130.5,197.8 L128.0,201.5 L124.7,203.6 L122.0,204.2 L117.5,200.1 L113.7,200.2 L115.7,202.4 L115.6,208.1 L108.1,212.7 L103.6,213.5 L101.1,216.2 L86.0,220.7 L80.8,219.1 L72.3,222.0 L69.2,221.5 L73.1,215.2 L78.9,211.1 L67.2,212.9 L60.3,215.3 L61.9,212.5 L71.9,203.6 L76.6,201.0 L61.4,206.4 L57.4,205.8 L56.5,204.2 L53.4,205.0 L52.2,201.3 L56.8,195.8 L65.7,190.2 L66.9,188.0 L51.9,187.3 L52.9,183.6 L57.5,180.2 L59.9,179.6 L66.0,182.0 L71.2,181.3 L69.0,179.1 L68.6,174.7 L67.0,173.3 L75.5,165.7 L93.5,161.9 L102.1,158.8 L97.7,157.1 L95.6,154.8 L89.8,161.1 L83.0,162.1 L77.8,160.1 L71.4,164.0 L66.7,164.6 L72.2,160.4 L80.8,151.3 L83.0,147.4 L80.9,144.8 L85.9,136.9 L87.7,135.5 L95.4,133.5 L97.5,131.1 L90.9,128.9 L79.2,129.5 L77.1,127.7 L75.7,124.5 L69.5,125.2 L67.9,124.0 L70.4,121.3 L61.2,120.4 L62.4,116.9 L60.4,113.3 L72.8,110.3 L66.9,107.5 L67.1,103.9 L72.0,101.0 L77.2,99.8 L77.2,95.9 L71.9,95.3 L66.7,96.7 L68.5,84.6 L66.1,85.6 L64.8,79.8 L61.2,81.4 L61.2,78.3 L62.3,76.1 L64.2,75.1 L69.5,75.5 L72.9,73.8 L77.7,73.4 L85.4,73.9 L90.7,78.6 L95.2,74.5 L108.2,77.5 L109.5,76.9 L107.1,71.4 L111.8,66.4 L119.3,63.0 L122.4,56.0 L112.3,57.7 L102.7,53.9 L104.2,51.2 L109.7,48.6 L114.7,43.0 L113.7,39.0 L114.2,36.1 L116.3,34.2 L117.9,29.5 L126.3,26.9 L134.3,27.4 L133.9,24.2 L136.9,23.7 L140.0,28.2 L140.4,30.8 L137.9,34.3 L139.3,35.9 L137.2,38.7 L142.8,34.7 L141.2,27.0 L141.6,24.2 L143.4,22.4 L148.3,21.5 L146.3,18.3 L148.1,18.0 L159.0,24.7 L152.4,30.0 Z"
+  },
+  {
+    "name": "ISTANBUL",
+    "countryCode": "TUR",
+    "countryName": "TURKEY",
+    "flag": "🇹🇷",
+    "lat": 41.0082,
+    "lon": 28.9784,
+    "continent": "Asia / Europe",
+    "subregion": "Anatolia & Balkans",
+    "borders": "Straddles Bosphorus Strait (Europe & Asia) • Hagia Sophia & Blue Mosque",
+    "capital": "Located in TURKEY (🇹🇷)",
+    "widthKm": 1625,
+    "pinX": 49.9,
+    "pinY": 91.4,
+    "svg": "M186.1,84.3 L189.5,85.5 L190.6,84.6 L196.5,85.4 L198.0,83.4 L200.0,83.7 L204.5,88.7 L207.0,89.4 L209.1,92.5 L210.1,95.4 L208.4,98.8 L209.5,103.7 L212.5,105.2 L217.5,105.6 L222.0,110.4 L219.5,108.7 L218.1,110.2 L217.4,113.6 L213.4,114.2 L216.1,121.8 L216.4,128.0 L218.0,128.8 L215.4,134.7 L219.2,137.0 L219.4,141.3 L221.8,143.6 L221.4,145.4 L219.7,145.0 L216.2,147.7 L214.4,143.2 L209.6,144.2 L199.8,142.2 L195.3,145.9 L193.6,143.3 L186.1,146.2 L177.3,146.1 L169.8,149.8 L162.7,151.9 L156.3,151.7 L150.0,148.8 L141.8,152.4 L137.8,152.3 L136.4,150.8 L133.4,150.2 L132.1,155.0 L133.1,158.1 L130.3,159.0 L130.0,161.3 L127.6,163.7 L125.0,162.6 L125.7,161.4 L124.2,157.1 L128.3,152.2 L128.2,150.1 L126.7,148.7 L119.6,153.4 L112.1,150.0 L101.2,158.8 L91.4,160.9 L86.9,158.8 L83.0,153.9 L75.7,150.2 L68.0,149.3 L65.9,157.6 L63.5,157.1 L57.7,159.2 L52.6,156.9 L49.8,151.4 L48.2,152.0 L42.6,150.0 L39.5,152.5 L40.2,150.9 L33.4,151.4 L39.4,149.8 L41.9,147.0 L31.3,147.7 L31.7,145.6 L34.3,145.1 L34.1,143.9 L30.8,142.0 L29.2,138.2 L30.9,137.3 L31.0,133.7 L20.7,129.6 L22.1,128.3 L22.4,124.5 L23.9,125.7 L24.9,128.8 L25.5,127.6 L26.9,128.2 L30.0,127.1 L27.4,126.7 L25.9,123.5 L28.6,121.1 L26.4,120.0 L26.9,117.9 L25.0,115.4 L27.3,111.8 L18.8,112.9 L19.5,105.6 L25.6,99.9 L31.5,99.1 L33.6,101.0 L36.3,100.9 L37.7,100.2 L36.4,98.8 L37.9,98.3 L39.2,98.7 L38.9,100.3 L50.2,100.1 L47.9,98.0 L49.7,96.7 L59.4,94.9 L54.1,94.2 L51.4,92.4 L50.7,91.4 L51.8,88.4 L74.7,90.0 L76.9,87.1 L86.1,81.3 L96.7,77.5 L112.6,78.2 L115.4,76.7 L117.0,77.2 L116.7,79.1 L118.6,81.4 L121.4,82.7 L126.8,82.0 L128.2,85.6 L130.6,87.7 L134.7,86.5 L137.8,89.0 L152.1,92.6 L163.4,90.0 L167.6,91.8 L172.5,92.1 L181.4,87.9 Z M39.5,78.0 L39.2,79.6 L41.5,83.8 L50.8,88.3 L49.7,91.4 L41.2,90.4 L33.9,91.9 L31.2,95.9 L26.0,98.5 L19.8,104.4 L20.3,101.1 L26.2,96.7 L18.7,97.0 L18.0,95.3 L21.2,92.2 L21.2,88.2 L24.4,85.9 L23.9,83.1 L21.1,80.7 L23.1,80.0 L24.3,78.1 L31.1,76.3 L34.3,78.7 Z"
+  },
+  {
+    "name": "DUBAI",
+    "countryCode": "ARE",
+    "countryName": "UNITED ARAB EMIRATES",
+    "flag": "🇦🇪",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "continent": "Asia",
+    "subregion": "Persian Gulf",
+    "borders": "Persian Gulf Coast • Burj Khalifa & Palm Jumeirah",
+    "capital": "Located in UNITED ARAB EMIRATES (🇦🇪)",
+    "widthKm": 489,
+    "pinX": 174.7,
+    "pinY": 80.0,
+    "svg": "M218.2,59.3 L221.0,63.1 L222.0,90.5 L220.5,90.8 L216.9,95.8 L208.3,101.7 L204.3,96.1 L206.3,93.8 L205.6,91.7 L202.0,90.9 L196.9,95.7 L197.3,106.5 L195.8,113.2 L197.4,119.8 L195.5,124.7 L202.6,126.0 L205.2,131.7 L204.9,133.1 L186.4,136.4 L183.1,138.8 L185.2,141.3 L185.8,144.4 L184.8,148.8 L171.7,180.9 L171.1,196.2 L168.3,199.9 L59.8,185.6 L18.2,130.1 L18.0,122.7 L19.6,120.3 L22.1,124.4 L26.4,124.2 L27.5,132.5 L29.6,135.5 L32.3,136.7 L41.3,137.4 L46.9,136.2 L63.7,128.8 L79.7,129.2 L92.5,131.4 L116.4,132.4 L137.7,123.1 L143.6,111.4 L145.5,109.8 L148.8,102.8 L152.5,98.4 L167.4,87.6 L176.1,78.6 L176.9,75.6 L185.4,66.4 L203.1,52.7 L206.6,47.0 L209.0,40.2 L212.7,40.9 L211.7,57.5 L213.3,59.6 L216.1,60.5 Z M117.9,127.8 L117.9,129.4 L113.6,128.9 L112.4,129.7 L105.5,128.1 L113.9,124.0 Z M92.7,124.0 L89.5,124.3 L86.7,122.5 L92.7,120.1 L96.1,116.9 L97.4,118.8 L94.8,123.0 Z"
+  },
+  {
+    "name": "AUCKLAND",
+    "countryCode": "NZL",
+    "countryName": "NEW ZEALAND",
+    "flag": "🇳🇿",
+    "lat": -36.8485,
+    "lon": 174.7633,
+    "continent": "Oceania",
+    "subregion": "Polynesia / Australasia",
+    "borders": "North Island Isthmus • Sky Tower & Hauraki Gulf Harbors",
+    "capital": "Located in NEW ZEALAND (🇳🇿)",
+    "widthKm": 1469,
+    "pinX": 119.2,
+    "pinY": 48.1,
+    "svg": "M104.1,103.1 L111.7,98.7 L110.3,103.0 L112.2,99.6 L114.9,99.9 L112.5,102.7 L115.6,100.9 L112.8,105.0 L113.7,106.6 L112.9,108.0 L114.8,108.9 L105.1,124.2 L99.6,127.9 L100.6,128.9 L98.7,130.3 L100.2,130.0 L101.3,132.2 L103.7,132.9 L103.6,135.4 L98.5,135.0 L99.2,134.1 L98.3,133.5 L96.6,135.3 L94.2,133.2 L95.5,135.6 L87.0,140.2 L86.1,148.3 L84.7,148.3 L85.8,149.8 L82.0,157.9 L82.7,160.2 L79.4,161.0 L72.7,168.6 L69.6,169.5 L60.8,169.3 L59.1,166.3 L55.9,166.3 L53.1,163.6 L51.6,164.8 L45.7,164.2 L47.4,161.3 L45.0,162.3 L45.6,160.4 L43.6,161.3 L43.5,159.7 L48.2,158.2 L46.3,157.4 L48.1,156.0 L45.8,156.1 L45.8,155.2 L47.5,154.4 L47.0,153.2 L49.6,154.5 L49.3,153.3 L50.3,153.0 L48.5,152.1 L48.4,150.9 L50.6,150.4 L50.0,148.9 L51.9,147.2 L52.4,148.8 L52.6,146.5 L55.4,144.3 L56.5,145.2 L56.0,143.2 L61.5,137.3 L67.1,135.2 L68.1,135.8 L68.0,134.2 L74.1,131.2 L77.8,126.5 L79.2,126.8 L78.4,125.8 L79.8,125.0 L81.2,125.6 L80.4,124.6 L81.7,124.0 L82.3,124.9 L84.5,121.0 L85.1,122.8 L85.0,120.7 L87.6,117.8 L89.2,109.5 L93.4,106.3 L96.4,96.7 L99.8,93.7 L102.5,93.7 L100.6,94.0 L100.3,95.5 L102.9,97.8 Z M105.5,24.3 L107.1,23.2 L107.4,24.4 L113.1,26.9 L113.5,28.8 L115.1,28.2 L117.5,34.9 L115.8,35.0 L119.5,41.4 L118.8,48.0 L124.1,49.9 L124.8,52.5 L126.3,52.4 L124.8,44.4 L125.5,43.4 L128.4,46.7 L131.5,58.0 L142.1,62.3 L148.8,56.8 L153.6,58.5 L151.2,69.2 L148.5,71.3 L147.9,77.8 L146.8,76.2 L144.4,75.7 L140.3,77.6 L139.0,81.7 L140.6,83.2 L138.2,89.2 L130.3,102.3 L124.2,107.2 L122.8,104.8 L120.2,104.9 L120.1,102.4 L119.1,103.7 L118.0,103.2 L122.8,94.9 L123.6,90.8 L122.7,88.7 L121.4,86.6 L111.6,81.1 L110.0,78.8 L110.8,76.5 L115.8,74.3 L117.6,72.1 L119.5,61.1 L120.7,59.9 L117.5,51.2 L118.9,52.6 L120.7,51.0 L119.3,49.2 L116.5,49.2 L113.9,43.6 L115.8,45.0 L115.8,40.5 L112.5,39.0 L111.4,36.4 L113.7,41.6 L113.1,42.4 L106.8,31.8 L108.8,29.1 L106.5,31.3 L104.1,27.6 L104.8,25.3 L100.3,18.3 L103.4,18.0 L102.7,19.3 Z M58.7,172.5 L57.7,173.4 L59.5,173.9 L59.5,175.1 L53.0,177.4 L55.5,173.0 L55.4,170.5 L56.9,170.4 Z M202.0,133.7 L200.1,135.3 L199.9,134.0 L198.9,134.3 L200.5,137.2 L198.9,138.4 L197.8,137.4 L198.5,135.1 L195.8,134.7 L198.4,133.4 Z M41.1,220.9 L41.3,222.0 L38.0,221.5 L40.0,218.2 L41.5,218.4 Z"
+  }
+];
+
+// Tiered Clue Deductions (Exact hierarchy: Capital/City deducts most -> Continent -> Borders -> Hemisphere least)
+const CLUE_DEDUCTIONS = {
+    hemisphere: 75,
+    borders: 150,
+    continent: 250,
+    capital: 350
+};
+
 class WorldleGame {
     constructor() {
         this.targetCountries = WORLDLE_TARGET_COUNTRIES;
         this.allCountries = WORLDLE_ALL_COUNTRIES;
+        this.cities = WORLDLE_CITIES;
+        this.mode = "countries"; // "countries" or "cities"
         this.countryIndex = 0;
+        this.cityIndex = 0;
         this.target = null;
         this.guesses = [];
         this.maxGuesses = 6;
@@ -692,6 +1506,8 @@ class WorldleGame {
         this.gameOver = false;
         this.wins = 0;
         this.streak = 0;
+        this.totalScore = 0;
+        this.roundPotential = 1000;
         this.useMiles = false;
         this.rotateMode = false;
         this.rotationDeg = 0;
@@ -705,9 +1521,15 @@ class WorldleGame {
         this.guessCountEl = document.getElementById("worldleGuessCount");
         this.winsEl = document.getElementById("worldleWins");
         this.streakEl = document.getElementById("worldleStreak");
+        this.scoreEl = document.getElementById("worldleScore");
+        this.potentialEl = document.getElementById("worldleRoundPotential");
         this.intelOutputEl = document.getElementById("worldleIntelOutput");
         this.unitBtn = document.getElementById("worldleUnitBtn");
         this.rotateBtn = document.getElementById("worldleRotateBtn");
+        this.modeCountriesBtn = document.getElementById("worldleModeCountries");
+        this.modeCitiesBtn = document.getElementById("worldleModeCities");
+        this.bordersLabelEl = document.getElementById("intelBordersLabel");
+        this.capitalLabelEl = document.getElementById("intelCapitalLabel");
 
         const startBtn = document.getElementById("startWorldle");
         if (startBtn) startBtn.addEventListener("click", () => this.startGame());
@@ -719,7 +1541,14 @@ class WorldleGame {
         if (hintBtn) hintBtn.addEventListener("click", () => this.revealNextIntel());
 
         const newBtn = document.getElementById("newWorldle");
-        if (newBtn) newBtn.addEventListener("click", () => this.nextCountry());
+        if (newBtn) newBtn.addEventListener("click", () => this.nextTarget());
+
+        if (this.modeCountriesBtn) {
+            this.modeCountriesBtn.addEventListener("click", () => this.switchMode("countries"));
+        }
+        if (this.modeCitiesBtn) {
+            this.modeCitiesBtn.addEventListener("click", () => this.switchMode("cities"));
+        }
 
         if (this.unitBtn) {
             this.unitBtn.addEventListener("click", () => {
@@ -769,42 +1598,79 @@ class WorldleGame {
                 this.streak = s || 0;
                 if (this.streakEl) this.streakEl.textContent = this.streak;
             });
+            window.ScoreStorage.get("worldleScore", (sc) => {
+                this.totalScore = sc || 0;
+                if (this.scoreEl) this.scoreEl.textContent = this.totalScore.toLocaleString();
+            });
         }
     }
 
     saveStats() {
         if (this.winsEl) this.winsEl.textContent = this.wins;
         if (this.streakEl) this.streakEl.textContent = this.streak;
+        if (this.scoreEl) this.scoreEl.textContent = this.totalScore.toLocaleString();
         if (window.ScoreStorage) {
             window.ScoreStorage.set("worldleWins", this.wins);
             window.ScoreStorage.set("worldleStreak", this.streak);
+            window.ScoreStorage.set("worldleScore", this.totalScore);
         }
     }
 
     pause() {}
 
+    switchMode(newMode) {
+        if (this.mode === newMode && this.isPlaying) return;
+        this.mode = newMode;
+        if (this.modeCountriesBtn) this.modeCountriesBtn.classList.toggle("active", newMode === "countries");
+        if (this.modeCitiesBtn) this.modeCitiesBtn.classList.toggle("active", newMode === "cities");
+
+        if (this.bordersLabelEl) {
+            this.bordersLabelEl.textContent = newMode === "cities" ? "🚧 River / Landmark" : "🚧 Borders / Coast";
+        }
+        if (this.capitalLabelEl) {
+            this.capitalLabelEl.textContent = newMode === "cities" ? "🏛️ Host Country" : "🏛️ Capital / City";
+        }
+        if (this.inputEl) {
+            this.inputEl.placeholder = newMode === "cities"
+                ? "Search 50+ world cities (e.g. London, Tokyo, Paris, New York)..."
+                : "Search 240+ countries or territories...";
+        }
+
+        if (this.isPlaying) {
+            this.loadCurrentTarget();
+        } else {
+            this.startGame();
+        }
+    }
+
     showStartScreen() {
         if (this.mapEl) {
-            this.mapEl.innerHTML = '<div style="text-align: center; color: #94a3b8; font-size: 0.9rem; padding: 1rem;">Click <b>Start Game</b> to load satellite country silhouette</div>';
+            this.mapEl.innerHTML = '<div style="text-align: center; color: #94a3b8; font-size: 0.9rem; padding: 1rem;">Click <b>Start Game</b> (or select <b>🌍 Countries</b> / <b>🏙️ World Cities</b> above)</div>';
         }
     }
 
     startGame() {
         this.isPlaying = true;
-        this.loadCountry(this.countryIndex);
+        this.loadCurrentTarget();
     }
 
-    nextCountry() {
+    nextTarget() {
         if (!this.isPlaying) {
             this.startGame();
             return;
         }
-        this.countryIndex = (this.countryIndex + 1) % this.targetCountries.length;
-        this.loadCountry(this.countryIndex);
+        if (this.mode === "cities") {
+            this.cityIndex = (this.cityIndex + 1) % this.cities.length;
+        } else {
+            this.countryIndex = (this.countryIndex + 1) % this.targetCountries.length;
+        }
+        this.loadCurrentTarget();
     }
 
-    loadCountry(index) {
-        this.target = this.targetCountries[index];
+    loadCurrentTarget() {
+        this.target = this.mode === "cities"
+            ? this.cities[this.cityIndex]
+            : this.targetCountries[this.countryIndex];
         this.guesses = [];
         this.gameOver = false;
         this.revealedIntel.clear();
@@ -812,8 +1678,12 @@ class WorldleGame {
         this.rotationDeg = this.rotateMode ? [90, 180, 270][Math.floor(Math.random() * 3)] : 0;
 
         document.querySelectorAll(".worldle-intel-chip").forEach(c => c.classList.remove("revealed"));
+        this.recalculateRoundPotential();
+
         if (this.intelOutputEl) {
-            this.intelOutputEl.textContent = "Click any Intel sensor above (or 💡 Next Intel Clue) for geographic telemetry.";
+            this.intelOutputEl.textContent = this.mode === "cities"
+                ? "📍 Red radar pin marks the city's exact location! Solve with 0 clues for 1,000 pts."
+                : "Solve with 0 clues for the full 1,000-pt No-Clue Bonus!";
         }
 
         if (this.inputEl) {
@@ -825,22 +1695,41 @@ class WorldleGame {
         if (window.sounds) window.sounds.launch();
     }
 
+    // Calculate live round potential score based on revealed clues and wrong guesses
+    recalculateRoundPotential() {
+        let score = 1000;
+        this.revealedIntel.forEach(type => {
+            score -= (CLUE_DEDUCTIONS[type] || 0);
+        });
+        // Each wrong guess deducts 40 pts
+        const wrongGuesses = this.guesses.filter(g => g.distKm > 0).length;
+        score -= wrongGuesses * 40;
+        this.roundPotential = Math.max(100, score);
+        if (this.potentialEl) {
+            this.potentialEl.textContent = this.roundPotential;
+        }
+        return this.roundPotential;
+    }
+
     getIntelText(type) {
         if (!this.target) return "";
         if (type === "hemisphere") {
             const ns = this.target.lat >= 0 ? "Northern" : "Southern";
             const ew = this.target.lon >= 0 ? "Eastern" : "Western";
             const tropic = Math.abs(this.target.lat) <= 23.5 ? "Tropical Zone" : (Math.abs(this.target.lat) >= 60 ? "Subpolar Zone" : "Temperate Zone");
-            return `🌐 ${ns} & ${ew} Hemisphere • ${tropic} (~${Math.abs(Math.round(this.target.lat))}°${this.target.lat >= 0 ? "N" : "S"})`;
-        }
-        if (type === "continent") {
-            return `🗺️ Continent: ${this.target.continent} (${this.target.subregion})`;
+            return `🌐 [-75 pts] ${ns} & ${ew} Hemisphere • ${tropic} (~${Math.abs(Math.round(this.target.lat))}°${this.target.lat >= 0 ? "N" : "S"})`;
         }
         if (type === "borders") {
-            return `🚧 ${this.target.borders}`;
+            return `🚧 [-150 pts] ${this.target.borders}`;
+        }
+        if (type === "continent") {
+            return `🗺️ [-250 pts] Continent: ${this.target.continent} (${this.target.subregion})`;
         }
         if (type === "capital") {
-            return `🏛️ Capital City: ${this.target.capital} (${this.target.name.length} letters in country name)`;
+            if (this.mode === "cities") {
+                return `🏛️ [-350 pts] ${this.target.capital} • City starts with '${this.target.name[0]}'`;
+            }
+            return `🏛️ [-350 pts] Capital City: ${this.target.capital} (${this.target.name.length} letters in country name)`;
         }
         return "";
     }
@@ -849,27 +1738,38 @@ class WorldleGame {
         if (!this.isPlaying || !this.target) {
             this.startGame();
         }
+        if (this.gameOver) return;
+
+        const isNew = !this.revealedIntel.has(type);
         this.revealedIntel.add(type);
         const chip = document.querySelector(`.worldle-intel-chip[data-intel="${type}"]`);
         if (chip) chip.classList.add("revealed");
+
+        this.recalculateRoundPotential();
         const text = this.getIntelText(type);
         if (this.intelOutputEl) {
             this.intelOutputEl.textContent = text;
         }
+        if (isNew && window.showToast) {
+            const cost = CLUE_DEDUCTIONS[type] || 0;
+            window.showToast(`Clue unlocked (-${cost} pts) • Round Potential: ${this.roundPotential} pts`, "📡");
+        }
         if (window.sounds) window.sounds.score();
     }
 
+    // Unlocks clues in order from LEAST deduction (-75 Hemisphere) to MOST deduction (-350 Capital/City)
     revealNextIntel() {
         if (!this.isPlaying || this.gameOver || !this.target) {
             this.startGame();
             return;
         }
-        const order = ["hemisphere", "continent", "borders", "capital"];
-        const nextType = order.find(t => !this.revealedIntel.has(t)) || "capital";
+        const orderLeastToMost = ["hemisphere", "borders", "continent", "capital"];
+        const nextType = orderLeastToMost.find(t => !this.revealedIntel.has(t)) || "capital";
         this.showIntel(nextType);
-        if (window.showToast) {
-            window.showToast(this.getIntelText(nextType), "📡");
-        }
+    }
+
+    getSearchPool() {
+        return this.mode === "cities" ? this.cities : this.allCountries;
     }
 
     handleInputKeydown(e) {
@@ -910,9 +1810,9 @@ class WorldleGame {
             return;
         }
 
-        // Prioritize prefix matches first, then substring matches
-        const starts = this.allCountries.filter(c => c.name.startsWith(val));
-        const includes = this.allCountries.filter(c => !c.name.startsWith(val) && c.name.includes(val));
+        const pool = this.getSearchPool();
+        const starts = pool.filter(c => c.name.startsWith(val));
+        const includes = pool.filter(c => !c.name.startsWith(val) && c.name.includes(val));
         const matches = [...starts, ...includes].slice(0, 7);
 
         if (matches.length === 0) {
@@ -922,7 +1822,7 @@ class WorldleGame {
 
         this.suggestionsEl.innerHTML = matches.map(c => `
             <div class="worldle-suggestion-item" data-country="${c.name}">
-                <span>${c.flag || "🌍"} ${c.name}</span>
+                <span>${this.mode === "cities" ? "🏙️" : (c.flag || "🌍")} ${c.name}</span>
                 <span style="font-size: 0.72rem; color: #94a3b8; font-weight: 600;">${c.continent || ""}</span>
             </div>
         `).join("");
@@ -937,7 +1837,6 @@ class WorldleGame {
         });
     }
 
-    // Haversine geodesic distance + Initial compass bearing + 5-block proximity bar
     calculateGeoMetrics(from, to) {
         if (from.name === to.name) {
             return {
@@ -993,46 +1892,59 @@ class WorldleGame {
         }
         if (!this.inputEl) return;
 
+        const pool = this.getSearchPool();
         const typed = this.inputEl.value.toUpperCase().trim();
-        let country = this.allCountries.find(c => c.name === typed);
-        if (!country) {
-            country = this.allCountries.find(c => c.name.startsWith(typed) && typed.length >= 3);
+        let entry = pool.find(c => c.name === typed);
+        if (!entry) {
+            entry = pool.find(c => c.name.startsWith(typed) && typed.length >= 3);
         }
-        if (!country) {
-            if (window.showToast) window.showToast("Select a valid country from the autocomplete list!", "🌍");
+        if (!entry) {
+            const label = this.mode === "cities" ? "city" : "country";
+            if (window.showToast) window.showToast(`Select a valid ${label} from the autocomplete list!`, "🌍");
             return;
         }
 
-        if (this.guesses.some(g => g.name === country.name)) {
-            if (window.showToast) window.showToast(`You already guessed ${country.name}!`, "⚠️");
+        if (this.guesses.some(g => g.name === entry.name)) {
+            if (window.showToast) window.showToast(`You already guessed ${entry.name}!`, "⚠️");
             return;
         }
 
         this.inputEl.value = "";
         if (this.suggestionsEl) this.suggestionsEl.classList.add("hidden");
 
-        const metrics = this.calculateGeoMetrics(country, this.target);
-        this.guesses.push({ name: country.name, flag: country.flag || "🌍", ...metrics });
+        const metrics = this.calculateGeoMetrics(entry, this.target);
+        const icon = this.mode === "cities" ? "🏙️" : (entry.flag || "🌍");
+        this.guesses.push({ name: entry.name, flag: icon, ...metrics });
+        this.recalculateRoundPotential();
         this.render();
 
-        if (country.name === this.target.name) {
+        if (entry.name === this.target.name) {
             this.gameOver = true;
             this.wins++;
             this.streak++;
+            const earnedPts = this.roundPotential;
+            this.totalScore += earnedPts;
             this.saveStats();
+
+            const cluesUsed = this.revealedIntel.size;
+            const bonusTag = cluesUsed === 0 ? "🏆 NO-CLUE PERFECT BONUS!" : `${cluesUsed} clue(s) used`;
+            const subDesc = this.mode === "cities"
+                ? `${this.target.flag} ${this.target.name}, ${this.target.countryName} • +${earnedPts} pts (${bonusTag})`
+                : `Capital: ${this.target.capital} • +${earnedPts} pts (${bonusTag})`;
+
             if (window.celebrateWin) {
                 setTimeout(() => {
                     window.celebrateWin({
-                        title: `${this.target.flag} ${this.target.name}!`,
-                        subtitle: `Capital: ${this.target.capital} • ${this.target.continent} (${this.target.subregion})`,
-                        trophy: "🌍",
+                        title: `+${earnedPts} PTS • ${this.target.name}!`,
+                        subtitle: subDesc,
+                        trophy: cluesUsed === 0 ? "🏆" : "🌍",
                         stats: [
-                            { label: "Country", val: `${this.target.flag} ${this.target.name}` },
-                            { label: "Capital", val: this.target.capital },
-                            { label: "Guesses", val: `${this.guesses.length}/6` },
-                            { label: "Streak", val: this.streak }
+                            { label: this.mode === "cities" ? "City" : "Country", val: `${this.target.flag} ${this.target.name}` },
+                            { label: "Points Earned", val: `+${earnedPts}` },
+                            { label: "Clues Used", val: cluesUsed === 0 ? "0 (Max Bonus!)" : cluesUsed },
+                            { label: "Total Score", val: this.totalScore.toLocaleString() }
                         ],
-                        onRestart: () => this.nextCountry()
+                        onRestart: () => this.nextTarget()
                     });
                 }, 350);
             }
@@ -1044,14 +1956,15 @@ class WorldleGame {
                 setTimeout(() => {
                     window.showGameOverModal({
                         title: `${this.target.flag} ${this.target.name}`,
-                        subtitle: `Capital: ${this.target.capital} • ${this.target.borders}`,
+                        subtitle: this.mode === "cities"
+                            ? `${this.target.name} (${this.target.countryName}) • ${this.target.borders}`
+                            : `Capital: ${this.target.capital} • ${this.target.borders}`,
                         icon: "🌍",
                         stats: [
-                            { label: "Mystery Country", val: `${this.target.flag} ${this.target.name}` },
-                            { label: "Capital", val: this.target.capital },
-                            { label: "Continent", val: this.target.continent }
+                            { label: "Answer", val: `${this.target.flag} ${this.target.name}` },
+                            { label: "Total Score", val: this.totalScore.toLocaleString() }
                         ],
-                        onRestart: () => this.nextCountry()
+                        onRestart: () => this.nextTarget()
                     });
                 }, 350);
             }
@@ -1067,6 +1980,11 @@ class WorldleGame {
             : `~${this.target.widthKm.toLocaleString()} km wide`;
         const compassLabel = this.rotateMode ? `ROT ${this.rotationDeg}°` : "N ▲";
 
+        const cityPinMarkup = this.mode === "cities" ? `
+            <circle cx="${this.target.pinX}" cy="${this.target.pinY}" r="9" fill="rgba(239, 68, 68, 0.35)" class="worldle-city-pulse" />
+            <circle cx="${this.target.pinX}" cy="${this.target.pinY}" r="4.5" fill="#ef4444" stroke="#fef08a" stroke-width="2" />
+        ` : "";
+
         this.mapEl.innerHTML = `
             <span class="worldle-compass-badge">${compassLabel}</span>
             <svg class="worldle-svg" viewBox="0 0 240 240" style="transform: rotate(${this.rotationDeg}deg);">
@@ -1078,8 +1996,9 @@ class WorldleGame {
                     </linearGradient>
                 </defs>
                 <path d="${this.target.svg}" fill="url(#worldleLandGrad)" stroke="#ecfdf5" stroke-width="1.6" stroke-linejoin="round" fill-rule="evenodd" />
+                ${cityPinMarkup}
             </svg>
-            <span class="worldle-scale-badge">📏 ${scaleLabel}</span>
+            <span class="worldle-scale-badge">${this.mode === "cities" ? "📍 City Pin • " : "📏 "}${scaleLabel}</span>
         `;
     }
 

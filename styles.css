@@ -1778,13 +1778,34 @@ canvas {
     background: rgba(30, 41, 59, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
-    padding: 0.38rem 0.5rem;
+    padding: 0.38rem 0.55rem;
     color: #e2e8f0;
-    font-size: 0.75rem;
+    font-size: 0.74rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.15s ease;
-    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+}
+.intel-cost-tag {
+    font-size: 0.65rem;
+    font-family: monospace;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 4px;
+}
+.intel-cost-tag.cost-low { background: rgba(56, 189, 248, 0.18); color: #38bdf8; }
+.intel-cost-tag.cost-med { background: rgba(250, 204, 21, 0.18); color: #fde047; }
+.intel-cost-tag.cost-high { background: rgba(249, 115, 22, 0.2); color: #fb923c; }
+.intel-cost-tag.cost-max { background: rgba(239, 68, 68, 0.22); color: #fca5a5; }
+@keyframes cityPinPulse {
+    0%, 100% { r: 6; opacity: 0.9; }
+    50% { r: 13; opacity: 0.25; }
+}
+.worldle-city-pulse {
+    animation: cityPinPulse 1.6s infinite ease-in-out;
 }
 .worldle-intel-chip:hover {
     background: rgba(56, 189, 248, 0.18);
