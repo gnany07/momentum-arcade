@@ -1478,6 +1478,86 @@ canvas {
     color: #ffffff;
     box-shadow: 0 0 15px rgba(239, 68, 68, 0.65);
 }
+.codenames-spymaster-bar {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto 0.65rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.88);
+    border: 1px dashed rgba(250, 204, 21, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+}
+.spymaster-key-btn {
+    font-size: 0.78rem !important;
+    padding: 0.42rem 0.75rem !important;
+    white-space: nowrap;
+}
+.spymaster-key-btn.key-open {
+    background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.55);
+}
+.spymaster-clue-form {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 1;
+    min-width: 240px;
+}
+.spymaster-input {
+    flex: 1;
+    background: rgba(2, 6, 23, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.38rem 0.6rem;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    outline: none;
+}
+.spymaster-input:focus {
+    border-color: #38bdf8;
+}
+.spymaster-count-select {
+    background: rgba(2, 6, 23, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.38rem 0.45rem;
+    color: #e2e8f0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    outline: none;
+}
+.spymaster-lock-btn {
+    font-size: 0.76rem !important;
+    padding: 0.4rem 0.65rem !important;
+    white-space: nowrap;
+}
+/* Spymaster Key Map Peek styles on unrevealed cards */
+.codenames-card.key-peek-agent {
+    background: rgba(5, 150, 105, 0.32);
+    border: 2px dashed #34d399;
+    color: #a7f3d0;
+    box-shadow: inset 0 0 12px rgba(16, 185, 129, 0.35);
+}
+.codenames-card.key-peek-assassin {
+    background: rgba(220, 38, 38, 0.34);
+    border: 2px dashed #f87171;
+    color: #fecaca;
+    box-shadow: inset 0 0 12px rgba(239, 68, 68, 0.4);
+}
+.codenames-card.key-peek-bystander {
+    background: rgba(100, 116, 139, 0.25);
+    border: 2px dotted rgba(148, 163, 184, 0.55);
+    color: #94a3b8;
+}
 
 /* ==========================================================================
    13. Nerdle Styling

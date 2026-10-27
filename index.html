@@ -419,14 +419,33 @@
                 <!-- 12. Codenames Duet Cabinet -->
                 <div class="game-cabinet hidden" id="game-codenames">
                     <div class="cabinet-header">
+                        <div class="difficulty-selector" id="codenamesModeSelector" style="margin-right: 0.4rem;">
+                            <button class="diff-btn active" id="codenamesModeAI" data-mode="ai" title="Solo / Co-op with AI Spymaster">🤖 AI Spymaster</button>
+                            <button class="diff-btn" id="codenamesMode2P" data-mode="2p" title="2-Player Single Screen: 1 Human Spymaster + 1 Human Guesser">👥 2P Spymaster</button>
+                        </div>
                         <div class="stats-group">
                             <span class="stat-badge"><span class="badge-label">Agents Found</span><span id="codenamesFound" class="badge-val">0 / 9</span></span>
                             <span class="stat-badge"><span class="badge-label">Turns Left</span><span id="codenamesTokens" class="badge-val">9 ⏱️</span></span>
                             <span class="stat-badge"><span class="badge-label">Wins</span><span id="codenamesWins" class="badge-val">0</span></span>
                         </div>
                     </div>
+                    <!-- 2-Player Spymaster Control Bar (shown in 2P Spymaster mode) -->
+                    <div id="codenamesSpymasterBar" class="codenames-spymaster-bar hidden">
+                        <button id="toggleKeyMapBtn" class="btn btn-accent spymaster-key-btn" type="button">👁️ Show Key Map (Spymaster Only)</button>
+                        <div class="spymaster-clue-form">
+                            <input type="text" id="spymasterClueInput" class="spymaster-input" placeholder="Type 1-word clue..." maxlength="20" autocomplete="off" />
+                            <select id="spymasterCountInput" class="spymaster-count-select" title="Number of matching words">
+                                <option value="1">1 word</option>
+                                <option value="2" selected>2 words</option>
+                                <option value="3">3 words</option>
+                                <option value="4">4 words</option>
+                                <option value="5">5 words</option>
+                            </select>
+                            <button id="setSpymasterClueBtn" class="btn btn-primary spymaster-lock-btn" type="button">🔒 Lock Clue &amp; Hide Map</button>
+                        </div>
+                    </div>
                     <div id="codenamesClueBanner" class="codenames-clue-banner">
-                        <span class="spymaster-tag">🕵️ AI Spymaster Clue:</span>
+                        <span id="codenamesSpymasterTag" class="spymaster-tag">🕵️ AI Spymaster Clue:</span>
                         <span id="codenamesClueWord" class="spymaster-clue-word">Click "Start Mission"</span>
                         <span id="codenamesClueCount" class="spymaster-clue-count"></span>
                     </div>
@@ -437,7 +456,7 @@
                         <button id="newCodenames" class="btn btn-secondary">New Board</button>
                         <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
-                    <div class="controls-hint">Uncover all 9 Green Agents using the AI Spymaster's 1-word clue. Avoid the 3 Black Assassins!</div>
+                    <div class="controls-hint" id="codenamesHintText">Uncover all 9 Green Agents using the Spymaster's 1-word clue. Avoid the 3 Black Assassins!</div>
                 </div>
 
                 <!-- 13. Nerdle Cabinet -->
