@@ -234,13 +234,63 @@
                             <span class="stat-badge"><span class="badge-label">Streak</span><span id="wordleStreak" class="badge-val">0</span></span>
                             <span class="stat-badge" title="Number of words in the 10,000-word dictionary that match all revealed clues"><span class="badge-label">Valid Matches</span><span id="wordleValidCount" class="badge-val">10,000</span></span>
                         </div>
-                        <div class="timer-badge" id="wordleTimer">00:00</div>
+                        <div class="timer-badge" id="wordleTimer">05:00</div>
+                    </div>
+                    <div class="wordle-controls-strip">
+                        <div class="difficulty-group" id="wordleLengthGroup" role="tablist" aria-label="Word Length">
+                            <button class="diff-btn active" data-length="5">5 Letters</button>
+                            <button class="diff-btn" data-length="6">6 Letters</button>
+                            <button class="diff-btn" data-length="7">7 Letters</button>
+                        </div>
+                        <div class="difficulty-group" id="wordleModeGroup" role="tablist" aria-label="Game Mode">
+                            <button class="diff-btn active" data-mode="solo">👤 Solo</button>
+                            <button class="diff-btn" data-mode="dual">👥 Dual Tournament</button>
+                        </div>
+                    </div>
+                    <!-- Dual Tournament Scoreboard Banner -->
+                    <div id="wordleTournamentBanner" class="wordle-tournament-banner hidden">
+                        <div class="tournament-match-header">
+                            <span class="tournament-title-badge">🏆 Dual Tournament</span>
+                            <span class="tournament-round-badge" id="tournamentGameNum">Game 1 of 5</span>
+                        </div>
+                        <div class="tournament-scoreboard">
+                            <div class="tournament-player-card active" id="p1ScoreCard">
+                                <span class="player-turn-dot"></span>
+                                <div class="player-card-meta">
+                                    <span class="player-label">Player 1</span>
+                                    <span class="player-wins-badge" id="p1Wins">0 Wins</span>
+                                </div>
+                                <span class="player-turn-tag" id="p1TurnTag">Turn</span>
+                            </div>
+                            <div class="tournament-vs-tag">VS</div>
+                            <div class="tournament-player-card" id="p2ScoreCard">
+                                <span class="player-turn-dot"></span>
+                                <div class="player-card-meta">
+                                    <span class="player-label">Player 2</span>
+                                    <span class="player-wins-badge" id="p2Wins">0 Wins</span>
+                                </div>
+                                <span class="player-turn-tag" id="p2TurnTag">Waiting</span>
+                            </div>
+                        </div>
                     </div>
                     <div id="wordleCluePanel" class="wordle-clue-panel hidden">
                         <span class="wordle-clue-badge" id="wordleCluePattern">Clue: _ _ _ _ _</span>
                         <span class="wordle-clue-hint" id="wordleClueText"></span>
                     </div>
-                    <div id="wordleBoard" class="wordle-board"></div>
+                    <div class="wordle-board-wrapper">
+                        <div id="wordleBoard" class="wordle-board" data-length="5"></div>
+                        <div id="wordleIntermissionOverlay" class="wordle-intermission-overlay hidden">
+                            <div class="wordle-intermission-card">
+                                <div class="intermission-icon" id="intermissionIcon">🔄</div>
+                                <h3 class="intermission-title" id="intermissionTitle">Player 1 Finished!</h3>
+                                <p class="intermission-desc" id="intermissionDesc">Solved in 4 guesses (02:15 remaining)</p>
+                                <div class="intermission-notice" id="intermissionNotice">Hand the device to <b>Player 2</b> to take their turn!</div>
+                                <div class="intermission-actions">
+                                    <button id="intermissionActionBtn" class="btn btn-primary btn-large">Start Player 2's Turn 🚀</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="keyboard" id="wordleKeyboard"></div>
                     <div class="controls-bar">
                         <button id="startWordle" class="btn btn-primary">Start Game</button>
@@ -248,7 +298,7 @@
                         <button id="wordleHintBtn" class="btn btn-accent" title="Reveal a positional letter clue for the current word">💡 Clue</button>
                         <button class="btn btn-secondary cabinet-sound-btn" title="Toggle Sound (Press M)"><span class="cabinet-sound-icon">🔊</span> <span class="cabinet-sound-text">Sound: ON</span></button>
                     </div>
-                    <div class="controls-hint">Guess the hidden 5-letter word in 6 tries. Green = exact match, Gold = in word.</div>
+                    <div class="controls-hint" id="wordleControlsHint">Guess the hidden 5-letter word in 6 tries. 5:00 countdown timer. Green = exact match, Gold = in word.</div>
                 </div>
 
                 <!-- 4. Tetris Cabinet -->
@@ -628,6 +678,7 @@
     <!-- 16 Arcade Games -->
     <script src="snake.js"></script>
     <script src="sudoku.js"></script>
+    <script src="wordle_words.js"></script>
     <script src="wordle.js"></script>
     <script src="connections.js"></script>
     <script src="codenames.js"></script>

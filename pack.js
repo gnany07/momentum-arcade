@@ -23,6 +23,7 @@ const filesToInclude = [
     'lofi.js',
     'snake.js',
     'sudoku.js',
+    'wordle_words.js',
     'wordle.js',
     'connections.js',
     'codenames.js',
