@@ -67,6 +67,9 @@ class Wordle {
         this.p1TurnResult = null; // { word, guesses, timeLeft, timeSpent, solved }
         this.tournamentHistory = [];
         this.intermissionShown = false;
+        this.setupOverlayShown = false;
+        this.p1Name = "Player 1";
+        this.p2Name = "Player 2";
 
         // Cache DOM Elements
         this.board = document.getElementById("wordleBoard");
@@ -92,6 +95,15 @@ class Wordle {
         this.p2WinsEl = document.getElementById("p2Wins");
         this.p1TurnTag = document.getElementById("p1TurnTag");
         this.p2TurnTag = document.getElementById("p2TurnTag");
+        this.p1Label = document.getElementById("p1Label");
+        this.p2Label = document.getElementById("p2Label");
+
+        // Tournament Setup DOM Elements
+        this.setupOverlay = document.getElementById("wordleTournamentSetupOverlay");
+        this.p1Input = document.getElementById("wordleP1Input");
+        this.p2Input = document.getElementById("wordleP2Input");
+        this.startTournamentBtn = document.getElementById("wordleStartTournamentBtn");
+        this.cancelTournamentBtn = document.getElementById("wordleCancelTournamentBtn");
 
         // Intermission Overlay Elements
         this.intermissionOverlay = document.getElementById("wordleIntermissionOverlay");
@@ -110,6 +122,22 @@ class Wordle {
 
         const hintBtn = document.getElementById("wordleHintBtn");
         if (hintBtn) hintBtn.addEventListener("click", () => this.revealClue());
+
+        if (this.startTournamentBtn) {
+            this.startTournamentBtn.addEventListener("click", () => this.confirmTournamentSetup());
+        }
+        if (this.cancelTournamentBtn) {
+            this.cancelTournamentBtn.addEventListener("click", () => this.cancelTournamentSetup());
+        }
+        [this.p1Input, this.p2Input].forEach(inp => {
+            if (!inp) return;
+            inp.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    this.confirmTournamentSetup();
+                }
+            });
+        });
 
         // Length group listeners
         const lengthBtns = document.querySelectorAll("#wordleLengthGroup .diff-btn");
@@ -159,6 +187,20 @@ class Wordle {
                 const el = document.getElementById("wordleStreak");
                 if (el) el.textContent = this.streak;
             });
+            window.ScoreStorage.get("wordleP1Name", (name) => {
+                if (name && typeof name === "string") {
+                    this.p1Name = name;
+                    if (this.p1Input) this.p1Input.value = name;
+                    if (this.p1Label) this.p1Label.textContent = name;
+                }
+            });
+            window.ScoreStorage.get("wordleP2Name", (name) => {
+                if (name && typeof name === "string") {
+                    this.p2Name = name;
+                    if (this.p2Input) this.p2Input.value = name;
+                    if (this.p2Label) this.p2Label.textContent = name;
+                }
+            });
         }
     }
 
@@ -190,7 +232,7 @@ class Wordle {
         this.updateControlsHint();
 
         if (this.mode === "dual") {
-            this.startNewTournament();
+            this.openTournamentSetup();
         } else if (this.isPlaying) {
             this.newGame();
         } else {
@@ -208,9 +250,10 @@ class Wordle {
 
         if (mode === "dual") {
             if (this.tournamentBanner) this.tournamentBanner.classList.remove("hidden");
-            this.startNewTournament();
+            this.openTournamentSetup();
         } else {
             if (this.tournamentBanner) this.tournamentBanner.classList.add("hidden");
+            this.hideTournamentSetup();
             this.hideIntermission();
             this.updateControlsHint();
             if (this.isPlaying) {
@@ -224,7 +267,7 @@ class Wordle {
     updateControlsHint() {
         if (!this.controlsHintEl) return;
         if (this.mode === "dual") {
-            this.controlsHintEl.textContent = `Dual Tournament (5 Games • ${this.wordLength}-Letter • ${this.maxGuesses} Tries): Player 1 plays first, then Player 2. 5:00 timer per turn. Most game wins takes the championship!`;
+            this.controlsHintEl.textContent = `Dual Tournament (5 Games • ${this.wordLength}-Letter): ${this.p1Name} vs ${this.p2Name}. 5:00 timer per turn. Most game wins takes the championship!`;
         } else {
             this.controlsHintEl.textContent = `Guess the hidden ${this.wordLength}-letter word in ${this.maxGuesses} tries. 5:00 countdown timer. Green = exact match, Gold = in word.`;
         }
@@ -255,6 +298,7 @@ class Wordle {
         this.stopTimer();
         this.resetTimer();
         this.hideIntermission();
+        this.hideTournamentSetup();
         this.hideMeaning();
 
         if (this.board) {
@@ -275,6 +319,7 @@ class Wordle {
     startGame() {
         this.isPlaying = true;
         this.hideIntermission();
+        this.hideTournamentSetup();
         if (this.keyboard && this.keyboard.style) this.keyboard.style.display = "flex";
         if (this.cluePanel) this.cluePanel.classList.add("hidden");
 
@@ -282,7 +327,7 @@ class Wordle {
         this.initializeKeyboard();
 
         if (this.mode === "dual") {
-            this.startTournamentGame();
+            this.openTournamentSetup();
         } else {
             this.newGame();
         }
@@ -294,7 +339,7 @@ class Wordle {
             return;
         }
         if (this.mode === "dual") {
-            this.startNewTournament();
+            this.openTournamentSetup();
         } else {
             this.newGame();
         }
@@ -428,7 +473,59 @@ class Wordle {
     // ----------------------------------------------------
     // Dual Tournament Logic (5-Game Series)
     // ----------------------------------------------------
+    openTournamentSetup() {
+        this.setupOverlayShown = true;
+        this.stopTimer();
+        this.hideIntermission();
+        this.hideMeaning();
+
+        if (this.p1Input) this.p1Input.value = this.p1Name;
+        if (this.p2Input) this.p2Input.value = this.p2Name;
+        if (this.setupOverlay) this.setupOverlay.classList.remove("hidden");
+
+        setTimeout(() => {
+            if (this.p1Input) this.p1Input.focus();
+        }, 60);
+    }
+
+    hideTournamentSetup() {
+        this.setupOverlayShown = false;
+        if (this.setupOverlay) this.setupOverlay.classList.add("hidden");
+    }
+
+    confirmTournamentSetup() {
+        const p1 = (this.p1Input && this.p1Input.value.trim()) || "Player 1";
+        const p2 = (this.p2Input && this.p2Input.value.trim()) || "Player 2";
+        this.p1Name = p1.slice(0, 15);
+        this.p2Name = p2.slice(0, 15);
+
+        if (window.ScoreStorage) {
+            window.ScoreStorage.set("wordleP1Name", this.p1Name);
+            window.ScoreStorage.set("wordleP2Name", this.p2Name);
+        }
+
+        this.hideTournamentSetup();
+        this.startNewTournament();
+    }
+
+    cancelTournamentSetup() {
+        this.hideTournamentSetup();
+        // If tournament was not active, switch back to solo
+        if (this.tournamentHistory.length === 0 && !this.isPlaying) {
+            this.setGameMode("solo");
+        } else if (this.isPlaying && this.tournamentGame > 0) {
+            this.resume();
+        }
+    }
+
     startNewTournament() {
+        this.mode = "dual";
+        document.querySelectorAll("#wordleModeGroup .diff-btn").forEach(btn => {
+            btn.classList.toggle("active", btn.dataset.mode === "dual");
+        });
+        if (this.tournamentBanner) this.tournamentBanner.classList.remove("hidden");
+
+        this.isPlaying = true;
         this.tournamentGame = 1;
         this.currentPlayer = 1;
         this.p1Wins = 0;
@@ -439,12 +536,7 @@ class Wordle {
 
         this.updateTournamentScoreboard();
         this.updateControlsHint();
-
-        if (this.isPlaying) {
-            this.startTournamentGame();
-        } else {
-            this.showStartScreen();
-        }
+        this.startTournamentGame();
     }
 
     updateTournamentScoreboard() {
@@ -453,6 +545,9 @@ class Wordle {
         }
         if (this.p1WinsEl) this.p1WinsEl.textContent = `${this.p1Wins} ${this.p1Wins === 1 ? "Win" : "Wins"}`;
         if (this.p2WinsEl) this.p2WinsEl.textContent = `${this.p2Wins} ${this.p2Wins === 1 ? "Win" : "Wins"}`;
+
+        if (this.p1Label) this.p1Label.textContent = this.p1Name;
+        if (this.p2Label) this.p2Label.textContent = this.p2Name;
 
         if (this.p1ScoreCard && this.p2ScoreCard) {
             if (this.currentPlayer === 1) {
@@ -498,8 +593,9 @@ class Wordle {
         this.resetKeyboardColors();
         this.updateClueAndValidationUI();
 
+        const activeName = playerNum === 1 ? this.p1Name : this.p2Name;
         if (window.showToast) {
-            window.showToast(`Game ${this.tournamentGame}/5: Player ${playerNum}'s Turn!`, "👥", 2500);
+            window.showToast(`Game ${this.tournamentGame}/5: ${activeName}'s Turn!`, "👥", 2500);
         }
         if (window.sounds) window.sounds.launch();
     }
@@ -522,15 +618,15 @@ class Wordle {
             const p1Def = this.getDefinition(this.currentWord);
             this.showIntermission({
                 icon: solved ? "🎯" : timedOut ? "⏰" : "⏸️",
-                title: "Player 1 Turn Complete!",
+                title: `${this.p1Name}'s Turn Complete!`,
                 desc: (solved
-                    ? `Player 1 solved <b>"${this.currentWord}"</b> in ${result.guesses} ${result.guesses === 1 ? "try" : "tries"} (${this.formatTime(result.timeSpent)})!`
+                    ? `<b>${this.p1Name}</b> solved <b>"${this.currentWord}"</b> in ${result.guesses} ${result.guesses === 1 ? "try" : "tries"} (${this.formatTime(result.timeSpent)})!`
                     : timedOut
-                    ? `Player 1 timed out on <b>"${this.currentWord}"</b>.`
-                    : `Player 1 used all ${this.maxGuesses} tries without solving <b>"${this.currentWord}"</b>.`) +
+                    ? `<b>${this.p1Name}</b> timed out on <b>"${this.currentWord}"</b>.`
+                    : `<b>${this.p1Name}</b> used all ${this.maxGuesses} tries without solving <b>"${this.currentWord}"</b>.`) +
                     `<div class="intermission-word-def"><b>Meaning:</b> ${p1Def}</div>`,
-                notice: "Hand the device to <b>Player 2</b> to take their turn!",
-                btnText: "Start Player 2's Turn 🚀",
+                notice: `Hand the device to <b>${this.p2Name}</b> to take their turn!`,
+                btnText: `Start ${this.p2Name}'s Turn 🚀`,
                 action: () => this.startTurn(2)
             });
         } else {
@@ -547,18 +643,18 @@ class Wordle {
         if (p1.solved && p2.solved) {
             if (p1.guesses < p2.guesses) {
                 gameWinner = 1;
-                reason = `Player 1 solved in fewer tries (${p1.guesses} vs ${p2.guesses})!`;
+                reason = `${this.p1Name} solved in fewer tries (${p1.guesses} vs ${p2.guesses})!`;
             } else if (p2.guesses < p1.guesses) {
                 gameWinner = 2;
-                reason = `Player 2 solved in fewer tries (${p2.guesses} vs ${p1.guesses})!`;
+                reason = `${this.p2Name} solved in fewer tries (${p2.guesses} vs ${p1.guesses})!`;
             } else {
                 // Tiebreaker on time spent
                 if (p1.timeSpent < p2.timeSpent) {
                     gameWinner = 1;
-                    reason = `Tiebreaker! Player 1 was faster (${this.formatTime(p1.timeSpent)} vs ${this.formatTime(p2.timeSpent)})!`;
+                    reason = `Tiebreaker! ${this.p1Name} was faster (${this.formatTime(p1.timeSpent)} vs ${this.formatTime(p2.timeSpent)})!`;
                 } else if (p2.timeSpent < p1.timeSpent) {
                     gameWinner = 2;
-                    reason = `Tiebreaker! Player 2 was faster (${this.formatTime(p2.timeSpent)} vs ${this.formatTime(p1.timeSpent)})!`;
+                    reason = `Tiebreaker! ${this.p2Name} was faster (${this.formatTime(p2.timeSpent)} vs ${this.formatTime(p1.timeSpent)})!`;
                 } else {
                     gameWinner = 0;
                     reason = `Exact tie! Same guesses (${p1.guesses}) and time (${this.formatTime(p1.timeSpent)})!`;
@@ -566,10 +662,10 @@ class Wordle {
             }
         } else if (p1.solved && !p2.solved) {
             gameWinner = 1;
-            reason = "Player 1 solved their word while Player 2 missed!";
+            reason = `${this.p1Name} solved their word while ${this.p2Name} missed!`;
         } else if (!p1.solved && p2.solved) {
             gameWinner = 2;
-            reason = "Player 2 solved their word while Player 1 missed!";
+            reason = `${this.p2Name} solved their word while ${this.p1Name} missed!`;
         } else {
             gameWinner = 0;
             reason = "Neither player solved their word!";
@@ -593,12 +689,18 @@ class Wordle {
 
         if (this.tournamentGame < this.maxTournamentGames) {
             const nextGameNum = this.tournamentGame + 1;
+            const winnerTitle = gameWinner === 1
+                ? `${this.p1Name} Wins Game ${this.tournamentGame}!`
+                : gameWinner === 2
+                ? `${this.p2Name} Wins Game ${this.tournamentGame}!`
+                : `Game ${this.tournamentGame} is a Draw!`;
+
             this.showIntermission({
                 icon: gameWinner === 1 ? "🥇" : gameWinner === 2 ? "🥈" : "🤝",
-                title: gameWinner === 1 ? "Player 1 Wins Game " + this.tournamentGame + "!" : gameWinner === 2 ? "Player 2 Wins Game " + this.tournamentGame + "!" : "Game " + this.tournamentGame + " is a Draw!",
-                desc: `${reason}<br><br><b>Series:</b> Player 1: ${this.p1Wins} | Player 2: ${this.p2Wins}` +
-                      `<div class="intermission-word-def"><b>P1 Word (${p1.word}):</b> ${p1Def}</div>` +
-                      `<div class="intermission-word-def"><b>P2 Word (${p2.word}):</b> ${p2Def}</div>`,
+                title: winnerTitle,
+                desc: `${reason}<br><br><b>Series:</b> ${this.p1Name}: ${this.p1Wins} | ${this.p2Name}: ${this.p2Wins}` +
+                      `<div class="intermission-word-def"><b>${this.p1Name}'s Word (${p1.word}):</b> ${p1Def}</div>` +
+                      `<div class="intermission-word-def"><b>${this.p2Name}'s Word (${p2.word}):</b> ${p2Def}</div>`,
                 notice: `Get ready for <b>Game ${nextGameNum} of ${this.maxTournamentGames}</b>!`,
                 btnText: `Start Game ${nextGameNum} of 5 ➡️`,
                 action: () => {
@@ -618,16 +720,16 @@ class Wordle {
         let trophy = "🏆";
 
         if (this.p1Wins > this.p2Wins) {
-            championTitle = "PLAYER 1 WINS THE TOURNAMENT!";
-            championSub = `Player 1 dominated the 5-game series with ${this.p1Wins} wins to ${this.p2Wins}!`;
+            championTitle = `${this.p1Name.toUpperCase()} WINS THE TOURNAMENT!`;
+            championSub = `${this.p1Name} dominated the 5-game series with ${this.p1Wins} wins to ${this.p2Wins}!`;
             trophy = "🏆";
         } else if (this.p2Wins > this.p1Wins) {
-            championTitle = "PLAYER 2 WINS THE TOURNAMENT!";
-            championSub = `Player 2 claimed victory in the 5-game series with ${this.p2Wins} wins to ${this.p1Wins}!`;
+            championTitle = `${this.p2Name.toUpperCase()} WINS THE TOURNAMENT!`;
+            championSub = `${this.p2Name} claimed victory in the 5-game series with ${this.p2Wins} wins to ${this.p1Wins}!`;
             trophy = "🏆";
         } else {
             championTitle = "TOURNAMENT DRAW!";
-            championSub = `Both players tied at ${this.p1Wins}–${this.p2Wins} after 5 thrilling games!`;
+            championSub = `${this.p1Name} & ${this.p2Name} tied at ${this.p1Wins}–${this.p2Wins} after 5 thrilling games!`;
             trophy = "🤝";
         }
 
@@ -640,11 +742,11 @@ class Wordle {
                     stats: [
                         { label: "Tournament", val: "5 Games (Dual)" },
                         { label: "Word Length", val: `${this.wordLength} Letters` },
-                        { label: "Player 1 Wins", val: this.p1Wins },
-                        { label: "Player 2 Wins", val: this.p2Wins },
+                        { label: `${this.p1Name} Wins`, val: this.p1Wins },
+                        { label: `${this.p2Name} Wins`, val: this.p2Wins },
                         { label: "Draws", val: this.tournamentDraws }
                     ],
-                    onRestart: () => this.startNewTournament()
+                    onRestart: () => this.openTournamentSetup()
                 });
             }, 350);
         } else if (window.sounds) {
@@ -907,7 +1009,9 @@ class Wordle {
     // User Input & Guess Processing
     // ----------------------------------------------------
     handleKeyPress(event) {
-        if (!this.isPlaying || this.gameOver || this.intermissionShown) return;
+        if (this.setupOverlayShown || this.intermissionShown) return;
+        if (event.target && (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA")) return;
+        if (!this.isPlaying || this.gameOver) return;
         if (window.arcadeApp && !window.arcadeApp.isGameActive("wordle")) return;
         if (event.ctrlKey || event.metaKey || event.altKey) return;
 
@@ -929,7 +1033,7 @@ class Wordle {
     }
 
     handleKeyClick(key) {
-        if (!this.isPlaying || this.gameOver || this.intermissionShown) return;
+        if (this.setupOverlayShown || this.intermissionShown || !this.isPlaying || this.gameOver) return;
 
         if (key === "↵" || key === "ENTER") {
             this.submitGuess();

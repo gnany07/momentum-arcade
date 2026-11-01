@@ -1254,6 +1254,48 @@ canvas {
     max-width: 340px;
     width: 100%;
 }
+.wordle-setup-card {
+    text-align: center;
+    max-width: 340px;
+    width: 100%;
+}
+.tournament-inputs-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
+    text-align: left;
+}
+.tournament-input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.tournament-input-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.tournament-name-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.55rem 0.75rem;
+    background: rgba(2, 6, 23, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 8px;
+    color: #f8fafc;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.tournament-name-input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    background: rgba(15, 23, 42, 0.95);
+}
 .intermission-icon {
     font-size: 2.2rem;
     margin-bottom: 0.4rem;

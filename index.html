@@ -257,7 +257,7 @@
                             <div class="tournament-player-card active" id="p1ScoreCard">
                                 <span class="player-turn-dot"></span>
                                 <div class="player-card-meta">
-                                    <span class="player-label">Player 1</span>
+                                    <span class="player-label" id="p1Label">Player 1</span>
                                     <span class="player-wins-badge" id="p1Wins">0 Wins</span>
                                 </div>
                                 <span class="player-turn-tag" id="p1TurnTag">Turn</span>
@@ -266,7 +266,7 @@
                             <div class="tournament-player-card" id="p2ScoreCard">
                                 <span class="player-turn-dot"></span>
                                 <div class="player-card-meta">
-                                    <span class="player-label">Player 2</span>
+                                    <span class="player-label" id="p2Label">Player 2</span>
                                     <span class="player-wins-badge" id="p2Wins">0 Wins</span>
                                 </div>
                                 <span class="player-turn-tag" id="p2TurnTag">Waiting</span>
@@ -279,6 +279,28 @@
                     </div>
                     <div class="wordle-board-wrapper">
                         <div id="wordleBoard" class="wordle-board" data-length="5"></div>
+                        <!-- Tournament Player Name Setup Overlay -->
+                        <div id="wordleTournamentSetupOverlay" class="wordle-intermission-overlay hidden">
+                            <div class="wordle-setup-card">
+                                <div class="intermission-icon">👥</div>
+                                <h3 class="intermission-title">Dual Tournament Setup</h3>
+                                <p class="intermission-desc">5-Game Matchup • 5:00 Timer Per Turn</p>
+                                <div class="tournament-inputs-grid">
+                                    <div class="tournament-input-field">
+                                        <label class="tournament-input-label" for="wordleP1Input">Player 1 Name</label>
+                                        <input type="text" id="wordleP1Input" class="tournament-name-input" maxlength="15" placeholder="Player 1" value="Player 1">
+                                    </div>
+                                    <div class="tournament-input-field">
+                                        <label class="tournament-input-label" for="wordleP2Input">Player 2 Name</label>
+                                        <input type="text" id="wordleP2Input" class="tournament-name-input" maxlength="15" placeholder="Player 2" value="Player 2">
+                                    </div>
+                                </div>
+                                <div class="intermission-actions" style="margin-top: 1.15rem; display: flex; gap: 0.6rem;">
+                                    <button id="wordleStartTournamentBtn" class="btn btn-primary btn-large" style="flex: 1;">Start Match 🚀</button>
+                                    <button id="wordleCancelTournamentBtn" class="btn btn-secondary" style="padding: 0.65rem 1rem;">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
                         <div id="wordleIntermissionOverlay" class="wordle-intermission-overlay hidden">
                             <div class="wordle-intermission-card">
                                 <div class="intermission-icon" id="intermissionIcon">🔄</div>
