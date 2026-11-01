@@ -676,7 +676,7 @@ window.celebrateWin = function({ title = 'VICTORY!', subtitle = 'You beat the ch
         statsContainer.innerHTML = '';
         stats.forEach(s => {
             const pill = document.createElement('div');
-            pill.className = 'stat-pill';
+            pill.className = 'stat-pill' + (s.wide ? ' stat-pill-wide' : '');
             pill.innerHTML = `<span class="stat-pill-label">${s.label}</span><span class="stat-pill-val">${s.val}</span>`;
             statsContainer.appendChild(pill);
         });
@@ -724,7 +724,7 @@ window.showGameOverModal = function({ title = 'GAME OVER', subtitle = 'Better lu
         statsContainer.innerHTML = '';
         stats.forEach(s => {
             const pill = document.createElement('div');
-            pill.className = 'stat-pill';
+            pill.className = 'stat-pill' + (s.wide ? ' stat-pill-wide' : '');
             pill.innerHTML = `<span class="stat-pill-label">${s.label}</span><span class="stat-pill-val">${s.val}</span>`;
             statsContainer.appendChild(pill);
         });

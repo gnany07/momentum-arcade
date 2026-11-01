@@ -25,6 +25,9 @@ class Wordle {
             7: list7.slice(0, 2500)
         };
 
+        this.definitions = (typeof WORDLE_DEFINITIONS !== "undefined" && WORDLE_DEFINITIONS) ||
+                           (typeof window !== "undefined" && window.WORDLE_DEFINITIONS) || {};
+
         this.maxGuessesByLength = { 5: 6, 6: 8, 7: 10 };
 
         // Configuration State
@@ -74,6 +77,11 @@ class Wordle {
         this.validCountEl = document.getElementById("wordleValidCount");
         this.timerEl = document.getElementById("wordleTimer");
         this.controlsHintEl = document.getElementById("wordleControlsHint");
+
+        // Word Meaning Elements
+        this.meaningPanel = document.getElementById("wordleMeaningPanel");
+        this.meaningWordTitle = document.getElementById("meaningWordTitle");
+        this.meaningBody = document.getElementById("meaningBody");
 
         // Tournament DOM Elements
         this.tournamentBanner = document.getElementById("wordleTournamentBanner");
@@ -222,10 +230,32 @@ class Wordle {
         }
     }
 
+    getDefinition(word) {
+        if (!word) return "A recognized English word.";
+        const upper = word.toUpperCase();
+        if (this.definitions && this.definitions[upper]) {
+            return this.definitions[upper];
+        }
+        return `A recognized ${word.length}-letter English word.`;
+    }
+
+    showMeaning(word) {
+        if (!this.meaningPanel || !word) return;
+        const def = this.getDefinition(word);
+        if (this.meaningWordTitle) this.meaningWordTitle.textContent = word.toUpperCase();
+        if (this.meaningBody) this.meaningBody.textContent = def;
+        this.meaningPanel.classList.remove("hidden");
+    }
+
+    hideMeaning() {
+        if (this.meaningPanel) this.meaningPanel.classList.add("hidden");
+    }
+
     showStartScreen() {
         this.stopTimer();
         this.resetTimer();
         this.hideIntermission();
+        this.hideMeaning();
 
         if (this.board) {
             this.board.setAttribute("data-length", this.wordLength);
@@ -272,6 +302,7 @@ class Wordle {
 
     newGame() {
         this.hideIntermission();
+        this.hideMeaning();
         this.currentWord = this.answerPool[Math.floor(Math.random() * this.answerPool.length)];
         this.guesses = [];
         this.currentGuess = "";
@@ -368,15 +399,18 @@ class Wordle {
             this.streak = 0;
             this.saveStats();
             this.updateClueAndValidationUI();
+            this.showMeaning(this.currentWord);
 
             if (window.showGameOverModal) {
                 setTimeout(() => {
+                    const def = this.getDefinition(this.currentWord);
                     window.showGameOverModal({
                         title: "TIME'S UP!",
                         subtitle: `5 minutes expired! The secret word was "${this.currentWord}".`,
                         icon: "⏰",
                         stats: [
                             { label: "Word", val: this.currentWord },
+                            { label: "Meaning", val: def, wide: true },
                             { label: "Length", val: `${this.wordLength} Letters` },
                             { label: "Guesses", val: `${this.guesses.length}/${this.maxGuesses}` },
                             { label: "Streak Reset", val: "0" }
@@ -445,6 +479,7 @@ class Wordle {
     startTurn(playerNum) {
         this.currentPlayer = playerNum;
         this.hideIntermission();
+        this.hideMeaning();
         this.updateTournamentScoreboard();
 
         this.currentWord = this.answerPool[Math.floor(Math.random() * this.answerPool.length)];
@@ -484,14 +519,16 @@ class Wordle {
 
         if (this.currentPlayer === 1) {
             this.p1TurnResult = result;
+            const p1Def = this.getDefinition(this.currentWord);
             this.showIntermission({
                 icon: solved ? "🎯" : timedOut ? "⏰" : "⏸️",
                 title: "Player 1 Turn Complete!",
-                desc: solved
-                    ? `Player 1 solved "${this.currentWord}" in ${result.guesses} ${result.guesses === 1 ? "try" : "tries"} (${this.formatTime(result.timeSpent)})!`
+                desc: (solved
+                    ? `Player 1 solved <b>"${this.currentWord}"</b> in ${result.guesses} ${result.guesses === 1 ? "try" : "tries"} (${this.formatTime(result.timeSpent)})!`
                     : timedOut
-                    ? `Player 1 timed out on "${this.currentWord}".`
-                    : `Player 1 used all ${this.maxGuesses} tries without solving "${this.currentWord}".`,
+                    ? `Player 1 timed out on <b>"${this.currentWord}"</b>.`
+                    : `Player 1 used all ${this.maxGuesses} tries without solving <b>"${this.currentWord}"</b>.`) +
+                    `<div class="intermission-word-def"><b>Meaning:</b> ${p1Def}</div>`,
                 notice: "Hand the device to <b>Player 2</b> to take their turn!",
                 btnText: "Start Player 2's Turn 🚀",
                 action: () => this.startTurn(2)
@@ -550,13 +587,18 @@ class Wordle {
         });
 
         this.updateTournamentScoreboard();
+        const p1Def = this.getDefinition(p1.word);
+        const p2Def = this.getDefinition(p2.word);
+        this.showMeaning(this.currentWord);
 
         if (this.tournamentGame < this.maxTournamentGames) {
             const nextGameNum = this.tournamentGame + 1;
             this.showIntermission({
                 icon: gameWinner === 1 ? "🥇" : gameWinner === 2 ? "🥈" : "🤝",
                 title: gameWinner === 1 ? "Player 1 Wins Game " + this.tournamentGame + "!" : gameWinner === 2 ? "Player 2 Wins Game " + this.tournamentGame + "!" : "Game " + this.tournamentGame + " is a Draw!",
-                desc: `${reason}<br><br><b>Series:</b> Player 1: ${this.p1Wins} | Player 2: ${this.p2Wins}`,
+                desc: `${reason}<br><br><b>Series:</b> Player 1: ${this.p1Wins} | Player 2: ${this.p2Wins}` +
+                      `<div class="intermission-word-def"><b>P1 Word (${p1.word}):</b> ${p1Def}</div>` +
+                      `<div class="intermission-word-def"><b>P2 Word (${p2.word}):</b> ${p2Def}</div>`,
                 notice: `Get ready for <b>Game ${nextGameNum} of ${this.maxTournamentGames}</b>!`,
                 btnText: `Start Game ${nextGameNum} of 5 ➡️`,
                 action: () => {
@@ -999,8 +1041,10 @@ class Wordle {
                 this.streak++;
                 this.saveStats();
                 this.updateClueAndValidationUI();
+                this.showMeaning(this.currentWord);
                 const timeSpent = 300 - this.timeLeft;
                 const timeStr = this.formatTime(timeSpent);
+                const def = this.getDefinition(this.currentWord);
 
                 if (window.celebrateWin) {
                     setTimeout(() => {
@@ -1010,6 +1054,7 @@ class Wordle {
                             trophy: "🔤",
                             stats: [
                                 { label: "Word", val: this.currentWord },
+                                { label: "Meaning", val: def, wide: true },
                                 { label: "Length", val: `${this.wordLength} Letters` },
                                 { label: "Guesses", val: `${this.guesses.length}/${this.maxGuesses}` },
                                 { label: "Win Streak", val: this.streak },
@@ -1033,6 +1078,8 @@ class Wordle {
                 this.streak = 0;
                 this.saveStats();
                 this.updateClueAndValidationUI();
+                this.showMeaning(this.currentWord);
+                const def = this.getDefinition(this.currentWord);
 
                 if (window.showGameOverModal) {
                     setTimeout(() => {
@@ -1042,6 +1089,7 @@ class Wordle {
                             icon: "💡",
                             stats: [
                                 { label: "Correct Word", val: this.currentWord },
+                                { label: "Meaning", val: def, wide: true },
                                 { label: "Length", val: `${this.wordLength} Letters` },
                                 { label: "Games Played", val: this.played },
                                 { label: "Streak Reset", val: "0" }

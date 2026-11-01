@@ -1286,6 +1286,64 @@ canvas {
     font-weight: 700;
 }
 
+/* Secret Word Meaning Display Panel */
+.wordle-meaning-panel {
+    width: 100%;
+    max-width: 440px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin: 0 auto 0.9rem;
+    animation: fadeIn 0.3s ease;
+    text-align: left;
+}
+.wordle-meaning-panel.hidden {
+    display: none !important;
+}
+.meaning-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.35rem;
+}
+.meaning-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+}
+.meaning-word-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: 0.08em;
+}
+.meaning-body {
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    line-height: 1.45;
+    font-style: italic;
+}
+.intermission-word-def {
+    display: block;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.65rem;
+    background: rgba(16, 185, 129, 0.1);
+    border-left: 3px solid #10b981;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    color: #e2e8f0;
+    text-align: left;
+    font-style: italic;
+}
+
 @keyframes wordleShake {
     0%, 100% { transform: translateX(0); }
     20%, 60% { transform: translateX(-6px); }
@@ -1470,6 +1528,23 @@ canvas {
     display: flex;
     flex-direction: column;
     min-width: 80px;
+}
+
+.stat-pill.stat-pill-wide {
+    width: 100%;
+    max-width: 440px;
+    text-align: left;
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(16, 185, 129, 0.35);
+}
+
+.stat-pill.stat-pill-wide .stat-pill-val {
+    font-size: 0.86rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #cbd5e1;
+    font-style: italic;
+    word-break: break-word;
 }
 
 .stat-pill-label {
