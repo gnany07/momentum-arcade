@@ -316,11 +316,27 @@ class Wordle {
         }
     }
 
+    showKeyboard() {
+        if (!this.keyboard) return;
+        if (this.keyboard.style) {
+            this.keyboard.style.display = "flex";
+        }
+        if (this.keyboard.children.length === 0) {
+            this.initializeKeyboard();
+        }
+    }
+
+    hideKeyboard() {
+        if (this.keyboard && this.keyboard.style) {
+            this.keyboard.style.display = "none";
+        }
+    }
+
     startGame() {
         this.isPlaying = true;
         this.hideIntermission();
         this.hideTournamentSetup();
-        if (this.keyboard && this.keyboard.style) this.keyboard.style.display = "flex";
+        this.showKeyboard();
         if (this.cluePanel) this.cluePanel.classList.add("hidden");
 
         this.initializeBoard();
@@ -346,8 +362,11 @@ class Wordle {
     }
 
     newGame() {
+        this.isPlaying = true;
         this.hideIntermission();
+        this.hideTournamentSetup();
         this.hideMeaning();
+        this.showKeyboard();
         this.currentWord = this.answerPool[Math.floor(Math.random() * this.answerPool.length)];
         this.guesses = [];
         this.currentGuess = "";
@@ -534,6 +553,7 @@ class Wordle {
         this.p1TurnResult = null;
         this.tournamentHistory = [];
 
+        this.showKeyboard();
         this.updateTournamentScoreboard();
         this.updateControlsHint();
         this.startTournamentGame();
@@ -572,9 +592,12 @@ class Wordle {
     }
 
     startTurn(playerNum) {
+        this.isPlaying = true;
         this.currentPlayer = playerNum;
         this.hideIntermission();
+        this.hideTournamentSetup();
         this.hideMeaning();
+        this.showKeyboard();
         this.updateTournamentScoreboard();
 
         this.currentWord = this.answerPool[Math.floor(Math.random() * this.answerPool.length)];
@@ -804,6 +827,9 @@ class Wordle {
 
     initializeKeyboard() {
         if (!this.keyboard) return;
+        if (this.keyboard.style) {
+            this.keyboard.style.display = "flex";
+        }
         const keyboardLayout = [
             ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
             ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
@@ -835,7 +861,10 @@ class Wordle {
     }
 
     resetKeyboardColors() {
-        const keys = document.querySelectorAll(".key");
+        if (!this.keyboard || this.keyboard.children.length === 0) {
+            this.initializeKeyboard();
+        }
+        const keys = this.keyboard ? this.keyboard.querySelectorAll(".key") : [];
         keys.forEach(key => {
             key.className = "key";
             if (key.textContent === "↵") key.classList.add("enter-key");
@@ -1113,7 +1142,7 @@ class Wordle {
         }
 
         // Update keyboard colors
-        const keys = document.querySelectorAll(".key");
+        const keys = this.keyboard ? this.keyboard.querySelectorAll(".key") : [];
         for (let i = 0; i < this.wordLength; i++) {
             const gChar = guess[i];
             const isCorrect = cells[i].classList.contains("correct");
