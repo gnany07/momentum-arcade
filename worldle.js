@@ -7,11 +7,639 @@ const WORLDLE_CITIES = [{"name":"LONDON","countryCode":"GBR","countryName":"UNIT
 
 // Point deductions ordered from LEAST deduction to MOST deduction:
 // Hemisphere (-75) < Borders/Landmark (-150) < Continent (-250) < Capital/Host Country (-350)
+
 const CLUE_DEDUCTIONS = {
     hemisphere: 75,
     borders: 150,
     continent: 250,
     capital: 350
+};
+
+const WORLDLE_COUNTRY_INTEL = {
+    GBR: {
+        pop: "67.8M",
+        area: "243,610 km²",
+        areaMi: "94,060 sq mi",
+        currency: "British Pound (GBP £)",
+        highestPoint: "Ben Nevis (1,345 m)",
+        driveSide: "Left",
+        timezone: "UTC+0 (GMT/BST)",
+        biome: "temperate",
+        fact: "No location in the UK is further than 75 miles (120 km) from the open sea.",
+        capitalPin: { x: 148, y: 177 }
+    },
+    ITA: {
+        pop: "58.9M",
+        area: "301,340 km²",
+        areaMi: "116,350 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Monte Bianco / Mont Blanc (4,808 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "mediterranean",
+        fact: "Surrounds two independent sovereign nations completely within its borders: San Marino & Vatican City.",
+        capitalPin: { x: 118, y: 116 }
+    },
+    JPN: {
+        pop: "124.5M",
+        area: "377,975 km²",
+        areaMi: "145,937 sq mi",
+        currency: "Japanese Yen (JPY ¥)",
+        highestPoint: "Mount Fuji (3,776 m)",
+        driveSide: "Left",
+        timezone: "UTC+9 (JST)",
+        biome: "temperate",
+        fact: "Japan's volcanic archipelago comprises 14,125 islands across 3,000 kilometers of Pacific ocean.",
+        capitalPin: { x: 147, y: 148 }
+    },
+    FRA: {
+        pop: "68.2M",
+        area: "551,695 km²",
+        areaMi: "213,011 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Mont Blanc (4,808 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "temperate",
+        fact: "France spans 12 distinct time zones across all global territories—more than any nation on Earth.",
+        capitalPin: { x: 118, y: 70 }
+    },
+    USA: {
+        pop: "335.8M",
+        area: "9,833,517 km²",
+        areaMi: "3,796,742 sq mi",
+        currency: "US Dollar (USD $)",
+        highestPoint: "Denali (6,190 m)",
+        driveSide: "Right",
+        timezone: "UTC-5 to UTC-10",
+        biome: "temperate",
+        fact: "Contains both the lowest continental point in North America (Badwater Basin, -86m) and 4,000m+ peaks.",
+        capitalPin: { x: 185, y: 95 }
+    },
+    AUS: {
+        pop: "26.7M",
+        area: "7,692,024 km²",
+        areaMi: "2,969,907 sq mi",
+        currency: "Australian Dollar (AUD $)",
+        highestPoint: "Mount Kosciuszko (2,228 m)",
+        driveSide: "Left",
+        timezone: "UTC+8 to UTC+10.5",
+        biome: "desert",
+        fact: "Australia is the only nation on Earth that governs an entire continent single-handedly.",
+        capitalPin: { x: 194, y: 175 }
+    },
+    BRA: {
+        pop: "216.4M",
+        area: "8,515,767 km²",
+        areaMi: "3,287,956 sq mi",
+        currency: "Brazilian Real (BRL R$)",
+        highestPoint: "Pico da Neblina (2,995 m)",
+        driveSide: "Right",
+        timezone: "UTC-2 to UTC-5",
+        biome: "tropical",
+        fact: "Contains 60% of the Amazon Rainforest, which produces roughly 20% of the world's river discharge.",
+        capitalPin: { x: 155, y: 135 }
+    },
+    IND: {
+        pop: "1.43B",
+        area: "3,287,263 km²",
+        areaMi: "1,269,219 sq mi",
+        currency: "Indian Rupee (INR ₹)",
+        highestPoint: "Kangchenjunga (8,586 m)",
+        driveSide: "Left",
+        timezone: "UTC+5:30 (IST)",
+        biome: "tropical",
+        fact: "Spans from Himalayan high-altitude glaciers down to tropical coral atolls across 7,516 km of coastline.",
+        capitalPin: { x: 104, y: 78 }
+    },
+    DEU: {
+        pop: "84.4M",
+        area: "357,022 km²",
+        areaMi: "137,847 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Zugspitze (2,962 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "temperate",
+        fact: "Shares land borders with 9 European countries, the second most in Europe after Russia.",
+        capitalPin: { x: 160, y: 72 }
+    },
+    ESP: {
+        pop: "48.6M",
+        area: "505,990 km²",
+        areaMi: "195,360 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Teide (3,715 m) / Mulhacen (3,479 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "mediterranean",
+        fact: "Spain's high central plateau, the Meseta Central, averages 650m in elevation above sea level.",
+        capitalPin: { x: 120, y: 110 }
+    },
+    GRC: {
+        pop: "10.4M",
+        area: "131,957 km²",
+        areaMi: "50,949 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Mount Olympus (2,918 m)",
+        driveSide: "Right",
+        timezone: "UTC+2 (EET)",
+        biome: "mediterranean",
+        fact: "Features approximately 6,000 islands and islets scattered across the Aegean and Ionian Seas.",
+        capitalPin: { x: 124, y: 130 }
+    },
+    NOR: {
+        pop: "5.5M",
+        area: "385,207 km²",
+        areaMi: "148,729 sq mi",
+        currency: "Norwegian Krone (NOK kr)",
+        highestPoint: "Galdhopiggen (2,469 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "nordic",
+        fact: "Its intricate fjord-carved coastline exceeds 100,000 kilometers when including all coastal islands.",
+        capitalPin: { x: 105, y: 185 }
+    },
+    SWE: {
+        pop: "10.5M",
+        area: "450,295 km²",
+        areaMi: "173,860 sq mi",
+        currency: "Swedish Krona (SEK kr)",
+        highestPoint: "Kebnekaise (2,097 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "nordic",
+        fact: "Sweden contains approximately 267,570 islands—more recorded islands than any country on Earth.",
+        capitalPin: { x: 138, y: 160 }
+    },
+    FIN: {
+        pop: "5.6M",
+        area: "338,424 km²",
+        areaMi: "130,666 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Halti (1,324 m)",
+        driveSide: "Right",
+        timezone: "UTC+2 (EET)",
+        biome: "nordic",
+        fact: "The 'Land of a Thousand Lakes' actually contains 187,888 lakes and over 75% forest coverage.",
+        capitalPin: { x: 125, y: 205 }
+    },
+    ISL: {
+        pop: "390K",
+        area: "103,000 km²",
+        areaMi: "39,769 sq mi",
+        currency: "Icelandic Krona (ISK kr)",
+        highestPoint: "Hvannadalshnukur (2,110 m)",
+        driveSide: "Right",
+        timezone: "UTC+0 (GMT)",
+        biome: "nordic",
+        fact: "Straddles the Mid-Atlantic Ridge where North American and Eurasian tectonic plates drift apart.",
+        capitalPin: { x: 62, y: 132 }
+    },
+    IRL: {
+        pop: "5.2M",
+        area: "70,273 km²",
+        areaMi: "27,133 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Carrauntoohil (1,038 m)",
+        driveSide: "Left",
+        timezone: "UTC+0 (GMT/IST)",
+        biome: "temperate",
+        fact: "Known as the Emerald Isle due to lush green vegetation sustained by frequent Atlantic rainfall.",
+        capitalPin: { x: 162, y: 110 }
+    },
+    PRT: {
+        pop: "10.4M",
+        area: "92,212 km²",
+        areaMi: "35,603 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Mount Pico (2,351 m) / Torre (1,993 m)",
+        driveSide: "Right",
+        timezone: "UTC+0 (WET)",
+        biome: "mediterranean",
+        fact: "Cabo da Roca in western Portugal marks the westernmost continental point of mainland Eurasia.",
+        capitalPin: { x: 80, y: 155 }
+    },
+    CHE: {
+        pop: "8.9M",
+        area: "41,285 km²",
+        areaMi: "15,940 sq mi",
+        currency: "Swiss Franc (CHF Fr.)",
+        highestPoint: "Dufourspitze (4,634 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "alpine",
+        fact: "Contains 48 mountain peaks towering above 4,000 meters in elevation across the Swiss Alps.",
+        capitalPin: { x: 105, y: 115 }
+    },
+    NLD: {
+        pop: "17.9M",
+        area: "41,850 km²",
+        areaMi: "16,158 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Vaalserberg (322 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "temperate",
+        fact: "About 26% of the Netherlands lies below sea level, protected by 3,700 kilometers of dikes.",
+        capitalPin: { x: 112, y: 110 }
+    },
+    POL: {
+        pop: "37.7M",
+        area: "312,696 km²",
+        areaMi: "120,733 sq mi",
+        currency: "Polish Zloty (PLN zl)",
+        highestPoint: "Rysy (2,501 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "temperate",
+        fact: "Home to Bialowieza Forest, one of the last and largest remaining primeval forests in Europe.",
+        capitalPin: { x: 145, y: 105 }
+    },
+    UKR: {
+        pop: "38.0M",
+        area: "603,628 km²",
+        areaMi: "233,062 sq mi",
+        currency: "Ukrainian Hryvnia (UAH grn)",
+        highestPoint: "Hoverla (2,061 m)",
+        driveSide: "Right",
+        timezone: "UTC+2 (EET)",
+        biome: "temperate",
+        fact: "Ukraine is the largest country located entirely within the continent of Europe.",
+        capitalPin: { x: 125, y: 75 }
+    },
+    TUR: {
+        pop: "85.8M",
+        area: "783,562 km²",
+        areaMi: "302,535 sq mi",
+        currency: "Turkish Lira (TRY tl)",
+        highestPoint: "Mount Ararat (5,137 m)",
+        driveSide: "Right",
+        timezone: "UTC+3 (TRT)",
+        biome: "mediterranean",
+        fact: "Transcontinental bridge between Europe and Asia across the historic Bosphorus Strait.",
+        capitalPin: { x: 108, y: 100 }
+    },
+    EGY: {
+        pop: "112.7M",
+        area: "1,002,450 km²",
+        areaMi: "387,050 sq mi",
+        currency: "Egyptian Pound (EGP E£)",
+        highestPoint: "Mount Catherine (2,629 m)",
+        driveSide: "Right",
+        timezone: "UTC+2 (EET)",
+        biome: "desert",
+        fact: "Over 95% of Egypt's population lives within a narrow fertile corridor along the Nile River.",
+        capitalPin: { x: 148, y: 55 }
+    },
+    ZAF: {
+        pop: "60.4M",
+        area: "1,221,037 km²",
+        areaMi: "471,445 sq mi",
+        currency: "South African Rand (ZAR R)",
+        highestPoint: "Mafadi (3,450 m)",
+        driveSide: "Left",
+        timezone: "UTC+2 (SAST)",
+        biome: "temperate",
+        fact: "The only country in the world with three official capital cities: Pretoria, Cape Town, and Bloemfontein.",
+        capitalPin: { x: 155, y: 80 }
+    },
+    MAR: {
+        pop: "37.8M",
+        area: "446,550 km²",
+        areaMi: "172,414 sq mi",
+        currency: "Moroccan Dirham (MAD dh)",
+        highestPoint: "Toubkal (4,167 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (WEST)",
+        biome: "mediterranean",
+        fact: "The High Atlas mountain range separates Morocco's Mediterranean coastline from the Sahara Desert.",
+        capitalPin: { x: 102, y: 68 }
+    },
+    KEN: {
+        pop: "55.1M",
+        area: "580,367 km²",
+        areaMi: "224,081 sq mi",
+        currency: "Kenyan Shilling (KES KSh)",
+        highestPoint: "Mount Kenya (5,199 m)",
+        driveSide: "Left",
+        timezone: "UTC+3 (EAT)",
+        biome: "tropical",
+        fact: "Bisected directly by the Equator and carved through by the dramatic Great Rift Valley.",
+        capitalPin: { x: 105, y: 140 }
+    },
+    MDG: {
+        pop: "30.3M",
+        area: "587,041 km²",
+        areaMi: "226,658 sq mi",
+        currency: "Malagasy Ariary (MGA Ar)",
+        highestPoint: "Maromokotro (2,876 m)",
+        driveSide: "Right",
+        timezone: "UTC+3 (EAT)",
+        biome: "tropical",
+        fact: "Over 90% of all plant and animal wildlife found on Madagascar exists nowhere else on Earth.",
+        capitalPin: { x: 110, y: 105 }
+    },
+    NGA: {
+        pop: "223.8M",
+        area: "923,768 km²",
+        areaMi: "356,669 sq mi",
+        currency: "Nigerian Naira (NGN ₦)",
+        highestPoint: "Chappal Waddi (2,419 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (WAT)",
+        biome: "tropical",
+        fact: "The most populous country in Africa, representing roughly 1 in every 6 people on the continent.",
+        capitalPin: { x: 108, y: 112 }
+    },
+    MEX: {
+        pop: "128.5M",
+        area: "1,964,375 km²",
+        areaMi: "758,450 sq mi",
+        currency: "Mexican Peso (MXN $)",
+        highestPoint: "Pico de Orizaba (5,636 m)",
+        driveSide: "Right",
+        timezone: "UTC-5 to UTC-8",
+        biome: "desert",
+        fact: "Mexico City sits on a high volcanic basin at 2,240m elevation above sea level.",
+        capitalPin: { x: 140, y: 145 }
+    },
+    CAN: {
+        pop: "40.1M",
+        area: "9,984,670 km²",
+        areaMi: "3,855,103 sq mi",
+        currency: "Canadian Dollar (CAD $)",
+        highestPoint: "Mount Logan (5,959 m)",
+        driveSide: "Right",
+        timezone: "UTC-3.5 to UTC-8",
+        biome: "nordic",
+        fact: "Canada contains more than half of all natural freshwater lakes on planet Earth.",
+        capitalPin: { x: 175, y: 195 }
+    },
+    ARG: {
+        pop: "46.6M",
+        area: "2,780,400 km²",
+        areaMi: "1,073,518 sq mi",
+        currency: "Argentine Peso (ARS $)",
+        highestPoint: "Aconcagua (6,961 m)",
+        driveSide: "Right",
+        timezone: "UTC-3 (ART)",
+        biome: "temperate",
+        fact: "Mount Aconcagua is the highest mountain outside of Asia in both the Western and Southern Hemispheres.",
+        capitalPin: { x: 160, y: 125 }
+    },
+    CHL: {
+        pop: "19.6M",
+        area: "756,102 km²",
+        areaMi: "291,933 sq mi",
+        currency: "Chilean Peso (CLP $)",
+        highestPoint: "Ojos del Salado (6,893 m)",
+        driveSide: "Right",
+        timezone: "UTC-3 / UTC-4",
+        biome: "alpine",
+        fact: "The longest north-to-south country in the world, spanning 4,300 km while averaging only 175 km wide.",
+        capitalPin: { x: 120, y: 110 }
+    },
+    PER: {
+        pop: "34.4M",
+        area: "1,285,216 km²",
+        areaMi: "496,225 sq mi",
+        currency: "Peruvian Sol (PEN S/.)",
+        highestPoint: "Huascaran (6,768 m)",
+        driveSide: "Right",
+        timezone: "UTC-5 (PET)",
+        biome: "tropical",
+        fact: "Lake Titicaca on Peru's border is the highest navigable body of water in the world (3,812 m).",
+        capitalPin: { x: 80, y: 140 }
+    },
+    COL: {
+        pop: "52.1M",
+        area: "1,141,748 km²",
+        areaMi: "440,831 sq mi",
+        currency: "Colombian Peso (COP $)",
+        highestPoint: "Pico Cristobal Colon (5,730 m)",
+        driveSide: "Right",
+        timezone: "UTC-5 (COT)",
+        biome: "tropical",
+        fact: "The only South American nation with coastlines bordering both the Atlantic (Caribbean) and Pacific oceans.",
+        capitalPin: { x: 115, y: 105 }
+    },
+    CUB: {
+        pop: "11.2M",
+        area: "109,884 km²",
+        areaMi: "42,426 sq mi",
+        currency: "Cuban Peso (CUP $)",
+        highestPoint: "Pico Turquino (1,974 m)",
+        driveSide: "Right",
+        timezone: "UTC-5 (CDT)",
+        biome: "tropical",
+        fact: "The largest single island in the Caribbean, spanning 1,250 km from east to west.",
+        capitalPin: { x: 60, y: 88 }
+    },
+    CHN: {
+        pop: "1.41B",
+        area: "9,596,961 km²",
+        areaMi: "3,705,407 sq mi",
+        currency: "Chinese Yuan (CNY ¥)",
+        highestPoint: "Mount Everest (8,849 m)",
+        driveSide: "Right",
+        timezone: "UTC+8 (CST)",
+        biome: "temperate",
+        fact: "Spans across 5 geographical time zones, but officially operates on a single national time zone (Beijing Time).",
+        capitalPin: { x: 165, y: 78 }
+    },
+    KOR: {
+        pop: "51.7M",
+        area: "100,432 km²",
+        areaMi: "38,777 sq mi",
+        currency: "South Korean Won (KRW ₩)",
+        highestPoint: "Hallasan (1,947 m)",
+        driveSide: "Right",
+        timezone: "UTC+9 (KST)",
+        biome: "temperate",
+        fact: "Roughly 70% of the Korean peninsula is covered by mountainous uplands and rugged hills.",
+        capitalPin: { x: 92, y: 55 }
+    },
+    THA: {
+        pop: "71.8M",
+        area: "513,120 km²",
+        areaMi: "198,117 sq mi",
+        currency: "Thai Baht (THB ฿)",
+        highestPoint: "Doi Inthanon (2,565 m)",
+        driveSide: "Left",
+        timezone: "UTC+7 (ICT)",
+        biome: "tropical",
+        fact: "The only Southeast Asian nation that was never colonized by European imperial powers.",
+        capitalPin: { x: 115, y: 135 }
+    },
+    VNM: {
+        pop: "100.3M",
+        area: "331,212 km²",
+        areaMi: "127,882 sq mi",
+        currency: "Vietnamese Dong (VND ₫)",
+        highestPoint: "Fansipan (3,143 m)",
+        driveSide: "Right",
+        timezone: "UTC+7 (ICT)",
+        biome: "tropical",
+        fact: "S-shaped coastline extends over 3,260 km along the South China Sea and Gulf of Tonkin.",
+        capitalPin: { x: 110, y: 50 }
+    },
+    IDN: {
+        pop: "277.5M",
+        area: "1,904,569 km²",
+        areaMi: "735,358 sq mi",
+        currency: "Indonesian Rupiah (IDR Rp)",
+        highestPoint: "Puncak Jaya (4,884 m)",
+        driveSide: "Left",
+        timezone: "UTC+7 to UTC+9",
+        biome: "tropical",
+        fact: "The world's largest archipelagic state, comprising over 17,500 equatorial islands.",
+        capitalPin: { x: 75, y: 165 }
+    },
+    PHL: {
+        pop: "117.3M",
+        area: "300,000 km²",
+        areaMi: "115,831 sq mi",
+        currency: "Philippine Peso (PHP ₱)",
+        highestPoint: "Mount Apo (2,954 m)",
+        driveSide: "Right",
+        timezone: "UTC+8 (PST)",
+        biome: "tropical",
+        fact: "An archipelago of 7,641 islands situated in the Pacific Ring of Fire.",
+        capitalPin: { x: 105, y: 80 }
+    },
+    MYS: {
+        pop: "34.3M",
+        area: "330,803 km²",
+        areaMi: "127,724 sq mi",
+        currency: "Malaysian Ringgit (MYR RM)",
+        highestPoint: "Mount Kinabalu (4,095 m)",
+        driveSide: "Left",
+        timezone: "UTC+8 (MYT)",
+        biome: "tropical",
+        fact: "Separated into two distinct geographical regions by the South China Sea: Peninsular Malaysia and Malaysian Borneo.",
+        capitalPin: { x: 62, y: 120 }
+    },
+    NZL: {
+        pop: "5.2M",
+        area: "268,021 km²",
+        areaMi: "103,483 sq mi",
+        currency: "New Zealand Dollar (NZD $)",
+        highestPoint: "Aoraki / Mount Cook (3,724 m)",
+        driveSide: "Left",
+        timezone: "UTC+12 (NZST)",
+        biome: "temperate",
+        fact: "No place in New Zealand is situated more than 128 km (80 miles) from the ocean coastline.",
+        capitalPin: { x: 140, y: 110 }
+    },
+    SAU: {
+        pop: "36.9M",
+        area: "2,149,690 km²",
+        areaMi: "830,000 sq mi",
+        currency: "Saudi Riyal (SAR r.s)",
+        highestPoint: "Jabal Sawda (3,000 m)",
+        driveSide: "Right",
+        timezone: "UTC+3 (AST)",
+        biome: "desert",
+        fact: "Home to the Rub' al Khali (Empty Quarter), the largest contiguous sand desert on Earth.",
+        capitalPin: { x: 135, y: 105 }
+    },
+    ARE: {
+        pop: "9.5M",
+        area: "83,600 km²",
+        areaMi: "32,278 sq mi",
+        currency: "UAE Dirham (AED dh)",
+        highestPoint: "Jabal Bil Ays (1,934 m)",
+        driveSide: "Right",
+        timezone: "UTC+4 (GST)",
+        biome: "desert",
+        fact: "Composed of seven distinct emirates, dominated by rolling desert dunes and Persian Gulf coastal flats.",
+        capitalPin: { x: 110, y: 120 }
+    },
+    ISR: {
+        pop: "9.8M",
+        area: "22,072 km²",
+        areaMi: "8,522 sq mi",
+        currency: "Israeli New Shekel (ILS ₪)",
+        highestPoint: "Mount Hermon (2,236 m)",
+        driveSide: "Right",
+        timezone: "UTC+2 (IST)",
+        biome: "mediterranean",
+        fact: "The Dead Sea on its eastern border is the lowest land elevation point on Earth at -430m below sea level.",
+        capitalPin: { x: 115, y: 100 }
+    },
+    PAK: {
+        pop: "241.5M",
+        area: "881,913 km²",
+        areaMi: "340,509 sq mi",
+        currency: "Pakistani Rupee (PKR Rs)",
+        highestPoint: "K2 (8,611 m)",
+        driveSide: "Left",
+        timezone: "UTC+5 (PKT)",
+        biome: "desert",
+        fact: "Home to K2, the second highest mountain on Earth, and five of the world's fourteen 8,000m+ peaks.",
+        capitalPin: { x: 145, y: 55 }
+    },
+    LKA: {
+        pop: "22.2M",
+        area: "65,610 km²",
+        areaMi: "25,332 sq mi",
+        currency: "Sri Lankan Rupee (LKR Rs)",
+        highestPoint: "Pidurutalagala (2,524 m)",
+        driveSide: "Left",
+        timezone: "UTC+5:30 (IST)",
+        biome: "tropical",
+        fact: "Known historically as the 'Pearl of the Indian Ocean' for its teardrop shape and gem deposits.",
+        capitalPin: { x: 95, y: 165 }
+    },
+    NPL: {
+        pop: "30.9M",
+        area: "147,516 km²",
+        areaMi: "56,956 sq mi",
+        currency: "Nepalese Rupee (NPR Rs)",
+        highestPoint: "Mount Everest (8,849 m)",
+        driveSide: "Left",
+        timezone: "UTC+5:45 (NPT)",
+        biome: "alpine",
+        fact: "Contains 8 of the world's 10 tallest mountain peaks, including Mount Everest.",
+        capitalPin: { x: 135, y: 120 }
+    },
+    AUT: {
+        pop: "9.1M",
+        area: "83,879 km²",
+        areaMi: "32,386 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Grossglockner (3,798 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "alpine",
+        fact: "Over 62% of Austria's total surface area is covered by the majestic Eastern Alps.",
+        capitalPin: { x: 175, y: 80 }
+    },
+    HRV: {
+        pop: "3.9M",
+        area: "56,594 km²",
+        areaMi: "21,851 sq mi",
+        currency: "Euro (EUR €)",
+        highestPoint: "Dinara (1,831 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "mediterranean",
+        fact: "Boasts 1,777 km of mainland Adriatic coastline plus an archipelago of over 1,200 islands.",
+        capitalPin: { x: 125, y: 75 }
+    },
+    DNK: {
+        pop: "5.9M",
+        area: "42,933 km²",
+        areaMi: "16,577 sq mi",
+        currency: "Danish Krone (DKK kr)",
+        highestPoint: "Mollehøj (171 m)",
+        driveSide: "Right",
+        timezone: "UTC+1 (CET)",
+        biome: "temperate",
+        fact: "Denmark consists of the Jutland peninsula and an archipelago of 406 named islands.",
+        capitalPin: { x: 170, y: 125 }
+    }
 };
 
 class WorldleGame {
@@ -24,9 +652,21 @@ class WorldleGame {
             this.countryByCode[c.code] = c;
         });
 
+        this.countryIntel = WORLDLE_COUNTRY_INTEL;
+
         this.mode = "countries"; // "countries" or "cities"
-        this.mapStyle = "atlas"; // "atlas" | "satellite" | "outline"
+        this.mapStyle = "satellite"; // "satellite" | "atlas" | "outline"
         this.cityZoom = false;   // Zoomed regional metro view in cities mode
+        this.showNeighbors = true;
+        this.showCapitalPin = false;
+
+        this.zoomLevel = 1.0;
+        this.panX = 0;
+        this.panY = 0;
+        this.isDragging = false;
+        this.dragStartX = 0;
+        this.dragStartY = 0;
+
         this.countryIndex = 0;
         this.cityIndex = 0;
         this.target = null;
@@ -43,7 +683,10 @@ class WorldleGame {
         this.rotationDeg = 0;
         this.revealedIntel = new Set();
         this.activeSuggestionIdx = -1;
+        this.lastFocusedGuess = null;
+        this.activeTab = "clues";
 
+        // DOM elements
         this.mapEl = document.getElementById("worldleMapContainer");
         this.inputEl = document.getElementById("worldleInput");
         this.suggestionsEl = document.getElementById("worldleSuggestions");
@@ -60,6 +703,19 @@ class WorldleGame {
         this.modeCitiesBtn = document.getElementById("worldleModeCities");
         this.bordersLabelEl = document.getElementById("intelBordersLabel");
         this.capitalLabelEl = document.getElementById("intelCapitalLabel");
+
+        // Advanced Mode / Layer / Radar elements
+        this.layerSatBtn = document.getElementById("worldleLayerSat");
+        this.layerAtlasBtn = document.getElementById("worldleLayerAtlas");
+        this.layerOutlineBtn = document.getElementById("worldleLayerOutline");
+        this.toggleNeighborsBtn = document.getElementById("worldleToggleNeighbors");
+        this.toggleCapitalBtn = document.getElementById("worldleToggleCapital");
+        this.radarHudEl = document.getElementById("worldleRadarHud");
+        this.tabCluesBtn = document.getElementById("worldleTabClues");
+        this.tabDossierBtn = document.getElementById("worldleTabDossier");
+        this.cluesSectionEl = document.getElementById("worldleCluesSection");
+        this.dossierSectionEl = document.getElementById("worldleDossierSection");
+        this.dossierContentEl = document.getElementById("worldleDossierContent");
 
         const startBtn = document.getElementById("startWorldle");
         if (startBtn) startBtn.addEventListener("click", () => this.startGame());
@@ -78,6 +734,33 @@ class WorldleGame {
         }
         if (this.modeCitiesBtn) {
             this.modeCitiesBtn.addEventListener("click", () => this.switchMode("cities"));
+        }
+
+        // Layer selection buttons
+        if (this.layerSatBtn) {
+            this.layerSatBtn.addEventListener("click", () => this.setMapStyle("satellite"));
+        }
+        if (this.layerAtlasBtn) {
+            this.layerAtlasBtn.addEventListener("click", () => this.setMapStyle("atlas"));
+        }
+        if (this.layerOutlineBtn) {
+            this.layerOutlineBtn.addEventListener("click", () => this.setMapStyle("outline"));
+        }
+
+        // Toggles
+        if (this.toggleNeighborsBtn) {
+            this.toggleNeighborsBtn.addEventListener("click", () => this.toggleNeighbors());
+        }
+        if (this.toggleCapitalBtn) {
+            this.toggleCapitalBtn.addEventListener("click", () => this.toggleCapitalPin());
+        }
+
+        // Intel tabs
+        if (this.tabCluesBtn) {
+            this.tabCluesBtn.addEventListener("click", () => this.switchIntelTab("clues"));
+        }
+        if (this.tabDossierBtn) {
+            this.tabDossierBtn.addEventListener("click", () => this.switchIntelTab("dossier"));
         }
 
         if (this.unitBtn) {
@@ -110,11 +793,186 @@ class WorldleGame {
             this.inputEl.addEventListener("keydown", (e) => this.handleInputKeydown(e));
         }
 
+        // Mouse drag and wheel pan/zoom on map container
+        this.setupMapInteractions();
+
+        // Keyboard hotkeys (S: Layer, Z: Zoom, N: Neighbors)
+        window.addEventListener("keydown", (e) => {
+            // Only fire if not typing in an input
+            const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+            if (activeTag === "input" || activeTag === "textarea") return;
+
+            const cabinet = document.getElementById("game-worldle");
+            if (!cabinet || cabinet.classList.contains("hidden")) return;
+
+            if (e.key === "s" || e.key === "S") {
+                e.preventDefault();
+                this.cycleMapStyle();
+            } else if (e.key === "z" || e.key === "Z") {
+                e.preventDefault();
+                this.cycleZoom();
+            } else if (e.key === "n" || e.key === "N") {
+                e.preventDefault();
+                this.toggleNeighbors();
+            }
+        });
+
         this.loadStats();
         this.showStartScreen();
 
         if (window.arcadeApp) {
             window.arcadeApp.registerGame("worldle", this);
+        }
+    }
+
+    setupMapInteractions() {
+        if (!this.mapEl) return;
+
+        this.mapEl.addEventListener("wheel", (e) => {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                this.zoomIn();
+            } else {
+                this.zoomOut();
+            }
+        }, { passive: false });
+
+        this.mapEl.addEventListener("mousedown", (e) => {
+            if (this.zoomLevel <= 1.0) return;
+            if (e.target.closest(".worldle-map-controls") || e.target.closest("button")) return;
+            this.isDragging = true;
+            this.dragStartX = e.clientX - this.panX;
+            this.dragStartY = e.clientY - this.panY;
+            this.mapEl.classList.add("is-panning");
+        });
+
+        window.addEventListener("mousemove", (e) => {
+            if (!this.isDragging) return;
+            const maxPan = (this.zoomLevel - 1) * 65;
+            this.panX = Math.max(-maxPan, Math.min(maxPan, e.clientX - this.dragStartX));
+            this.panY = Math.max(-maxPan, Math.min(maxPan, e.clientY - this.dragStartY));
+            this.updateSvgViewBox();
+        });
+
+        window.addEventListener("mouseup", () => {
+            if (this.isDragging) {
+                this.isDragging = false;
+                if (this.mapEl) this.mapEl.classList.remove("is-panning");
+            }
+        });
+    }
+
+    setMapStyle(style) {
+        this.mapStyle = style;
+        if (this.layerSatBtn) this.layerSatBtn.classList.toggle("active", style === "satellite");
+        if (this.layerAtlasBtn) this.layerAtlasBtn.classList.toggle("active", style === "atlas");
+        if (this.layerOutlineBtn) this.layerOutlineBtn.classList.toggle("active", style === "outline");
+        if (this.mapEl) {
+            this.mapEl.classList.toggle("satellite-mode", style === "satellite");
+        }
+        this.renderMap();
+    }
+
+    cycleMapStyle() {
+        const order = ["satellite", "atlas", "outline"];
+        const idx = (order.indexOf(this.mapStyle) + 1) % order.length;
+        this.setMapStyle(order[idx]);
+    }
+
+    toggleNeighbors() {
+        this.showNeighbors = !this.showNeighbors;
+        if (this.toggleNeighborsBtn) {
+            this.toggleNeighborsBtn.classList.toggle("active", this.showNeighbors);
+            this.toggleNeighborsBtn.textContent = this.showNeighbors ? "🌐 Neighbors" : "🔲 Isolated";
+        }
+        this.renderMap();
+    }
+
+    toggleCapitalPin() {
+        this.showCapitalPin = !this.showCapitalPin;
+        if (this.toggleCapitalBtn) {
+            this.toggleCapitalBtn.classList.toggle("active", this.showCapitalPin);
+        }
+        this.renderMap();
+    }
+
+    switchIntelTab(tab) {
+        this.activeTab = tab;
+        if (this.tabCluesBtn) this.tabCluesBtn.classList.toggle("active", tab === "clues");
+        if (this.tabDossierBtn) this.tabDossierBtn.classList.toggle("active", tab === "dossier");
+        if (this.cluesSectionEl) this.cluesSectionEl.classList.toggle("hidden", tab !== "clues");
+        if (this.dossierSectionEl) this.dossierSectionEl.classList.toggle("hidden", tab !== "dossier");
+        if (tab === "dossier") {
+            this.renderDossier();
+        }
+    }
+
+    zoomIn() {
+        const next = Math.min(3.2, Math.round((this.zoomLevel + 0.5) * 10) / 10);
+        if (next !== this.zoomLevel) {
+            this.zoomLevel = next;
+            this.renderMap();
+        }
+    }
+
+    zoomOut() {
+        const next = Math.max(1.0, Math.round((this.zoomLevel - 0.5) * 10) / 10);
+        if (next !== this.zoomLevel) {
+            this.zoomLevel = next;
+            if (this.zoomLevel === 1.0) {
+                this.panX = 0;
+                this.panY = 0;
+            }
+            this.renderMap();
+        }
+    }
+
+    resetZoom() {
+        this.zoomLevel = 1.0;
+        this.panX = 0;
+        this.panY = 0;
+        this.cityZoom = false;
+        this.renderMap();
+    }
+
+    cycleZoom() {
+        if (this.zoomLevel <= 1.0) this.zoomLevel = 1.8;
+        else if (this.zoomLevel <= 1.9) this.zoomLevel = 2.6;
+        else {
+            this.zoomLevel = 1.0;
+            this.panX = 0;
+            this.panY = 0;
+        }
+        this.renderMap();
+    }
+
+    toggleCityZoom() {
+        this.cityZoom = !this.cityZoom;
+        this.panX = 0;
+        this.panY = 0;
+        this.renderMap();
+    }
+
+    computeViewBox() {
+        if (this.mode === "cities" && this.cityZoom && this.target && typeof this.target.pinX === "number") {
+            const span = 112;
+            const vx = Math.max(0, Math.min(240 - span, this.target.pinX - span / 2));
+            const vy = Math.max(0, Math.min(240 - span, this.target.pinY - span / 2));
+            return `${vx.toFixed(1)} ${vy.toFixed(1)} ${span} ${span}`;
+        }
+
+        const span = 240 / this.zoomLevel;
+        const centerX = 120 + this.panX;
+        const centerY = 120 + this.panY;
+        const vx = Math.max(-20, Math.min(260 - span, centerX - span / 2));
+        const vy = Math.max(-20, Math.min(260 - span, centerY - span / 2));
+        return `${vx.toFixed(1)} ${vy.toFixed(1)} ${span.toFixed(1)} ${span.toFixed(1)}`;
+    }
+
+    updateSvgViewBox() {
+        const svg = this.mapEl ? this.mapEl.querySelector(".worldle-svg") : null;
+        if (svg) {
+            svg.setAttribute("viewBox", this.computeViewBox());
         }
     }
 
@@ -152,6 +1010,10 @@ class WorldleGame {
         if (this.mode === newMode && this.isPlaying) return;
         this.mode = newMode;
         this.cityZoom = false;
+        this.zoomLevel = 1.0;
+        this.panX = 0;
+        this.panY = 0;
+
         if (this.modeCountriesBtn) this.modeCountriesBtn.classList.toggle("active", newMode === "countries");
         if (this.modeCitiesBtn) this.modeCitiesBtn.classList.toggle("active", newMode === "cities");
 
@@ -174,22 +1036,11 @@ class WorldleGame {
         }
     }
 
-    cycleMapStyle() {
-        const order = ["atlas", "satellite", "outline"];
-        const idx = (order.indexOf(this.mapStyle) + 1) % order.length;
-        this.mapStyle = order[idx];
-        this.renderMap();
-    }
-
-    toggleCityZoom() {
-        this.cityZoom = !this.cityZoom;
-        this.renderMap();
-    }
-
     showStartScreen() {
         if (this.mapEl) {
             this.mapEl.innerHTML = '<div style="text-align: center; color: #94a3b8; font-size: 0.9rem; padding: 1rem;">Click <b>Start Game</b> (or select <b>🌍 Countries</b> / <b>🏙️ World Cities</b> above)</div>';
         }
+        this.renderRadarHud();
     }
 
     startGame() {
@@ -218,10 +1069,15 @@ class WorldleGame {
         this.gameOver = false;
         this.revealedIntel.clear();
         this.activeSuggestionIdx = -1;
+        this.lastFocusedGuess = null;
+        this.zoomLevel = 1.0;
+        this.panX = 0;
+        this.panY = 0;
         this.rotationDeg = this.rotateMode ? [90, 180, 270][Math.floor(Math.random() * 3)] : 0;
 
         document.querySelectorAll(".worldle-intel-chip").forEach(c => c.classList.remove("revealed"));
         this.recalculateRoundPotential();
+        this.switchIntelTab("clues");
 
         if (this.intelOutputEl) {
             this.intelOutputEl.textContent = this.mode === "cities"
@@ -234,6 +1090,7 @@ class WorldleGame {
             this.inputEl.focus();
         }
         if (this.suggestionsEl) this.suggestionsEl.classList.add("hidden");
+
         this.render();
         if (window.sounds) window.sounds.launch();
     }
@@ -454,7 +1311,10 @@ class WorldleGame {
 
         const metrics = this.calculateGeoMetrics(entry, this.target);
         const icon = this.mode === "cities" ? "🏙️" : (entry.flag || "🌍");
-        this.guesses.push({ name: entry.name, flag: icon, ...metrics });
+        const guessObj = { name: entry.name, flag: icon, ...metrics };
+        this.guesses.push(guessObj);
+        this.lastFocusedGuess = guessObj;
+
         this.recalculateRoundPotential();
         this.render();
 
@@ -466,11 +1326,16 @@ class WorldleGame {
             this.totalScore += earnedPts;
             this.saveStats();
 
+            this.switchIntelTab("dossier");
+
             const cluesUsed = this.revealedIntel.size;
             const bonusTag = cluesUsed === 0 ? "🏆 NO-CLUE PERFECT BONUS!" : `${cluesUsed} clue(s) used`;
             const subDesc = this.mode === "cities"
                 ? `${this.target.flag} ${this.target.name}, ${this.target.countryName} • +${earnedPts} pts (${bonusTag})`
                 : `Capital: ${this.target.capital} • +${earnedPts} pts (${bonusTag})`;
+
+            const countryCode = this.mode === "cities" ? this.target.countryCode : this.target.code;
+            const intel = this.countryIntel[countryCode] || {};
 
             if (window.celebrateWin) {
                 setTimeout(() => {
@@ -482,6 +1347,8 @@ class WorldleGame {
                             { label: this.mode === "cities" ? "City" : "Country", val: `${this.target.flag} ${this.target.name}` },
                             { label: "Points Earned", val: `+${earnedPts}` },
                             { label: "Clues Used", val: cluesUsed === 0 ? "0 (Max Bonus!)" : cluesUsed },
+                            { label: "Population", val: intel.pop || "—" },
+                            { label: "Currency", val: intel.currency || "—" },
                             { label: "Total Score", val: this.totalScore.toLocaleString() }
                         ],
                         onRestart: () => this.nextTarget()
@@ -492,6 +1359,11 @@ class WorldleGame {
             this.gameOver = true;
             this.streak = 0;
             this.saveStats();
+            this.switchIntelTab("dossier");
+
+            const countryCode = this.mode === "cities" ? this.target.countryCode : this.target.code;
+            const intel = this.countryIntel[countryCode] || {};
+
             if (window.showGameOverModal) {
                 setTimeout(() => {
                     window.showGameOverModal({
@@ -502,6 +1374,8 @@ class WorldleGame {
                         icon: "🌍",
                         stats: [
                             { label: "Answer", val: `${this.target.flag} ${this.target.name}` },
+                            { label: "Population", val: intel.pop || "—" },
+                            { label: "Highest Peak", val: intel.highestPoint || "—" },
                             { label: "Total Score", val: this.totalScore.toLocaleString() }
                         ],
                         onRestart: () => this.nextTarget()
@@ -516,10 +1390,13 @@ class WorldleGame {
     renderMap() {
         if (!this.mapEl || !this.target) return;
 
-        // Resolve map source (either target country directly or host country for a city)
         const mapSource = this.mode === "cities"
             ? (this.countryByCode[this.target.countryCode] || this.target)
             : this.target;
+
+        const countryCode = this.mode === "cities" ? this.target.countryCode : this.target.code;
+        const intel = this.countryIntel[countryCode] || {};
+        const biome = intel.biome || "temperate";
 
         const svgPath = mapSource.svg || "";
         const neighborsPath = mapSource.neighborsSvg || "";
@@ -531,58 +1408,60 @@ class WorldleGame {
             : `~${this.target.widthKm.toLocaleString()} km`;
         const compassLabel = this.rotateMode ? `ROT ${this.rotationDeg}°` : "N ▲";
 
-        const styleBadgeText = this.mapStyle === "atlas"
-            ? "🗺️ Physical Atlas"
-            : (this.mapStyle === "satellite" ? "🛰️ Satellite" : "🟢 Outline");
+        const viewBox = this.computeViewBox();
+        const isSat = this.mapStyle === "satellite";
+        const isAtlas = this.mapStyle === "atlas";
+        const isOutline = this.mapStyle === "outline";
 
-        // Compute viewBox (support 2.1x regional zoom around city pin in Cities mode!)
-        let viewBox = "0 0 240 240";
-        if (this.mode === "cities" && this.cityZoom) {
-            const span = 112;
-            const vx = Math.max(0, Math.min(240 - span, this.target.pinX - span / 2));
-            const vy = Math.max(0, Math.min(240 - span, this.target.pinY - span / 2));
-            viewBox = `${vx.toFixed(1)} ${vy.toFixed(1)} ${span} ${span}`;
+        if (this.mapEl) {
+            this.mapEl.classList.toggle("satellite-mode", isSat);
         }
 
-        const showContext = this.mapStyle !== "outline";
-        const isSat = this.mapStyle === "satellite";
-
-        // Graticule grid lines (every 48px)
-        const graticuleMarkup = `
-            <g class="worldle-graticule" stroke="rgba(125, 211, 252, 0.14)" stroke-width="0.6" stroke-dasharray="2,3">
-                <line x1="48" y1="0" x2="48" y2="240" />
-                <line x1="96" y1="0" x2="96" y2="240" />
-                <line x1="144" y1="0" x2="144" y2="240" />
-                <line x1="192" y1="0" x2="192" y2="240" />
-                <line x1="0" y1="48" x2="240" y2="48" />
-                <line x1="0" y1="96" x2="240" y2="96" />
-                <line x1="0" y1="144" x2="240" y2="144" />
-                <line x1="0" y1="192" x2="240" y2="192" />
+        // Graticule grid lines (lat/lon)
+        const graticuleMarkup = isOutline ? "" : `
+            <g class="worldle-graticule" stroke="${isSat ? 'rgba(56, 189, 248, 0.16)' : 'rgba(125, 211, 252, 0.14)'}" stroke-width="0.6" stroke-dasharray="2,3">
+                <line x1="48" y1="-50" x2="48" y2="290" />
+                <line x1="96" y1="-50" x2="96" y2="290" />
+                <line x1="144" y1="-50" x2="144" y2="290" />
+                <line x1="192" y1="-50" x2="192" y2="290" />
+                <line x1="-50" y1="48" x2="290" y2="48" />
+                <line x1="-50" y1="96" x2="290" y2="96" />
+                <line x1="-50" y1="144" x2="290" y2="144" />
+                <line x1="-50" y1="192" x2="290" y2="192" />
             </g>
         `;
 
-        // Shallow coastal shelf water glow + Neighboring countries
-        const contextMarkup = showContext ? `
-            <!-- Turquoise Continental Shelf Shallow-Water Glow -->
-            ${neighborsPath ? `<path d="${neighborsPath}" fill="none" stroke="${isSat ? 'rgba(6, 182, 212, 0.22)' : 'rgba(56, 189, 248, 0.26)'}" stroke-width="11" stroke-linejoin="round" />` : ""}
-            <path d="${svgPath}" fill="none" stroke="${isSat ? 'rgba(34, 211, 238, 0.38)' : 'rgba(56, 189, 248, 0.48)'}" stroke-width="12" stroke-linejoin="round" />
-            <path d="${svgPath}" fill="none" stroke="rgba(125, 211, 252, 0.55)" stroke-width="5" stroke-linejoin="round" />
-
-            <!-- Surrounding Neighboring Countries Landmass -->
-            ${neighborsPath ? `
-                <path d="${neighborsPath}" fill="url(#worldleNeighborGrad)" stroke="${isSat ? '#334155' : '#64748b'}" stroke-width="1.1" stroke-linejoin="round" fill-rule="evenodd" />
-                <path d="${neighborsPath}" fill="none" stroke="rgba(15, 23, 42, 0.65)" stroke-width="0.6" stroke-dasharray="3,2" stroke-linejoin="round" />
-            ` : ""}
+        // Surrounding neighbor landmasses
+        const neighborsMarkup = (this.showNeighbors && neighborsPath && !isOutline) ? `
+            <!-- Continental Shelf Shallow Fringing -->
+            <path d="${neighborsPath}" fill="none" stroke="${isSat ? 'rgba(6, 182, 212, 0.28)' : 'rgba(56, 189, 248, 0.26)'}" stroke-width="12" stroke-linejoin="round" />
+            <!-- Neighbor Landmass -->
+            <path d="${neighborsPath}" fill="url(#worldleNeighborGrad)" stroke="${isSat ? '#1e293b' : '#64748b'}" stroke-width="1.1" stroke-linejoin="round" fill-rule="evenodd" />
+            <path d="${neighborsPath}" fill="none" stroke="${isSat ? 'rgba(2, 6, 23, 0.7)' : 'rgba(15, 23, 42, 0.65)'}" stroke-width="0.7" stroke-dasharray="3,2" stroke-linejoin="round" />
         ` : "";
 
-        // Rivers & Lakes overlay
-        const hydroMarkup = showContext ? `
-            ${riversPath ? `<path d="${riversPath}" fill="none" stroke="${isSat ? '#22d3ee' : '#38bdf8'}" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" opacity="0.82" />` : ""}
+        // Coastal bathymetric shelf glow
+        const shelfMarkup = !isOutline ? `
+            <path d="${svgPath}" fill="none" stroke="${isSat ? 'rgba(6, 182, 212, 0.45)' : 'rgba(56, 189, 248, 0.48)'}" stroke-width="14" stroke-linejoin="round" />
+            <path d="${svgPath}" fill="none" stroke="${isSat ? 'rgba(34, 211, 238, 0.72)' : 'rgba(125, 211, 252, 0.55)'}" stroke-width="5" stroke-linejoin="round" />
+        ` : "";
+
+        // Natural Earth Rivers & Lakes
+        const hydroMarkup = !isOutline ? `
+            ${riversPath ? `<path d="${riversPath}" fill="none" stroke="${isSat ? '#22d3ee' : '#38bdf8'}" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.88" />` : ""}
             ${lakesPath ? `<path d="${lakesPath}" fill="url(#worldleOceanGrad)" stroke="#7dd3fc" stroke-width="0.7" stroke-linejoin="round" fill-rule="evenodd" />` : ""}
         ` : "";
 
+        // Atmospheric Clouds Overlay (translucent cirrus swirls in Satellite mode)
+        const cloudsMarkup = isSat ? `
+            <g class="worldle-sat-clouds" opacity="0.22" style="mix-blend-mode: screen; pointer-events: none;">
+                <path d="M-10,30 Q40,15 90,35 T180,25 T250,45 Q210,65 140,50 T40,65 Z" fill="#ffffff" filter="url(#worldleCloudBlur)" />
+                <path d="M20,145 Q80,130 140,150 T220,135 Q250,160 190,170 T90,165 Z" fill="#ffffff" filter="url(#worldleCloudBlur)" />
+            </g>
+        ` : "";
+
         // City Radar Pin + Crosshair in Cities Mode
-        const cityPinMarkup = this.mode === "cities" ? `
+        const cityPinMarkup = this.mode === "cities" && typeof this.target.pinX === "number" ? `
             <g class="worldle-city-marker">
                 <line x1="${this.target.pinX - 18}" y1="${this.target.pinY}" x2="${this.target.pinX + 18}" y2="${this.target.pinY}" stroke="rgba(254, 240, 138, 0.65)" stroke-width="0.9" stroke-dasharray="2,2" />
                 <line x1="${this.target.pinX}" y1="${this.target.pinY - 18}" x2="${this.target.pinX}" y2="${this.target.pinY + 18}" stroke="rgba(254, 240, 138, 0.65)" stroke-width="0.9" stroke-dasharray="2,2" />
@@ -592,91 +1471,324 @@ class WorldleGame {
             </g>
         ` : "";
 
-        const zoomBtnMarkup = this.mode === "cities" ? `
-            <button type="button" class="worldle-map-zoom-btn" id="worldleZoomToggleBtn" title="Toggle Regional Metro Zoom">
-                ${this.cityZoom ? "🗺️ Country" : "🔍 Zoom City"}
-            </button>
+        // Optional Capital Pin Hint
+        const capitalPinMarkup = (this.showCapitalPin && intel.capitalPin) ? `
+            <g class="worldle-capital-pin-group">
+                <circle cx="${intel.capitalPin.x}" cy="${intel.capitalPin.y}" r="8" fill="none" stroke="#fde047" stroke-width="1.2" class="worldle-city-pulse" />
+                <circle cx="${intel.capitalPin.x}" cy="${intel.capitalPin.y}" r="3.4" fill="#facc15" stroke="#78350f" stroke-width="1.2" />
+                <text x="${intel.capitalPin.x + 5}" y="${intel.capitalPin.y - 3}" font-size="6.8" font-weight="bold" fill="#fef08a" filter="url(#worldleTextGlow)">⭐ ${this.target.capital}</text>
+            </g>
         ` : "";
 
+        // Biome Palette definitions for Satellite mode
+        let satStops = `
+            <stop offset="0%" stop-color="#14532d" />
+            <stop offset="40%" stop-color="#15803d" />
+            <stop offset="75%" stop-color="#4ade80" />
+            <stop offset="100%" stop-color="#ca8a04" />
+        `;
+        if (biome === "desert") {
+            satStops = `
+                <stop offset="0%" stop-color="#78350f" />
+                <stop offset="35%" stop-color="#b45309" />
+                <stop offset="70%" stop-color="#d97706" />
+                <stop offset="100%" stop-color="#fde047" />
+            `;
+        } else if (biome === "tropical") {
+            satStops = `
+                <stop offset="0%" stop-color="#022c22" />
+                <stop offset="35%" stop-color="#064e3b" />
+                <stop offset="70%" stop-color="#047857" />
+                <stop offset="100%" stop-color="#10b981" />
+            `;
+        } else if (biome === "nordic") {
+            satStops = `
+                <stop offset="0%" stop-color="#0f172a" />
+                <stop offset="30%" stop-color="#1e293b" />
+                <stop offset="65%" stop-color="#115e59" />
+                <stop offset="100%" stop-color="#f8fafc" />
+            `;
+        } else if (biome === "mediterranean") {
+            satStops = `
+                <stop offset="0%" stop-color="#7c2d12" />
+                <stop offset="35%" stop-color="#9a3412" />
+                <stop offset="70%" stop-color="#65a30d" />
+                <stop offset="100%" stop-color="#ca8a04" />
+            `;
+        } else if (biome === "alpine") {
+            satStops = `
+                <stop offset="0%" stop-color="#14291e" />
+                <stop offset="35%" stop-color="#334155" />
+                <stop offset="70%" stop-color="#64748b" />
+                <stop offset="100%" stop-color="#f8fafc" />
+            `;
+        }
+
+        const landGradMarkup = isOutline ? `
+            <linearGradient id="worldleLandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#10b981" />
+                <stop offset="100%" stop-color="#059669" />
+            </linearGradient>
+        ` : (isSat ? `
+            <linearGradient id="worldleLandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                ${satStops}
+            </linearGradient>
+        ` : `
+            <linearGradient id="worldleLandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4ade80" />
+                <stop offset="38%" stop-color="#10b981" />
+                <stop offset="72%" stop-color="#84cc16" />
+                <stop offset="100%" stop-color="#eab308" />
+            </linearGradient>
+        `);
+
+        // Satellite live header bar
+        const satBarMarkup = isSat ? `
+            <div class="worldle-sat-hud-bar">
+                <span class="sat-live-badge"><span class="sat-live-dot"></span> ORBITAL LIVE</span>
+                <span class="sat-spec-badge">SENTINEL-2 RGB • 10m • ${biome.toUpperCase()}</span>
+            </div>
+        ` : "";
+
+        // Floating zoom controls
+        const controlsMarkup = `
+            <div class="worldle-map-controls">
+                <button type="button" class="map-ctrl-btn" id="worldleZoomInBtn" title="Zoom In (Scroll Up)">➕</button>
+                <button type="button" class="map-ctrl-btn" id="worldleZoomOutBtn" title="Zoom Out (Scroll Down)">➖</button>
+                <button type="button" class="map-ctrl-btn" id="worldleZoomResetBtn" title="Reset View">↺</button>
+            </div>
+        `;
+
         this.mapEl.innerHTML = `
-            <button type="button" class="worldle-map-style-btn" id="worldleStyleToggleBtn" title="Switch Map Layer (Physical Atlas / Satellite / Classic Outline)">
-                ${styleBadgeText}
-            </button>
-            ${zoomBtnMarkup}
+            ${satBarMarkup}
+            ${controlsMarkup}
             <span class="worldle-compass-badge">${compassLabel}</span>
             <svg class="worldle-svg" viewBox="${viewBox}" style="transform: rotate(${this.rotationDeg}deg);">
                 <defs>
                     <!-- Deep Ocean Bathymetry Gradient -->
-                    <radialGradient id="worldleOceanGrad" cx="50%" cy="50%" r="72%">
-                        <stop offset="0%" stop-color="${isSat ? '#082f49' : '#0c4a6e'}" />
-                        <stop offset="55%" stop-color="${isSat ? '#041e34' : '#082f49'}" />
-                        <stop offset="100%" stop-color="${isSat ? '#020b16' : '#041628'}" />
+                    <radialGradient id="worldleOceanGrad" cx="50%" cy="50%" r="78%">
+                        <stop offset="0%" stop-color="${isSat ? '#0a2a4a' : (isAtlas ? '#0c4a6e' : '#0f172a')}" />
+                        <stop offset="42%" stop-color="${isSat ? '#061c33' : (isAtlas ? '#082f49' : '#0b1324')}" />
+                        <stop offset="80%" stop-color="${isSat ? '#031122' : (isAtlas ? '#041628' : '#070c18')}" />
+                        <stop offset="100%" stop-color="${isSat ? '#01070f' : (isAtlas ? '#020b16' : '#03060c')}" />
                     </radialGradient>
 
-                    <!-- Neighboring Countries Satellite Earth/Slate Gradient -->
+                    <!-- Surrounding Countries Earthy Slate Gradient -->
                     <linearGradient id="worldleNeighborGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="${isSat ? '#16222f' : '#263346'}" />
-                        <stop offset="50%" stop-color="${isSat ? '#111b26' : '#1e293b'}" />
-                        <stop offset="100%" stop-color="${isSat ? '#0d151f' : '#172030'}" />
+                        <stop offset="0%" stop-color="${isSat ? '#1c2833' : '#263346'}" />
+                        <stop offset="50%" stop-color="${isSat ? '#15202b' : '#1e293b'}" />
+                        <stop offset="100%" stop-color="${isSat ? '#0e151c' : '#172030'}" />
                     </linearGradient>
 
-                    <!-- Target Country Physical Hypsometric / Satellite Terrain Gradient -->
-                    <linearGradient id="worldleLandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="${isSat ? '#059669' : '#4ade80'}" />
-                        <stop offset="38%" stop-color="${isSat ? '#047857' : '#10b981'}" />
-                        <stop offset="72%" stop-color="${isSat ? '#65a30d' : '#84cc16'}" />
-                        <stop offset="100%" stop-color="${isSat ? '#ca8a04' : '#eab308'}" />
-                    </linearGradient>
+                    ${landGradMarkup}
 
                     <!-- Interior Highland Topographic Contour Gradient -->
                     <radialGradient id="worldleHighlandGrad" cx="48%" cy="45%" r="55%">
-                        <stop offset="0%" stop-color="rgba(254, 240, 138, 0.32)" />
-                        <stop offset="55%" stop-color="rgba(16, 185, 129, 0.1)" />
-                        <stop offset="100%" stop-color="rgba(6, 78, 59, 0.25)" />
+                        <stop offset="0%" stop-color="${isSat ? 'rgba(254, 240, 138, 0.38)' : 'rgba(254, 240, 138, 0.32)'}" />
+                        <stop offset="55%" stop-color="${isSat ? 'rgba(34, 211, 238, 0.12)' : 'rgba(16, 185, 129, 0.1)'}" />
+                        <stop offset="100%" stop-color="rgba(2, 6, 23, 0.28)" />
                     </radialGradient>
 
-                    <!-- 3D Drop Shadow & Coastal Relief Filter -->
+                    <!-- 3D Elevation Hillshading & Relief Filter -->
+                    <filter id="worldleSatRelief" x="-10%" y="-10%" width="120%" height="120%">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+                        <feDiffuseLighting in="noise" lighting-color="#ffffff" surfaceScale="2.4" diffuseConstant="1.15" result="light">
+                            <feDistantLight azimuth="315" elevation="45" />
+                        </feDiffuseLighting>
+                        <feBlend mode="multiply" in="SourceGraphic" in2="light" result="lit" />
+                        <feComposite in="lit" in2="SourceGraphic" operator="in" />
+                    </filter>
+
+                    <!-- Cloud Soft Blur -->
+                    <filter id="worldleCloudBlur" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="2.4" />
+                    </filter>
+
+                    <!-- Text Glow -->
+                    <filter id="worldleTextGlow">
+                        <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#020617" flood-opacity="0.9" />
+                    </filter>
+
+                    <!-- Drop Shadow -->
                     <filter id="worldleLandShadow" x="-15%" y="-15%" width="130%" height="130%">
-                        <feDropShadow dx="0" dy="2.5" stdDeviation="3.5" flood-color="#020617" flood-opacity="0.7" />
+                        <feDropShadow dx="0" dy="2.8" stdDeviation="3.6" flood-color="#020617" flood-opacity="0.8" />
                     </filter>
                 </defs>
 
                 <!-- 1. Deep Ocean Bathymetry Background -->
-                <rect x="-20" y="-20" width="280" height="280" fill="url(#worldleOceanGrad)" />
+                <rect x="-60" y="-60" width="360" height="360" fill="url(#worldleOceanGrad)" />
                 ${graticuleMarkup}
 
-                <!-- 2. Coastal Shelf & Surrounding Neighboring Countries -->
-                ${contextMarkup}
+                <!-- 2. Surrounding Continental Shelf & Neighbor Countries -->
+                ${neighborsMarkup}
+                ${shelfMarkup}
 
-                <!-- 3. Target Country Physical Terrain + Highland Relief + Crisp Border -->
+                <!-- 3. Target Country Landmass + Elevation Relief -->
                 <g filter="url(#worldleLandShadow)">
-                    <path d="${svgPath}" fill="url(#worldleLandGrad)" stroke="#020617" stroke-width="2.8" stroke-linejoin="round" fill-rule="evenodd" />
-                    <path d="${svgPath}" fill="url(#worldleHighlandGrad)" stroke="${isSat ? '#38bdf8' : '#fef08a'}" stroke-width="1.4" stroke-linejoin="round" fill-rule="evenodd" />
+                    <path d="${svgPath}" fill="url(#worldleLandGrad)" filter="${isSat ? 'url(#worldleSatRelief)' : 'none'}" stroke="#020617" stroke-width="${isOutline ? '1.8' : '2.6'}" stroke-linejoin="round" fill-rule="evenodd" />
+                    ${!isOutline ? `<path d="${svgPath}" fill="url(#worldleHighlandGrad)" stroke="${isSat ? '#38bdf8' : '#fef08a'}" stroke-width="1.2" stroke-linejoin="round" fill-rule="evenodd" />` : ""}
                 </g>
 
-                <!-- 4. Natural Earth Rivers & Lakes -->
+                <!-- 4. Hydrography Rivers & Lakes -->
                 ${hydroMarkup}
 
-                <!-- 5. City Radar Pin (in World Cities mode) -->
+                <!-- 5. Atmospheric Clouds -->
+                ${cloudsMarkup}
+
+                <!-- 6. City Radar Pin or Capital City Pin -->
                 ${cityPinMarkup}
+                ${capitalPinMarkup}
             </svg>
-            <span class="worldle-scale-badge">${this.mode === "cities" ? "📍 GPS Radar • " : "📏 "}${scaleLabel}</span>
+            <span class="worldle-scale-badge">${this.mode === "cities" ? "📍 GPS Radar • " : "📏 "}${scaleLabel} • ${this.zoomLevel.toFixed(1)}x</span>
         `;
 
-        const styleBtn = document.getElementById("worldleStyleToggleBtn");
-        if (styleBtn) {
-            styleBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                this.cycleMapStyle();
-            });
+        // Wire Zoom buttons
+        const zIn = document.getElementById("worldleZoomInBtn");
+        if (zIn) zIn.addEventListener("click", (e) => { e.stopPropagation(); this.zoomIn(); });
+        const zOut = document.getElementById("worldleZoomOutBtn");
+        if (zOut) zOut.addEventListener("click", (e) => { e.stopPropagation(); this.zoomOut(); });
+        const zReset = document.getElementById("worldleZoomResetBtn");
+        if (zReset) zReset.addEventListener("click", (e) => { e.stopPropagation(); this.resetZoom(); });
+    }
+
+    renderRadarHud() {
+        if (!this.radarHudEl) return;
+
+        const activeGuess = this.lastFocusedGuess || (this.guesses.length > 0 ? this.guesses[this.guesses.length - 1] : null);
+        const hasGuess = !!activeGuess;
+
+        const needleRotate = hasGuess ? activeGuess.bearingDeg : 0;
+        const distStr = hasGuess ? this.formatDistance(activeGuess.distKm) : "—";
+        const prox = hasGuess ? activeGuess.proximity : 0;
+        const isWon = hasGuess && activeGuess.distKm === 0;
+
+        let statusText = "🛰️ RADAR SCANNING";
+        let statusClass = "";
+
+        if (isWon) {
+            statusText = "🎯 TARGET LOCKED";
+            statusClass = "status-target";
+        } else if (hasGuess && prox >= 80) {
+            statusText = "🔥 HOT • CLOSING IN";
+            statusClass = "status-hot";
+        } else if (hasGuess && prox >= 50) {
+            statusText = "⚡ WARM RANGE";
+            statusClass = "status-warm";
+        } else if (hasGuess) {
+            statusText = "❄️ LONG RANGE";
+            statusClass = "";
         }
-        const zoomBtn = document.getElementById("worldleZoomToggleBtn");
-        if (zoomBtn) {
-            zoomBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                this.toggleCityZoom();
-            });
-        }
+
+        const bearingText = hasGuess
+            ? `${activeGuess.bearingDeg.toString().padStart(3, "0")}° ${activeGuess.compassCode}`
+            : "000° SCAN";
+
+        const subDesc = hasGuess
+            ? `Bearing from ${activeGuess.flag} ${activeGuess.name} • ${prox}% Proximity`
+            : "Enter a country or city guess to lock 360° navigational compass";
+
+        this.radarHudEl.innerHTML = `
+            <div class="radar-dial-box" title="360° Navigational Compass Radar">
+                <svg class="radar-dial-svg" viewBox="0 0 78 78">
+                    <defs>
+                        <radialGradient id="radarDialGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#020914" />
+                            <stop offset="75%" stop-color="#041628" />
+                            <stop offset="100%" stop-color="#082f49" />
+                        </radialGradient>
+                        <linearGradient id="radarBeamGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="rgba(56, 189, 248, 0)" />
+                            <stop offset="100%" stop-color="rgba(56, 189, 248, 0.75)" />
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Outer Dial Face -->
+                    <circle cx="39" cy="39" r="37" fill="url(#radarDialGrad)" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.4" />
+                    <!-- Concentric Sonar Rings -->
+                    <circle cx="39" cy="39" r="26" fill="none" stroke="rgba(56, 189, 248, 0.22)" stroke-width="0.8" stroke-dasharray="2,2" />
+                    <circle cx="39" cy="39" r="14" fill="none" stroke="rgba(56, 189, 248, 0.22)" stroke-width="0.8" stroke-dasharray="2,2" />
+
+                    <!-- Radar Crosshairs -->
+                    <line x1="39" y1="4" x2="39" y2="74" stroke="rgba(56, 189, 248, 0.18)" stroke-width="0.6" />
+                    <line x1="4" y1="39" x2="74" y2="39" stroke="rgba(56, 189, 248, 0.18)" stroke-width="0.6" />
+
+                    <!-- Cardinal Headings -->
+                    <text x="39" y="11" font-size="7.5" font-weight="900" fill="#ef4444" text-anchor="middle">N</text>
+                    <text x="71" y="41.5" font-size="6.8" font-weight="800" fill="#94a3b8" text-anchor="middle">E</text>
+                    <text x="39" y="72" font-size="6.8" font-weight="800" fill="#94a3b8" text-anchor="middle">S</text>
+                    <text x="7" y="41.5" font-size="6.8" font-weight="800" fill="#94a3b8" text-anchor="middle">W</text>
+
+                    <!-- Radar Sweep Beam (Continuous sweep) -->
+                    <g class="radar-sweep-beam">
+                        <line x1="39" y1="39" x2="39" y2="6" stroke="url(#radarBeamGrad)" stroke-width="1.8" />
+                    </g>
+
+                    <!-- Navigational Heading Needle -->
+                    <g class="radar-needle-group" style="transform: rotate(${needleRotate}deg);">
+                        <polygon points="39,12 42.5,39 39,36 35.5,39" fill="${isWon ? '#facc15' : '#ef4444'}" />
+                        <polygon points="39,66 42.5,39 39,42 35.5,39" fill="#94a3b8" />
+                        <circle cx="39" cy="39" r="3.6" fill="#f8fafc" stroke="#0f172a" stroke-width="1.2" />
+                    </g>
+                </svg>
+            </div>
+            <div class="radar-info-box">
+                <div class="radar-telemetry-row">
+                    <span class="radar-bearing-tag">🧭 ${bearingText}</span>
+                    <span class="radar-dist-tag">${distStr}</span>
+                    <span class="radar-status-pill ${statusClass}">${statusText}</span>
+                </div>
+                <div class="radar-prox-bar-track">
+                    <div class="radar-prox-bar-fill" style="width: ${prox}%;"></div>
+                </div>
+                <div class="radar-sub-desc">${subDesc}</div>
+            </div>
+        `;
+    }
+
+    renderDossier() {
+        if (!this.dossierContentEl || !this.target) return;
+        const countryCode = this.mode === "cities" ? this.target.countryCode : this.target.code;
+        const intel = this.countryIntel[countryCode] || {};
+        const title = this.mode === "cities"
+            ? `${this.target.flag} ${this.target.name}, ${this.target.countryName}`
+            : `${this.target.flag} ${this.target.name}`;
+        const continent = `${this.target.continent} (${this.target.subregion})`;
+
+        this.dossierContentEl.innerHTML = `
+            <div class="dossier-header-bar">
+                <span class="dossier-country-title">${title}</span>
+                <span class="dossier-continent-badge">${continent}</span>
+            </div>
+            <div class="dossier-grid">
+                <div class="dossier-row">
+                    <span class="dossier-label">🏛️ Capital</span>
+                    <span class="dossier-val">${this.target.capital || intel.capitalPin ? this.target.capital : "—"}</span>
+                </div>
+                <div class="dossier-row">
+                    <span class="dossier-label">👥 Population</span>
+                    <span class="dossier-val">${intel.pop || "—"}</span>
+                </div>
+                <div class="dossier-row">
+                    <span class="dossier-label">📐 Land Area</span>
+                    <span class="dossier-val">${intel.area || "—"} (${intel.areaMi || "—"})</span>
+                </div>
+                <div class="dossier-row">
+                    <span class="dossier-label">🪙 Currency</span>
+                    <span class="dossier-val">${intel.currency || "—"}</span>
+                </div>
+                <div class="dossier-row">
+                    <span class="dossier-label">🏔️ Highest Point</span>
+                    <span class="dossier-val">${intel.highestPoint || "—"}</span>
+                </div>
+                <div class="dossier-row">
+                    <span class="dossier-label">🚗 Driving Side</span>
+                    <span class="dossier-val">${intel.driveSide || "Right"} • ${intel.timezone || "—"}</span>
+                </div>
+            </div>
+            <div class="dossier-fact-box">
+                💡 <b>Geographic Intel:</b> ${intel.fact || this.target.borders}
+            </div>
+        `;
     }
 
     render() {
@@ -687,10 +1799,12 @@ class WorldleGame {
         }
 
         this.renderMap();
+        this.renderRadarHud();
+        this.renderDossier();
 
         if (this.guessesEl) {
-            this.guessesEl.innerHTML = this.guesses.map(g => `
-                <div class="worldle-guess-row">
+            this.guessesEl.innerHTML = this.guesses.map((g, idx) => `
+                <div class="worldle-guess-row" data-guess-idx="${idx}" title="Click to focus radar on this guess">
                     <span>${g.flag} ${g.name}</span>
                     <span class="worldle-blocks">${g.blocks}</span>
                     <span style="font-family: monospace; color: #e2e8f0; text-align: right;">${this.formatDistance(g.distKm)}</span>
@@ -698,6 +1812,17 @@ class WorldleGame {
                     <span class="worldle-prox-badge">${g.proximity}%</span>
                 </div>
             `).join("");
+
+            this.guessesEl.querySelectorAll(".worldle-guess-row").forEach(row => {
+                row.addEventListener("click", () => {
+                    const idx = parseInt(row.getAttribute("data-guess-idx"), 10);
+                    if (this.guesses[idx]) {
+                        this.lastFocusedGuess = this.guesses[idx];
+                        this.renderRadarHud();
+                        if (window.sounds) window.sounds.click();
+                    }
+                });
+            });
         }
     }
 }
@@ -705,3 +1830,11 @@ class WorldleGame {
 window.addEventListener("DOMContentLoaded", () => {
     window.worldleGame = new WorldleGame();
 });
+
+if (typeof window !== "undefined") {
+    window.WorldleGame = WorldleGame;
+}
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = { WorldleGame, WORLDLE_TARGET_COUNTRIES, WORLDLE_COUNTRY_INTEL, WORLDLE_CITIES };
+}
